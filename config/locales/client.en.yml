@@ -1,0 +1,18 @@
+en:
+  js:
+    theme-creator:
+      themes: Themes
+      my_themes: My Themes
+      new_theme: New Theme
+      css_html: "Custom CSS"
+      custom_sections: "Custom sections:"
+      edit_css_html_help: "You have not edited any CSS"
+      edit_css_html: "Edit CSS"
+      explain_preview: "Preview this theme"
+      preview: "Preview"
+      export_json: "Export JSON"
+      delete: "Delete"
+      new_theme_title: "My New Theme"
+      delete_confirm: "Are you sure you want to delete this theme?"
+      save: "Save"
+      select_a_theme: "Select or create a theme to get started"

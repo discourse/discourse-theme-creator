@@ -1,0 +1,19 @@
+{{#unless editingTheme}}
+<div class='content-list span6'>
+  <h3>{{i18n 'theme-creator.my_themes'}}</h3>
+  <ul>
+    {{#each model as |theme|}}
+      <li>
+        {{#link-to 'user.themes.show' theme replace=true}}
+          {{theme.name}}
+        {{/link-to}}
+      </li>
+    {{/each}}
+  </ul>
+
+  {{d-button label="theme-creator.new_theme" icon="plus" action="newTheme" class="btn-primary"}}
+</div>
+{{/unless}}
+<div>
+{{outlet}}
+</div>

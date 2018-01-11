@@ -1,0 +1,25 @@
+<div class="show-current-style">
+  <h1>
+    {{#if editingName}}
+      {{text-field value=model.name autofocus="true"}}
+      {{d-button action="finishedEditingName" class="btn-primary btn-small submit-edit" icon="check"}}
+      {{d-button action="cancelEditingName" class="btn-small cancel-edit" icon="times"}}
+    {{else}}
+      {{model.name}} <a {{action "startEditingName"}}>{{d-icon "pencil"}}</a>
+    {{/if}}
+  </h1>
+
+  <h3>{{i18n "theme-creator.css_html"}}</h3>
+  
+  <div class="theme-creator-editor">
+    {{ace-editor content=activeSection editorId=editorId mode="scss" autofocus="true"}}
+  </div>
+
+  {{#d-button action="save" disabled=saveDisabled class='btn-primary'}}
+      {{saveButtonText}}
+    {{/d-button}}
+
+  <a href='{{previewUrl}}' title="{{i18n 'theme-creator.explain_preview'}}" target='_blank' class='btn'>{{d-icon 'desktop'}}{{i18n 'theme-creator.preview'}}</a>
+
+  {{d-button action="destroy" label="theme-creator.delete" icon="trash" class="btn-danger"}}
+</div>
