@@ -80,9 +80,6 @@ class ThemeCreator::ThemeCreatorController < ApplicationController
     def theme_params
       @theme_params ||=
         begin
-          # deep munge is a train wreck, work around it for now
-          params[:user_theme][:child_theme_ids] ||= [] if params[:user_theme].key?(:child_theme_ids)
-
           params.require(:user_theme).permit(
             :name,
             # :color_scheme_id,
@@ -98,7 +95,7 @@ class ThemeCreator::ThemeCreatorController < ApplicationController
       return unless fields = theme_params[:theme_fields]
 
       fields.each do |field|
-        if field[:target] == 'common' && field[:name] == 'scss'
+        if ['common', 'mobile', 'desktop'].include?(field[:target]) && field[:name] == 'scss'
           @theme.set_field(
             target: field[:target],
             name: field[:name],

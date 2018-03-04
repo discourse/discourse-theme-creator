@@ -10,14 +10,12 @@
   </h1>
 
   <h3>{{i18n "theme-creator.css_html"}}</h3>
-  
-  <div class="theme-creator-editor">
-    {{ace-editor content=activeSection editorId=editorId mode="scss" autofocus="true"}}
-  </div>
 
-  {{#d-button action="save" disabled=saveDisabled class='btn-primary'}}
-      {{saveButtonText}}
-    {{/d-button}}
+  {{#link-to 'user.themes.edit' model.id 'common' 'scss' class="btn"}}
+    {{i18n 'theme-creator.edit_css_html'}}
+  {{/link-to}}
+
+  <hr/>
 
   <a href='{{previewUrl}}' title="{{i18n 'theme-creator.explain_preview'}}" target='_blank' class='btn'>{{d-icon 'desktop'}}{{i18n 'theme-creator.preview'}}</a>
 

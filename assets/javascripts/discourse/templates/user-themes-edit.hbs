@@ -1,0 +1,29 @@
+
+<h2>{{i18n 'theme-creator.edit_css_html'}} {{#link-to 'user.themes.show' model.id replace=true}}{{model.name}}{{/link-to}}</h2>
+
+<ul class='nav nav-pills target'>
+  <li>
+    {{#link-to 'user.themes.edit' model.id 'common' fieldName replace=true title=field.title}}
+      {{i18n 'theme-creator.target.common'}}
+    {{/link-to}}
+  </li>
+  <li>
+    {{#link-to 'user.themes.edit' model.id 'desktop' fieldName replace=true title=field.title}}
+      {{i18n 'theme-creator.target.desktop'}}
+      {{d-icon 'desktop'}}
+    {{/link-to}}
+  </li>
+  <li>
+    {{#link-to 'user.themes.edit' model.id 'mobile' fieldName replace=true title=field.title}}
+      {{i18n 'theme-creator.target.mobile'}}
+      {{d-icon 'mobile'}}
+    {{/link-to}}
+  </li>
+</ul>
+
+{{ace-editor content=activeSection editorId=editorId mode=activeSectionMode autofocus="true"}}
+
+{{#d-button action="save" disabled=saveDisabled class='btn-primary'}}
+  {{saveButtonText}}
+{{/d-button}}
+

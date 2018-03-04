@@ -13,6 +13,7 @@ Discourse::Application.routes.append do
   mount ::ThemeCreator::Engine, at: "/theme-creator"
   get "u/:username/themes" => "users#index", constraints: { username: RouteFormat.username }
   get "u/:username/themes/:id" => "users#index", constraints: { username: RouteFormat.username }
+  get 'u/:username/themes/:id/:target/:field_name/edit' => 'users#index', constraints: { username: RouteFormat.username }
 end
 
 after_initialize do
