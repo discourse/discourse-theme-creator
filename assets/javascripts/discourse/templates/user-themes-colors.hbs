@@ -1,0 +1,34 @@
+<h2>{{i18n 'theme-creator.edit_color_scheme_for'}} {{#link-to 'user.themes.show' model.theme_id replace=true}}{{model.theme_name}}{{/link-to}}</h2>
+
+<div class="theme-content">
+
+  {{#if model.colors.length}}
+    <table class="table colors">
+      <tbody>
+      {{#each model.colors as |c|}}
+        <tr class="{{if c.changed 'changed'}} {{if c.valid 'valid' 'invalid'}}">
+          <td class="name" title={{c.name}}>
+            <b>{{i18n (concat 'theme-creator.colors.' c.name '.name')}}</b>
+            <br/>
+            <span class="description">{{i18n (concat 'theme-creator.colors.' c.name '.description')}}</span>
+          </td>
+          <td class="hex">{{color-input hexValue=c.hex brightnessValue=c.brightness valid=c.valid}}</td>
+          <td class="actions">
+              <button class="btn revert {{unless c.savedIsOverriden 'invisible'}}" {{action "revert" c}}>{{i18n 'revert'}}</button>
+              <button class="btn undo {{unless c.changed 'invisible'}}" {{action "undo" c}}>{{i18n 'undo'}}</button>
+          </td>
+        </tr>
+      {{/each}}
+      </tbody>
+    </table>
+  {{else}}
+    <p>{{i18n 'search.no_results'}}</p>
+  {{/if}}
+
+  {{#d-button action="save" disabled=saveDisabled class='btn-primary'}}
+    {{saveButtonText}}
+  {{/d-button}}
+
+  <a href='{{previewUrl}}' title="{{i18n 'theme-creator.explain_preview'}}" target='_blank' class='btn'>{{d-icon 'desktop'}}{{i18n 'theme-creator.preview'}}</a>
+
+</div>

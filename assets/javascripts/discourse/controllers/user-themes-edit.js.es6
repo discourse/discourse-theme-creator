@@ -1,6 +1,8 @@
 import { default as computed } from 'ember-addons/ember-computed-decorators';
+import { url } from 'discourse/lib/computed';
 
 export default Ember.Controller.extend({
+  previewUrl: url('model.id', '/theme-creator/user_themes/%@/preview'),
 
   @computed("fieldName", "targetName")
   editorId(fieldName, targetName) {

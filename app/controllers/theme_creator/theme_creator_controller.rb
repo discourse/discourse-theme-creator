@@ -2,7 +2,7 @@ class ThemeCreator::ThemeCreatorController < ApplicationController
 
   before_action :ensure_logged_in
 
-  before_action :ensure_own_theme, only: [:destroy, :update, :preview]
+  before_action :ensure_own_theme, only: [:destroy, :update, :preview, :create_color_scheme, :update_color_scheme]
   skip_before_action :check_xhr, only: [:preview]
 
   def preview
@@ -13,7 +13,9 @@ class ThemeCreator::ThemeCreatorController < ApplicationController
 
   def list
     @theme = Theme.where(user_id: current_user.id).order(:name).includes(:theme_fields, :remote_theme)
-    @color_schemes = ColorScheme.all.to_a
+
+    # Only present color schemes that are attached to the user's themes
+    @color_schemes = ColorScheme.where(theme_id: @theme.pluck(:id)).to_a
     light = ColorScheme.new(name: I18n.t("color_schemes.default"))
     @color_schemes.unshift(light)
 
@@ -25,7 +27,7 @@ class ThemeCreator::ThemeCreatorController < ApplicationController
     }
 
     respond_to do |format|
-      format.json { render json: payload }
+      format.json { render json: payload, include: '**' }
     end
   end
 
@@ -72,6 +74,47 @@ class ThemeCreator::ThemeCreatorController < ApplicationController
 
     respond_to do |format|
       format.json { head :no_content }
+    end
+  end
+
+  def create_color_scheme
+    @theme ||= Theme.find(params[:id])
+
+    new_scheme = ColorScheme.create_from_base(name: "#{current_user.username}'s Color Scheme")
+    new_scheme.theme_id = @theme.id
+    new_scheme.save!
+
+    @theme.color_scheme_id = new_scheme.id
+    @theme.save!
+
+    # Delete any orphaned color schemes
+    ColorScheme
+      .where(theme_id: @theme.id)
+      .where.not(id: new_scheme.id)
+      .destroy_all()
+
+    respond_to do |format|
+      format.json { head :no_content }
+    end
+  end
+
+  def update_color_scheme
+    @theme ||= Theme.find(params[:id])
+    @color_scheme = ColorScheme.find(params[:color_scheme_id])
+
+    # The theme ID has been validated, so just check that this color scheme
+    # really does belong to the theme
+    if @color_scheme.theme_id != @theme.id
+      raise Discourse::InvalidAccess.new("Cannot modify that color scheme.")
+    end
+
+    color_scheme_params = params.permit(color_scheme: [colors: [:name, :hex]])[:color_scheme]
+
+    color_scheme = ColorSchemeRevisor.revise(@color_scheme, color_scheme_params)
+    if color_scheme.valid?
+      render json: color_scheme, root: false
+    else
+      render_json_error(color_scheme)
     end
   end
 

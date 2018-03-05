@@ -16,8 +16,45 @@ en:
       delete_confirm: "Are you sure you want to delete this theme?"
       save: "Save"
       select_a_theme: "Select or create a theme to get started"
-
+      color_scheme: "Color Scheme"
+      default_color_scheme: "Default Color Scheme"
+      edit_color_scheme: "Edit Color Scheme"
+      create_color_scheme: "Create Color Scheme"
+      delete_color_scheme: "Delete"
+      not_editable: "(not editable)"
       target:
         common: "Common"
         mobile: "Mobile"
         desktop: "Desktop"
+      edit_color_scheme_for: "Edit Color Scheme For"
+      colors:
+        primary:
+          name: 'primary'
+          description: 'Most text, icons, and borders.'
+        secondary:
+          name: 'secondary'
+          description: 'The main background color, and text color of some buttons.'
+        tertiary:
+          name: 'tertiary'
+          description: 'Links, some buttons, notifications, and accent color.'
+        quaternary:
+          name: "quaternary"
+          description: "Navigation links."
+        header_background:
+          name: "header background"
+          description: "Background color of the site's header."
+        header_primary:
+          name: "header primary"
+          description: "Text and icons in the site's header."
+        highlight:
+          name: 'highlight'
+          description: 'The background color of highlighted elements on the page, such as posts and topics.'
+        danger:
+          name: 'danger'
+          description: 'Highlight color for actions like deleting posts and topics.'
+        success:
+          name: 'success'
+          description: 'Used to indicate an action was successful.'
+        love:
+          name: 'love'
+          description: "The like button's color."

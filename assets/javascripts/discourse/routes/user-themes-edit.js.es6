@@ -21,7 +21,6 @@ export default Ember.Route.extend({
     controller.set("model", wrapper.model);
     controller.set("targetName", wrapper.target || "common");
     controller.set("fieldName", wrapper.field_name || "scss");
-    // this.controllerFor("adminCustomizeThemes").set("editingTheme", true);
   },
 
 });

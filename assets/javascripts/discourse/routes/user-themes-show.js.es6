@@ -16,8 +16,6 @@ export default Ember.Route.extend({
     const parentController = this.controllerFor("user.themes");
     parentController.set("editingTheme", false);
     controller.set("allThemes", parentController.get("model"));
-    controller.set("colorSchemes", parentController.get("model.extras.color_schemes"));
-    controller.set("colorSchemeId", model.get("color_scheme_id"));
   },
 
 });

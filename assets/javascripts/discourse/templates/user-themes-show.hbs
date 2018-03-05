@@ -9,11 +9,40 @@
     {{/if}}
   </h1>
 
-  <h3>{{i18n "theme-creator.css_html"}}</h3>
+  <div class="theme-content">
 
-  {{#link-to 'user.themes.edit' model.id 'common' 'scss' class="btn"}}
-    {{i18n 'theme-creator.edit_css_html'}}
-  {{/link-to}}
+    <h3>{{i18n "theme-creator.color_scheme"}}</h3>
+      {{#if canEditColorScheme}}
+        <p>
+        {{#link-to 'user.themes.colors' model.id model.color_scheme_id class="btn"}}
+          {{i18n 'theme-creator.edit_color_scheme'}}
+          {{d-icon 'pencil'}}
+        {{/link-to}}
+        {{!-- {{d-button action="deleteColorScheme" label="theme-creator.delete_color_scheme" icon="trash" class="btn-danger"}} --}}
+        </p>
+      {{else}}
+        <p>
+          {{#if model.color_scheme}}
+            {{model.color_scheme.name}}
+          {{else}}
+            {{i18n 'theme-creator.default_color_scheme'}}
+          {{/if}}
+          {{i18n 'theme-creator.not_editable'}}
+        </p>
+        <p>
+        {{d-button action="createColorScheme" label="theme-creator.create_color_scheme" icon="plus" class="btn"}}
+        </p>
+
+
+      {{/if}}
+
+    <h3>{{i18n "theme-creator.css_html"}}</h3>
+
+    {{#link-to 'user.themes.edit' model.id 'common' 'scss' class="btn"}}
+      {{i18n 'theme-creator.edit_css_html'}}
+    {{/link-to}}
+
+  </div>
 
   <hr/>
 
