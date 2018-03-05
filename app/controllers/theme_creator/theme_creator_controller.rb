@@ -6,9 +6,9 @@ class ThemeCreator::ThemeCreatorController < ApplicationController
   skip_before_action :check_xhr, only: [:preview]
 
   def preview
-    @theme = Theme.find(params[:id])
-
-    redirect_to path("/"), flash: { preview_theme_key: @theme.key }
+    @theme ||= Theme.find(params[:id])
+    destination = '/styleguide/' if defined? DiscourseStyleguide else '/'
+    redirect_to path(destination), flash: { preview_theme_key: @theme.key }
   end
 
   def list
