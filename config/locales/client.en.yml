@@ -13,6 +13,7 @@ en:
       export_json: "Export JSON"
       delete: "Delete"
       new_theme_title: "My New Theme"
+      is_shared: "Anyone with the link can see this theme?"
       delete_confirm: "Are you sure you want to delete this theme?"
       save: "Save"
       select_a_theme: "Select or create a theme to get started"

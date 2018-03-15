@@ -1,8 +1,9 @@
 class ThemeCreator::ThemeCreatorController < ApplicationController
 
-  before_action :ensure_logged_in
+  before_action :ensure_logged_in, except: [:preview]
 
-  before_action :ensure_own_theme, only: [:destroy, :update, :preview, :create_color_scheme, :update_color_scheme]
+  before_action :ensure_own_theme, only: [:destroy, :update, :create_color_scheme, :update_color_scheme]
+  before_action :ensure_can_see_theme, only: [:preview]
   skip_before_action :check_xhr, only: [:preview]
 
   def preview
@@ -48,7 +49,7 @@ class ThemeCreator::ThemeCreatorController < ApplicationController
   def update
     @theme = Theme.find(params[:id])
 
-    [:name].each do |field|
+    [:name, :is_shared].each do |field|
       if theme_params.key?(field)
         @theme.send("#{field}=", theme_params[field])
       end
@@ -125,6 +126,7 @@ class ThemeCreator::ThemeCreatorController < ApplicationController
         begin
           params.require(:user_theme).permit(
             :name,
+            :is_shared,
             # :color_scheme_id,
             # :default,
             # :user_selectable,
@@ -147,6 +149,15 @@ class ThemeCreator::ThemeCreatorController < ApplicationController
             # upload_id: field[:upload_id]
           )
         end
+      end
+    end
+
+    def ensure_can_see_theme
+      @theme = Theme.find(params[:id])
+
+      if !guardian.can_see_user_theme?(@theme)
+
+        raise Discourse::InvalidAccess.new("Theme not available.")
       end
     end
 

@@ -26,6 +26,10 @@ export default Ember.Controller.extend({
       this.set("editingName", false);
     },
 
+    applyIsShared() {
+      this.get("model").saveChanges("is_shared");
+    },
+
     createColorScheme() {
       const theme_id = this.get('model.id');
       ajax(`/theme-creator/user_themes/${theme_id}/colors`, {

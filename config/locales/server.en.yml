@@ -1,0 +1,3 @@
+en:
+  site_settings:
+    theme_creator_share_groups: "Names of groups that are allowed to share themes with other users. Leave blank to allow all users."

@@ -1,0 +1,4 @@
+plugins:
+  theme_creator_share_groups:
+    default: 'trust_level_3'
+    type: 'list'
