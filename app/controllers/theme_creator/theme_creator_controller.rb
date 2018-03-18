@@ -9,7 +9,7 @@ class ThemeCreator::ThemeCreatorController < ApplicationController
   def preview
     @theme ||= Theme.find(params[:id])
     destination = '/styleguide/' if defined? DiscourseStyleguide else '/'
-    redirect_to path(destination), flash: { preview_theme_key: @theme.key }
+    redirect_to path("#{destination}?preview_theme_key=#{@theme.key}")
   end
 
   def list
