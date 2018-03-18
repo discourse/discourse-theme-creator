@@ -23,6 +23,7 @@ en:
       create_color_scheme: "Create Color Scheme"
       delete_color_scheme: "Delete"
       not_editable: "(not editable)"
+      sharing: "Sharing"
       target:
         common: "Common"
         mobile: "Mobile"

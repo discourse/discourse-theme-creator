@@ -4,7 +4,7 @@ import { ajax } from 'discourse/lib/ajax';
 import { popupAjaxError } from 'discourse/lib/ajax-error';
 
 export default Ember.Controller.extend({
-  previewUrl: url('model.id', '/theme-creator/user_themes/%@/preview'),
+  previewUrl: url('model.id', `${location.protocol}//${location.host}${Discourse.getURL('/theme-creator/user_themes/%@/preview')}`),
 
   @computed('model.id', 'model.color_scheme.theme_id')
   canEditColorScheme(themeId, colorSchemeThemeId){

@@ -10,8 +10,15 @@
   </h1>
 
   <div class="theme-content">
+
     {{#if model.can_share}}
+    <h3>{{i18n "theme-creator.sharing"}}</h3>
       {{inline-edit-checkbox action="applyIsShared" labelKey="theme-creator.is_shared" checked=model.is_shared}}
+
+      {{#if model.is_shared}}
+        {{text-field value=previewUrl}}
+      {{/if}}
+
     {{/if}}
 
     <h3>{{i18n "theme-creator.color_scheme"}}</h3>
