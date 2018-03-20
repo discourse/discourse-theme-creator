@@ -46,24 +46,20 @@
                 icon="plus" class="btn" disabled=creatingColorScheme}}
       </p>
         
-       
-      
-      
-
-      {{!-- <p>
-        {{i18n 'theme-creator.other_color_schemes'}}:
-        <ul>
-          {{#each colorSchemes as |scheme|}}
-            <li>
-              {{scheme.name}}
-              {{d-button action="editColorScheme" actionParam=scheme class="btn-primary btn-small" icon="pencil"}}
-              {{d-button action="deleteColorScheme" actionParam=scheme class="btn-small btn-danger" icon="trash"}}
-            </li>
-          {{/each}}
-        </ul>
-      </p> --}}
-
     <h3>{{i18n "theme-creator.css_html"}}</h3>
+
+    {{#if editedDescriptions}}
+      <p>{{i18n "theme-creator.edited_sections"}}</p>
+      <ul>
+        {{#each editedDescriptions as |desc|}}
+          <li>{{desc}}</li>
+        {{/each}}
+      </ul>
+    {{else}}
+      <p>
+        {{i18n "theme-creator.no_edited_sections"}}
+      </p>
+    {{/if}}
 
     {{#link-to 'user.themes.edit' model.id 'common' 'scss' class="btn"}}
       {{i18n 'theme-creator.edit_css_html'}}

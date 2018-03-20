@@ -17,6 +17,23 @@ export default Ember.Controller.extend({
     return colorSchemeId !== existingId;
   },
 
+  @computed('model.theme_fields.@each')
+  editedDescriptions(fields) {
+    let descriptions = [];
+    let description = target => {
+      let current = fields.filter(field => field.target === target && !Em.isBlank(field.value));
+      if (current.length > 0) {
+        let text = I18n.t('theme-creator.target.'+target);
+        let localized = current.map(f=>I18n.t('theme-creator.'+f.name + '.text'));
+        return text + ": " + localized.join(" , ");
+      }
+    };
+    ['common', 'desktop', 'mobile'].forEach(target => {
+      descriptions.push(description(target));
+    });
+    return descriptions.reject(d=>Em.isBlank(d));
+  },
+
   actions:{
 
     startEditingName() {
