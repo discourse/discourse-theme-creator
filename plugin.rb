@@ -71,6 +71,12 @@ after_initialize do
     User.find(object.user_id).guardian.can_share_user_theme?(object)
   end
   
+  reloadable_patch do |plugin|
+    class ::Theme
+      belongs_to :user
+    end
+  end
+
   # Allow preview of shared user themes
   # flash[:user_theme_key] will only be populated after a POST request
   # after a UI confirmation (theme_creator_controller.rb) to prevent hotlinking
