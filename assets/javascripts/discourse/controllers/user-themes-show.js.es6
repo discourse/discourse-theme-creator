@@ -32,7 +32,7 @@ export default Ember.Controller.extend({
 
     createColorScheme() {
       const theme_id = this.get('model.id');
-      ajax(`/theme-creator/user_themes/${theme_id}/colors`, {
+      ajax(`/user_themes/${theme_id}/colors`, {
         type: 'POST',
         data: {}
       }).then(()=>{
