@@ -22,29 +22,46 @@
     {{/if}}
 
     <h3>{{i18n "theme-creator.color_scheme"}}</h3>
-      {{#if canEditColorScheme}}
-        <p>
-        {{#link-to 'user.themes.colors' model.id model.color_scheme_id class="btn"}}
-          {{i18n 'theme-creator.edit_color_scheme'}}
+
+      <p>
+      {{combo-box content=colorSchemes
+                  filterable=true
+                  value=colorSchemeId
+                  icon="paint-brush"}}
+       {{#if colorSchemeChanged}}
+          {{d-button action="changeScheme" class="btn-primary btn-small submit-edit" icon="check"}}
+          {{d-button action="cancelChangeScheme" class="btn-small cancel-edit" icon="times"}}
+       {{else}}
+       
+        {{#link-to 'user.themes.colors' model.id model.color_scheme_id class="btn" disabled=colorSchemeEditDisabled}}
           {{d-icon 'pencil'}}
+          {{i18n 'theme-creator.edit_color_scheme'}}
         {{/link-to}}
-        {{!-- {{d-button action="deleteColorScheme" label="theme-creator.delete_color_scheme" icon="trash" class="btn-danger"}} --}}
-        </p>
-      {{else}}
-        <p>
-          {{#if model.color_scheme}}
-            {{model.color_scheme.name}}
-          {{else}}
-            {{i18n 'theme-creator.default_color_scheme'}}
-          {{/if}}
-          {{i18n 'theme-creator.not_editable'}}
-        </p>
-        <p>
-        {{d-button action="createColorScheme" label="theme-creator.create_color_scheme" icon="plus" class="btn"}}
-        </p>
 
-
+        {{d-button action="deleteColorScheme" label="theme-creator.delete_color_scheme" icon="trash" class="btn-danger" disabled=colorSchemeEditDisabled}}
       {{/if}}
+      </p>
+      <p>
+      {{d-button action="createColorScheme" label=(if creatingColorScheme 'theme-creator.adding_color_scheme' 'theme-creator.add_color_scheme') 
+                icon="plus" class="btn" disabled=creatingColorScheme}}
+      </p>
+        
+       
+      
+      
+
+      {{!-- <p>
+        {{i18n 'theme-creator.other_color_schemes'}}:
+        <ul>
+          {{#each colorSchemes as |scheme|}}
+            <li>
+              {{scheme.name}}
+              {{d-button action="editColorScheme" actionParam=scheme class="btn-primary btn-small" icon="pencil"}}
+              {{d-button action="deleteColorScheme" actionParam=scheme class="btn-small btn-danger" icon="trash"}}
+            </li>
+          {{/each}}
+        </ul>
+      </p> --}}
 
     <h3>{{i18n "theme-creator.css_html"}}</h3>
 

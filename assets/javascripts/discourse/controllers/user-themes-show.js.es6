@@ -6,9 +6,15 @@ import { popupAjaxError } from 'discourse/lib/ajax-error';
 export default Ember.Controller.extend({
   previewUrl: url('model.id', `${location.protocol}//${location.host}${Discourse.getURL('/user_themes/%@/preview')}`),
 
-  @computed('model.id', 'model.color_scheme.theme_id')
-  canEditColorScheme(themeId, colorSchemeThemeId){
-    return themeId === colorSchemeThemeId;
+  @computed('model.color_scheme_id')
+  colorSchemeEditDisabled(colorSchemeId){
+    return colorSchemeId === null;
+  },
+
+  @computed("colorSchemeId", "model.color_scheme_id")
+  colorSchemeChanged(colorSchemeId, existingId) {
+    colorSchemeId = colorSchemeId;
+    return colorSchemeId !== existingId;
   },
 
   actions:{
@@ -26,18 +32,33 @@ export default Ember.Controller.extend({
       this.set("editingName", false);
     },
 
+    changeScheme(){
+      this.get("model").set('color_scheme_id', this.get("colorSchemeId"));
+      this.get("model").saveChanges("color_scheme_id");
+    },
+    cancelChangeScheme() {
+      this.set("colorSchemeId", this.get("model.color_scheme_id"));
+    },
+
     applyIsShared() {
       this.get("model").saveChanges("is_shared");
     },
 
     createColorScheme() {
+      this.set('creatingColorScheme', true);
+
       const theme_id = this.get('model.id');
       ajax(`/user_themes/${theme_id}/colors`, {
         type: 'POST',
         data: {}
       }).then(()=>{
+        this.set('creatingColorScheme', false);
         this.send("refreshThemes");
       }).catch(popupAjaxError);
+    },
+
+    destroyColorScheme() {
+      this.get('colorSchemes').findBy('id', this.get('model.color_scheme_id')).destroy();
     },
 
     destroy() {

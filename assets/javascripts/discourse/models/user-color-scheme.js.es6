@@ -29,4 +29,10 @@ export default ColorScheme.extend({
     });
   },
 
+  destroy: function() {
+    if (this.get('id')) {
+      return ajax(`/user_themes/${theme_id}/colors/${this_id}`, { type: 'DELETE' });
+    }
+  }
+
 });

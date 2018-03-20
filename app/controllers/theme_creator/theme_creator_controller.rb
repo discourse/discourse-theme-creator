@@ -28,7 +28,7 @@ class ThemeCreator::ThemeCreatorController < ApplicationController
     }
 
     respond_to do |format|
-      format.json { render json: payload, include: '**' }
+      format.json { render json: payload }
     end
   end
 
@@ -49,7 +49,14 @@ class ThemeCreator::ThemeCreatorController < ApplicationController
   def update
     @theme = Theme.find(params[:id])
 
-    [:name, :is_shared].each do |field|
+    if theme_params.key?(:color_scheme_id) && !theme_params[:color_scheme_id].nil?
+      color_scheme = ColorScheme.find(theme_params[:color_scheme_id])
+      if color_scheme.theme_id != @theme.id
+        raise Discourse::InvalidAccess.new("Color scheme must be owned by theme.")
+      end
+    end
+
+    [:name, :is_shared, :color_scheme_id].each do |field|
       if theme_params.key?(field)
         @theme.send("#{field}=", theme_params[field])
       end
@@ -81,18 +88,12 @@ class ThemeCreator::ThemeCreatorController < ApplicationController
   def create_color_scheme
     @theme ||= Theme.find(params[:id])
 
-    new_scheme = ColorScheme.create_from_base(name: "#{current_user.username}'s Color Scheme")
+    new_scheme = ColorScheme.create_from_base(name: I18n.t('theme_creator.new_color_scheme'))
     new_scheme.theme_id = @theme.id
     new_scheme.save!
 
     @theme.color_scheme_id = new_scheme.id
     @theme.save!
-
-    # Delete any orphaned color schemes
-    ColorScheme
-      .where(theme_id: @theme.id)
-      .where.not(id: new_scheme.id)
-      .destroy_all()
 
     respond_to do |format|
       format.json { head :no_content }
@@ -119,6 +120,28 @@ class ThemeCreator::ThemeCreatorController < ApplicationController
     end
   end
 
+  def destroy_color_scheme
+    @theme ||= Theme.find(params[:id])
+    @color_scheme = ColorScheme.find(params[:color_scheme_id])
+
+    # The theme ID has been validated, so just check that this color scheme
+    # really does belong to the theme
+    if @color_scheme.theme_id != @theme.id
+      raise Discourse::InvalidAccess.new("Cannot modify that color scheme.")
+    end
+
+    if @theme.color_scheme_id == @color_scheme.id
+      @theme.color_scheme_id = nil
+      @theme.save!
+    end
+
+    @color_scheme.destroy
+
+    respond_to do |format|
+      format.json { head :no_content }
+    end
+  end
+
   private
 
     def theme_params
@@ -127,7 +150,7 @@ class ThemeCreator::ThemeCreatorController < ApplicationController
           params.require(:user_theme).permit(
             :name,
             :is_shared,
-            # :color_scheme_id,
+            :color_scheme_id,
             # :default,
             # :user_selectable,
             theme_fields: [:name, :target, :value, :upload_id, :type_id],
