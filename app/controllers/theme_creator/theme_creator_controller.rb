@@ -1,15 +1,34 @@
 class ThemeCreator::ThemeCreatorController < ApplicationController
 
-  before_action :ensure_logged_in, except: [:preview]
+  before_action :ensure_logged_in, except: [:preview, :share_preview, :share_info]
 
   before_action :ensure_own_theme, only: [:destroy, :update, :create_color_scheme, :update_color_scheme, :destroy_color_scheme]
-  before_action :ensure_can_see_theme, only: [:preview]
-  skip_before_action :check_xhr, only: [:preview]
+  before_action :ensure_can_see_theme, only: [:share_preview, :share_info]
+  skip_before_action :check_xhr, only: [:preview, :share_preview]
 
+  # Preview is used when actively developing a theme, it uses the GET parameter ?preview_theme_key
   def preview
     @theme ||= Theme.find(params[:id])
+    raise Discourse::InvalidAccess.new() if !guardian.can_hotlink_user_theme?(@theme)
+
     destination = '/styleguide/' if defined? DiscourseStyleguide else '/'
     redirect_to path("#{destination}?preview_theme_key=#{@theme.key}")
+  end
+
+  # Shared preview is used when sharing the theme with others. It is only accessible via POST to avoid
+  # hotlinking (reduce XSS risk)
+  def share_preview
+    @theme ||= Theme.find(params[:id])
+    raise Discourse::InvalidAccess.new() if !guardian.can_see_user_theme?(@theme)
+
+    destination = '/styleguide/' if defined? DiscourseStyleguide else '/'
+    redirect_to path(destination), flash: { user_theme_key: @theme.key }
+  end
+
+  def share_info
+    @theme ||= Theme.find(params[:id])
+    raise Discourse::InvalidAccess.new() if !guardian.can_see_user_theme?(@theme)
+    render json: @theme, serializer: ::BasicUserThemeSerializer, root: 'theme'
   end
 
   def list

@@ -28,7 +28,10 @@ en:
       sharing: "Sharing"
       edited_sections: "Edited sections:"
       no_edited_sections: "You have not edited any CSS or HTML"
-
+      view_shared_theme: "View Shared Theme"
+      view_theme: "View Theme"
+      cancel: "Cancel"
+      view_shared_theme_education: "(Return to your current theme by refreshing the page)"
       target:
         common: "Common"
         mobile: "Mobile"

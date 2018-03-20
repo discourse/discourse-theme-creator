@@ -1,0 +1,25 @@
+{{#d-modal-body id="theme-creator-share-modal" title="theme-creator.view_shared_theme"}}
+  <h1>
+    {{model.name}}
+  </h1>
+  <p>
+  {{avatar model.user avatarTemplatePath="avatar_template" title=user.username imageSize="extra_large"}}
+  </p>
+  <h3>by {{#if model.user.name}}{{model.user.name}}{{else}}{{model.user.username}}{{/if}}</h3>
+
+  <p>
+  {{i18n 'theme-creator.view_shared_theme_education'}}
+  </p>
+  <p>
+  {{d-button 
+      class='btn-primary btn-large'
+      action='view'
+      title="theme-creator.view_theme"
+      label="theme-creator.view_theme"
+      }}
+  </p>
+
+  <form id="view-theme-form" method='post' action="{{postURL}}">
+    <input type="hidden" name="authenticity_token" id="authenticity_token" value="{{session.csrfToken}}">
+  </form>
+{{/d-modal-body}}
