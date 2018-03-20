@@ -20,6 +20,7 @@ export default Ember.Controller.extend({
 
   @computed('model.theme_fields.@each')
   editedDescriptions(fields) {
+    if(!fields){ return [] }
     let descriptions = [];
     let description = target => {
       let current = fields.filter(field => field.target === target && !Em.isBlank(field.value));
