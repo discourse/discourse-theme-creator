@@ -2,7 +2,7 @@ import { default as computed } from 'ember-addons/ember-computed-decorators';
 import { url } from 'discourse/lib/computed';
 
 export default Ember.Controller.extend({
-  previewUrl: url('model.theme_id', '/theme-creator/user_themes/%@/preview'),
+  previewUrl: url('model.theme_id', '/user_themes/%@/preview'),
 
   @computed('isSaving')
   saveButtonText(isSaving) {

@@ -10,7 +10,7 @@ register_asset "stylesheets/theme-creator.scss"
 load File.expand_path('../lib/theme_creator/engine.rb', __FILE__)
 
 Discourse::Application.routes.append do
-  mount ::ThemeCreator::Engine, at: "/theme-creator"
+  mount ::ThemeCreator::Engine, at: "/user_themes"
   get "u/:username/themes" => "users#index", constraints: { username: RouteFormat.username }
   get "u/:username/themes/:id" => "users#index", constraints: { username: RouteFormat.username }
   get "u/:username/themes/:theme_id/colors/:color_scheme_id" => "users#index", constraints: { username: RouteFormat.username }

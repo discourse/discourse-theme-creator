@@ -16,7 +16,7 @@ export default ColorScheme.extend({
     const theme_id = this.get('theme_id');
     const this_id = this.get('id');
 
-    return ajax(`/theme-creator/user_themes/${theme_id}/colors/${this_id}`, {
+    return ajax(`/user_themes/${theme_id}/colors/${this_id}`, {
       data: JSON.stringify({"color_scheme": data}),
       type: 'PUT',
       dataType: 'json',
