@@ -110,7 +110,7 @@ class ThemeCreator::ThemeCreatorController < ApplicationController
       raise Discourse::InvalidAccess.new("Cannot modify that color scheme.")
     end
 
-    color_scheme_params = params.permit(color_scheme: [colors: [:name, :hex]])[:color_scheme]
+    color_scheme_params = params.permit(color_scheme: [:name, colors: [:name, :hex]])[:color_scheme]
 
     color_scheme = ColorSchemeRevisor.revise(@color_scheme, color_scheme_params)
     if color_scheme.valid?

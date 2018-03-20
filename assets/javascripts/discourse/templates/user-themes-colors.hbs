@@ -1,6 +1,8 @@
-<h2>{{i18n 'theme-creator.edit_color_scheme_for'}} {{#link-to 'user.themes.show' model.theme_id replace=true}}{{model.theme_name}}{{/link-to}}</h2>
-
 <div class="theme-content">
+  <h2>
+    {{text-field value=model.name autofocus="true"}}
+  </h2>
+  <h4>({{i18n 'theme-creator.color_scheme_belongs_to'}} {{#link-to 'user.themes.show' model.theme_id replace=true}}{{model.theme_name}}{{/link-to}})</h4>
 
   {{#if model.colors.length}}
     <table class="table colors">
