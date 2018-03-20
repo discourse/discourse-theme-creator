@@ -16,7 +16,7 @@
       {{inline-edit-checkbox action="applyIsShared" labelKey="theme-creator.is_shared" checked=model.is_shared}}
 
       {{#if model.is_shared}}
-        {{text-field value=previewUrl}}
+        {{text-field class="preview-url" value=sharedUrl readonly=true}}
       {{/if}}
 
     {{/if}}

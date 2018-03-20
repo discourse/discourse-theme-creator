@@ -4,7 +4,8 @@ import { ajax } from 'discourse/lib/ajax';
 import { popupAjaxError } from 'discourse/lib/ajax-error';
 
 export default Ember.Controller.extend({
-  previewUrl: url('model.id', `${location.protocol}//${location.host}${Discourse.getURL('/user_themes/%@/preview')}`),
+  previewUrl: url('model.id', '/user_themes/%@/preview'),
+  sharedUrl: url('model.id', `${location.protocol}//${location.host}${Discourse.getURL('/user_themes/%@/view')}`),
 
   @computed('model.color_scheme_id')
   colorSchemeEditDisabled(colorSchemeId){

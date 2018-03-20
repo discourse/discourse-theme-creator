@@ -59,7 +59,11 @@
 
   // Indent on theme-show view
   .theme-content {
-    margin-left: 10px;
+    margin-left: 20px;
+
+    .preview-url{
+      width: 300px;
+    }
   }
 }
 
