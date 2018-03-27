@@ -2,6 +2,8 @@ import { url } from 'discourse/lib/computed';
 import { default as computed } from 'ember-addons/ember-computed-decorators';
 import { ajax } from 'discourse/lib/ajax';
 import { popupAjaxError } from 'discourse/lib/ajax-error';
+import ThemeSettings from 'admin/models/theme-settings';
+
 
 export default Ember.Controller.extend({
   previewUrl: url('model.id', '/user_themes/%@/preview'),
@@ -34,6 +36,16 @@ export default Ember.Controller.extend({
       descriptions.push(description(target));
     });
     return descriptions.reject(d=>Em.isBlank(d));
+  },
+
+  @computed("model.settings")
+  settings(settings) {
+    return settings.map(setting => ThemeSettings.create(setting));
+  },
+
+  @computed("settings")
+  hasSettings(settings) {
+    return settings.length > 0;
   },
 
   actions:{

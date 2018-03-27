@@ -32,6 +32,7 @@ en:
       cancel: "Cancel"
       view_shared_theme_education: "(Return to your current theme by refreshing the page)"
       show_overridden: "Only show overriden"
+      theme_settings: "Theme Settings"
       target:
         common: "Common"
         mobile: "Mobile"

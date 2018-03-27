@@ -6,5 +6,6 @@
 //= require admin/templates/components/ace-editor
 //= require admin/components/color-input
 //= require admin/controllers/admin-customize-themes-edit
+//= require admin/models/theme-settings
 
 

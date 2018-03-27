@@ -61,9 +61,20 @@
       </p>
     {{/if}}
 
-    {{#link-to 'user.themes.edit' model.id 'common' 'scss' class="btn"}}
-      {{i18n 'theme-creator.edit_css_html'}}
-    {{/link-to}}
+    <p>
+      {{#link-to 'user.themes.edit' model.id 'common' 'scss' class="btn"}}
+        {{i18n 'theme-creator.edit_css_html'}}
+      {{/link-to}}
+    </p>
+
+    {{#if hasSettings}}
+    <h3>{{i18n "theme-creator.theme_settings"}}</h3>
+    {{#d-section class="form-horizontal theme settings"}}
+      {{#each settings as |setting|}}
+        {{theme-setting setting=setting model=model class="theme-setting"}}
+      {{/each}}
+    {{/d-section}}
+    {{/if}}
 
   </div>
 
