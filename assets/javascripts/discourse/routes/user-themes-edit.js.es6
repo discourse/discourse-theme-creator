@@ -18,9 +18,15 @@ export default Ember.Route.extend({
   },
 
   setupController(controller, wrapper) {
+    const fields = controller.fieldsForTarget(wrapper.target);
+    if (!fields.includes(wrapper.field_name)) {
+      this.transitionTo('user.themes.edit', wrapper.model.id, wrapper.target, fields[0]);
+      return;
+    }
     controller.set("model", wrapper.model);
-    controller.set("targetName", wrapper.target || "common");
+    controller.setTargetName(wrapper.target || "common");
     controller.set("fieldName", wrapper.field_name || "scss");
+    this.controllerFor("user.themes.edit").set("editingTheme", true);
   },
 
 });

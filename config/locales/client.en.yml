@@ -4,13 +4,12 @@ en:
       themes: Themes
       my_themes: My Themes
       new_theme: New Theme
-      css_html: "Custom CSS"
+      css_html: "CSS/HTML"
       custom_sections: "Custom sections:"
       edit_css_html_help: "You have not edited any CSS"
-      edit_css_html: "Edit CSS"
+      edit_css_html: "Edit CSS/HTML"
       explain_preview: "Preview this theme"
       preview: "Preview"
-      export_json: "Export JSON"
       delete: "Delete"
       new_theme_title: "My New Theme"
       is_shared: "Anyone with the link can see this theme?"
@@ -32,11 +31,12 @@ en:
       view_theme: "View Theme"
       cancel: "Cancel"
       view_shared_theme_education: "(Return to your current theme by refreshing the page)"
+      show_overridden: "Only show overriden"
       target:
         common: "Common"
         mobile: "Mobile"
         desktop: "Desktop"
-
+        settings: "Settings"
       scss:
         text: "CSS"
         title: "Enter custom CSS, we accept all valid CSS and SCSS styles"
@@ -61,7 +61,6 @@ en:
       yaml:
         text: "YAML"
         title: "Define theme settings in YAML format"
-
       colors:
         primary:
           name: 'primary'
