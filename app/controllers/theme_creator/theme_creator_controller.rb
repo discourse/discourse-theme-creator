@@ -1,4 +1,9 @@
-class ThemeCreator::ThemeCreatorController < ApplicationController
+# We're going to extend the admin theme controller, so we don't repeat all the logic there
+
+class ThemeCreator::ThemeCreatorController < Admin::ThemesController
+
+  requires_login(nil) # Override the blanket "require logged in" from the admin controller
+  skip_before_action :ensure_staff # Open up to non-staff
 
   before_action :ensure_logged_in, except: [:preview, :share_preview, :share_info]
 
@@ -51,23 +56,21 @@ class ThemeCreator::ThemeCreatorController < ApplicationController
     end
   end
 
-  def create
-    @theme = Theme.new(name: theme_params[:name],
-                       user_id: current_user.id,
-                       user_selectable: false,)
+  # def create # Implemented in Admin::ThemesController
 
-    respond_to do |format|
-      if @theme.save
-        format.json { render json: { user_theme: @theme }, status: :created }
-      else
-        format.json { render json: @theme.errors, status: :unprocessable_entity }
+  # Mostly using default implementation, but add a security check so users
+  # can only set the color scheme to one owned by the current theme
+  def update
+    @theme ||= Theme.find(params[:id])
+
+    # Set the user_theme specific fields
+    [:is_shared].each do |field|
+      if theme_params.key?(field)
+        @theme.send("#{field}=", theme_params[field])
       end
     end
-  end
 
-  def update
-    @theme = Theme.find(params[:id])
-
+    # Check color scheme permission
     if theme_params.key?(:color_scheme_id) && !theme_params[:color_scheme_id].nil?
       color_scheme = ColorScheme.find(theme_params[:color_scheme_id])
       if color_scheme.theme_id != @theme.id
@@ -75,34 +78,10 @@ class ThemeCreator::ThemeCreatorController < ApplicationController
       end
     end
 
-    [:name, :is_shared, :color_scheme_id].each do |field|
-      if theme_params.key?(field)
-        @theme.send("#{field}=", theme_params[field])
-      end
-    end
+    super
+  end  
 
-    set_fields
-
-    respond_to do |format|
-      if @theme.save
-        format.json { render json: { user_theme: @theme }, status: :created }
-      else
-        format.json {
-          error = @theme.errors[:color_scheme] ? I18n.t("themes.bad_color_scheme") : I18n.t("themes.other_error")
-          render json: { errors: [ error ] }, status: :unprocessable_entity
-        }
-      end
-    end
-  end
-
-  def destroy
-    @theme = Theme.find(params[:id])
-    @theme.destroy
-
-    respond_to do |format|
-      format.json { head :no_content }
-    end
-  end
+  # def create # Implemented in Admin::ThemesController
 
   def create_color_scheme
     @theme ||= Theme.find(params[:id])
@@ -163,35 +142,26 @@ class ThemeCreator::ThemeCreatorController < ApplicationController
 
   private
 
+    # Override with a restricted version
+    # Users shouldn't be able to modify:
+    #  - :default and :user_selectable
+    #  - :child_theme_ids
+    # But we want to add
+    #  - is_shared
     def theme_params
       @theme_params ||=
         begin
-          params.require(:user_theme).permit(
+          params.require(:theme).permit(
             :name,
             :is_shared,
             :color_scheme_id,
             # :default,
             # :user_selectable,
+            settings: {},
             theme_fields: [:name, :target, :value, :upload_id, :type_id],
             # child_theme_ids: []
           )
         end
-    end
-
-    def set_fields
-      return unless fields = theme_params[:theme_fields]
-
-      fields.each do |field|
-        if ['common', 'mobile', 'desktop'].include?(field[:target]) && field[:name] == 'scss'
-          @theme.set_field(
-            target: field[:target],
-            name: field[:name],
-            value: field[:value],
-            # type_id: field[:type_id],
-            # upload_id: field[:upload_id]
-          )
-        end
-      end
     end
 
     def ensure_can_see_theme
