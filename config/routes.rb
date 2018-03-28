@@ -8,6 +8,8 @@ ThemeCreator::Engine.routes.draw do
 
   # Additional theme endpoints
   post "upload_asset" => "theme_creator#upload_asset"
+  post "import" => "theme_creator#import"
+  post "generate_key_pair" => "theme_creator#generate_key_pair"
 
   # Sharing with other users
   get ":id/view" => "theme_creator#share_info"

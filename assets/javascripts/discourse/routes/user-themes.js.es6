@@ -1,6 +1,7 @@
 import { popupAjaxError } from 'discourse/lib/ajax-error';
 import UserColorScheme from "../models/user-color-scheme";
 import ColorSchemeColor from "admin/models/color-scheme-color";
+import showModal from 'discourse/lib/show-modal';
 
 export default Discourse.Route.extend({
   model(){
@@ -39,6 +40,10 @@ export default Discourse.Route.extend({
       item.save(obj).then(() => {
         this.send('addTheme', item);
       }).catch(popupAjaxError);
+    },
+
+    importModal(){
+      showModal('user-themes-import-modal', {admin: true, templateName: 'admin-import-theme'});
     },
 
     refreshThemes(){

@@ -11,6 +11,18 @@
 
   <div class="theme-content">
 
+    {{#if model.remote_theme}}
+      <p>
+        <a href="{{model.remote_theme.about_url}}">{{i18n "admin.customize.theme.about_theme"}}</a>
+      </p>
+      {{#if model.remote_theme.license_url}}
+        <p>
+          <a href="{{model.remote_theme.license_url}}">{{i18n "admin.customize.theme.license"}} {{d-icon "copyright"}}</a>
+        </p>
+      {{/if}}
+    {{/if}}
+
+
     {{#if model.can_share}}
     <h3>{{i18n "theme-creator.sharing"}}</h3>
       {{inline-edit-checkbox action="applyIsShared" labelKey="theme-creator.is_shared" checked=model.is_shared}}
@@ -62,9 +74,27 @@
     {{/if}}
 
     <p>
-      {{#link-to 'user.themes.edit' model.id 'common' 'scss' class="btn"}}
-        {{i18n 'theme-creator.edit_css_html'}}
-      {{/link-to}}
+      {{#if model.remote_theme}}
+        {{#if model.remote_theme.commits_behind}}
+        {{#d-button action="updateToLatest" icon="download" class='btn-primary'}}{{i18n "admin.customize.theme.update_to_latest"}}{{/d-button}}
+        {{else}}
+        {{#d-button action="checkForThemeUpdates" icon="refresh"}}{{i18n "admin.customize.theme.check_for_updates"}}{{/d-button}}
+        {{/if}}
+      {{/if}}
+      {{#d-button action="editTheme" class="btn edit"}}{{i18n 'admin.customize.theme.edit_css_html'}}{{/d-button}}
+      {{#if model.remote_theme}}
+        <span class='status-message'>
+          {{#if updatingRemote}}
+            {{i18n 'admin.customize.theme.updating'}}
+          {{else}}
+            {{#if model.remote_theme.commits_behind}}
+              {{i18n 'admin.customize.theme.commits_behind' count=model.remote_theme.commits_behind}}
+            {{else}}
+              {{i18n 'admin.customize.theme.up_to_date'}} {{format-date model.remote_theme.updated_at leaveAgo="true"}}
+            {{/if}}
+          {{/if}}
+        </span>
+      {{/if}}
     </p>
 
     <h3>{{i18n "theme-creator.uploads"}}</h3>

@@ -9,6 +9,8 @@ export default AdminCustomizeThemesShowController.extend({
   previewUrl: url('model.id', '/user_themes/%@/preview'),
   sharedUrl: url('model.id', `${location.protocol}//${location.host}${Discourse.getURL('/user_themes/%@/view')}`),
 
+  editRouteName: 'user.themes.edit',
+
   @computed('model.color_scheme_id')
   colorSchemeEditDisabled(colorSchemeId){
     return colorSchemeId === null;
