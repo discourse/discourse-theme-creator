@@ -2,12 +2,10 @@ import { url } from 'discourse/lib/computed';
 import { default as computed } from 'ember-addons/ember-computed-decorators';
 import { ajax } from 'discourse/lib/ajax';
 import { popupAjaxError } from 'discourse/lib/ajax-error';
-import ThemeSettings from 'admin/models/theme-settings';
 import showModal from 'discourse/lib/show-modal';
+import AdminCustomizeThemesShowController from 'admin/controllers/admin-customize-themes-show';
 
-const THEME_UPLOAD_VAR = 2;
-
-export default Ember.Controller.extend({
+export default AdminCustomizeThemesShowController.extend({
   previewUrl: url('model.id', '/user_themes/%@/preview'),
   sharedUrl: url('model.id', `${location.protocol}//${location.host}${Discourse.getURL('/user_themes/%@/view')}`),
 
@@ -16,82 +14,10 @@ export default Ember.Controller.extend({
     return colorSchemeId === null;
   },
 
-  @computed("colorSchemeId", "model.color_scheme_id")
-  colorSchemeChanged(colorSchemeId, existingId) {
-    colorSchemeId = colorSchemeId;
-    return colorSchemeId !== existingId;
-  },
-
-  @computed('model.theme_fields.@each')
-  editedDescriptions(fields) {
-    if(!fields){ return [] }
-    let descriptions = [];
-    let description = target => {
-      let current = fields.filter(field => field.target === target && !Em.isBlank(field.value));
-      if (current.length > 0) {
-        let text = I18n.t('theme-creator.target.'+target);
-        let localized = current.map(f=>I18n.t('theme-creator.'+f.name + '.text'));
-        return text + ": " + localized.join(" , ");
-      }
-    };
-    ['common', 'desktop', 'mobile'].forEach(target => {
-      descriptions.push(description(target));
-    });
-    return descriptions.reject(d=>Em.isBlank(d));
-  },
-
-  @computed("model.settings")
-  settings(settings) {
-    return settings.map(setting => ThemeSettings.create(setting));
-  },
-
-  @computed("settings")
-  hasSettings(settings) {
-    return settings.length > 0;
-  },
-
   actions:{
 
     addUploadModal() {
       showModal('user-themes-upload-modal', {name: '', admin: true, templateName: 'admin-add-upload'});
-    },
-
-    addUpload(info) {
-      let model = this.get("model");
-      model.setField('common', info.name, '', info.upload_id, THEME_UPLOAD_VAR);
-      model.saveChanges('theme_fields').catch(e => popupAjaxError(e));
-    },
-
-    removeUpload(upload) {
-      return bootbox.confirm(
-          I18n.t("admin.customize.theme.delete_upload_confirm"),
-          I18n.t("no_value"),
-          I18n.t("yes_value"), result => {
-            if (result) {
-              this.get("model").removeField(upload);
-            }
-      });
-    },
-
-    startEditingName() {
-      this.set("oldName", this.get("model.name"));
-      this.set("editingName", true);
-    },
-    cancelEditingName() {
-      this.set("model.name", this.get("oldName"));
-      this.set("editingName", false);
-    },
-    finishedEditingName() {
-      this.get("model").saveChanges("name");
-      this.set("editingName", false);
-    },
-
-    changeScheme(){
-      this.get("model").set('color_scheme_id', this.get("colorSchemeId"));
-      this.get("model").saveChanges("color_scheme_id");
-    },
-    cancelChangeScheme() {
-      this.set("colorSchemeId", this.get("model.color_scheme_id"));
     },
 
     applyIsShared() {
