@@ -67,6 +67,22 @@
   }
 }
 
-#theme-creator-share-modal{
+#theme-creator-view-modal{
   text-align: center;
+}
+
+#theme-creator-share-modal{
+
+
+  div.share_unavailable{
+    text-align: center;
+
+    .large_theme_share_icon{
+      font-size: 5rem;
+    }
+
+    p.theme_share_unavailable{
+      font-size: 1.2rem;
+    }
+  }
 }

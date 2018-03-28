@@ -7,7 +7,6 @@ import AdminCustomizeThemesShowController from 'admin/controllers/admin-customiz
 
 export default AdminCustomizeThemesShowController.extend({
   previewUrl: url('model.id', '/user_themes/%@/preview'),
-  sharedUrl: url('model.id', `${location.protocol}//${location.host}${Discourse.getURL('/user_themes/%@/view')}`),
 
   editRouteName: 'user.themes.edit',
 
@@ -18,12 +17,12 @@ export default AdminCustomizeThemesShowController.extend({
 
   actions:{
 
-    addUploadModal() {
-      showModal('user-themes-upload-modal', {name: '', admin: true, templateName: 'admin-add-upload'});
+    shareModal(){
+      showModal('user-themes-share-modal', {model: this.get('model')});
     },
 
-    applyIsShared() {
-      this.get("model").saveChanges("is_shared");
+    addUploadModal() {
+      showModal('user-themes-upload-modal', {name: '', admin: true, templateName: 'admin-add-upload'});
     },
 
     createColorScheme() {

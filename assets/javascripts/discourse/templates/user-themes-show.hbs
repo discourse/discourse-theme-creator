@@ -9,6 +9,12 @@
     {{/if}}
   </h1>
 
+  {{#if model.is_shared}}
+    {{#if model.can_share}}
+      {{i18n 'theme-creator.shared_at'}} <code>{{model.shareUrl}}</code>
+    {{/if}}
+  {{/if}}
+
   <div class="theme-content">
 
     {{#if model.remote_theme}}
@@ -20,17 +26,6 @@
           <a href="{{model.remote_theme.license_url}}">{{i18n "admin.customize.theme.license"}} {{d-icon "copyright"}}</a>
         </p>
       {{/if}}
-    {{/if}}
-
-
-    {{#if model.can_share}}
-    <h3>{{i18n "theme-creator.sharing"}}</h3>
-      {{inline-edit-checkbox action="applyIsShared" labelKey="theme-creator.is_shared" checked=model.is_shared}}
-
-      {{#if model.is_shared}}
-        {{text-field class="preview-url" value=sharedUrl readonly=true}}
-      {{/if}}
-
     {{/if}}
 
     <h3>{{i18n "theme-creator.color_scheme"}}</h3>
@@ -130,6 +125,9 @@
   <hr/>
 
   <a href='{{previewUrl}}' title="{{i18n 'theme-creator.explain_preview'}}" target='_blank' class='btn'>{{d-icon 'desktop'}}{{i18n 'theme-creator.preview'}}</a>
+
+
+  {{d-button action="shareModal" label="theme-creator.share" icon="users" class="btn"}}
 
   {{d-button action="destroy" label="theme-creator.delete" icon="trash" class="btn-danger"}}
 </div>

@@ -1,0 +1,38 @@
+{{#d-modal-body id="theme-creator-share-modal" title="theme-creator.share_theme"}}
+  {{!-- <h1>
+    {{model.name}}
+  </h1>
+  <p>
+  {{avatar model.user avatarTemplatePath="avatar_template" title=user.username imageSize="extra_large"}}
+  </p>
+  <h3>by {{#if model.user.name}}{{model.user.name}}{{else}}{{model.user.username}}{{/if}}</h3>
+
+  <p>
+  {{i18n 'theme-creator.view_shared_theme_education'}}
+  </p>
+  <p>
+  {{d-button 
+      class='btn-primary btn-large'
+      action='view'
+      title="theme-creator.view_theme"
+      label="theme-creator.view_theme"
+      }}
+  </p> --}}
+
+  {{#if model.can_share}}
+    {{inline-edit-checkbox action="applyIsShared" labelKey="theme-creator.is_shared" checked=model.is_shared}}
+
+    {{#if model.is_shared}}
+      {{text-field class="preview-url" value=model.shareUrl readonly=true}}
+    {{/if}}
+
+  {{else}}
+    <div class="share_unavailable">
+      <h1 class='large_theme_share_icon'>{{d-icon 'users'}}</h1>
+      <p class='theme_share_unavailable'>
+        {{{i18n 'theme-creator.share_unavailable'}}}
+      </p>
+    </div>
+  {{/if}}
+
+{{/d-modal-body}}

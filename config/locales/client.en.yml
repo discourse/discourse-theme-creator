@@ -36,6 +36,10 @@ en:
       uploads: "Uploads"
       no_uploads: "You can upload assets associated with your theme such as fonts and images"
       new: "New"
+      share: "Share"
+      share_theme: "Share Theme"
+      share_unavailable: "To share your themes with others you must belong to the <b>@theme-authors</b> group on <a href='https://meta.discourse.org'>meta.discourse.org</a>. You can request membership <a href='https://meta.discourse.org/groups'>here</a>."
+      shared_at: "Available publically at"
       target:
         common: "Common"
         mobile: "Mobile"
