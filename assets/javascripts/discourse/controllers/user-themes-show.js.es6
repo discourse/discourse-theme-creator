@@ -38,7 +38,10 @@ export default AdminCustomizeThemesShowController.extend({
     },
 
     destroyColorScheme() {
-      this.get('colorSchemes').findBy('id', this.get('model.color_scheme_id')).destroy();
+      this.get('colorSchemes').findBy('id', this.get('model.color_scheme_id')).destroy().then(()=>{
+        this.send("refreshThemes");
+      });
+
     },
 
     destroy() {

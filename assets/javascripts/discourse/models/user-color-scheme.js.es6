@@ -29,9 +29,9 @@ export default ColorScheme.extend({
     });
   },
 
-  destroy: function() {
+  destroy() {
     if (this.get('id')) {
-      return ajax(`/user_themes/${theme_id}/colors/${this_id}`, { type: 'DELETE' });
+      return ajax(`/user_themes/${this.get('theme_id')}/colors/${this.get('id')}`, { type: 'DELETE' });
     }
   }
 
