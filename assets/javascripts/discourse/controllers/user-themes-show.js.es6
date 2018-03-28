@@ -3,7 +3,9 @@ import { default as computed } from 'ember-addons/ember-computed-decorators';
 import { ajax } from 'discourse/lib/ajax';
 import { popupAjaxError } from 'discourse/lib/ajax-error';
 import ThemeSettings from 'admin/models/theme-settings';
+import showModal from 'discourse/lib/show-modal';
 
+const THEME_UPLOAD_VAR = 2;
 
 export default Ember.Controller.extend({
   previewUrl: url('model.id', '/user_themes/%@/preview'),
@@ -49,6 +51,27 @@ export default Ember.Controller.extend({
   },
 
   actions:{
+
+    addUploadModal() {
+      showModal('user-themes-upload-modal', {name: '', admin: true, templateName: 'admin-add-upload'});
+    },
+
+    addUpload(info) {
+      let model = this.get("model");
+      model.setField('common', info.name, '', info.upload_id, THEME_UPLOAD_VAR);
+      model.saveChanges('theme_fields').catch(e => popupAjaxError(e));
+    },
+
+    removeUpload(upload) {
+      return bootbox.confirm(
+          I18n.t("admin.customize.theme.delete_upload_confirm"),
+          I18n.t("no_value"),
+          I18n.t("yes_value"), result => {
+            if (result) {
+              this.get("model").removeField(upload);
+            }
+      });
+    },
 
     startEditingName() {
       this.set("oldName", this.get("model.name"));

@@ -33,6 +33,9 @@ en:
       view_shared_theme_education: "(Return to your current theme by refreshing the page)"
       show_overridden: "Only show overriden"
       theme_settings: "Theme Settings"
+      uploads: "Uploads"
+      no_uploads: "You can upload assets associated with your theme such as fonts and images"
+      new: "New"
       target:
         common: "Common"
         mobile: "Mobile"

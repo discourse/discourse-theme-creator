@@ -67,6 +67,25 @@
       {{/link-to}}
     </p>
 
+    <h3>{{i18n "theme-creator.uploads"}}</h3>
+    {{#if model.uploads}}
+      <ul class='removable-list'>
+        {{#each model.uploads as |upload|}}
+        <li>
+          <span class='col'>${{upload.name}}: <a href={{upload.url}} target='_blank'>{{upload.filename}}</a></span>
+          <span class='col'>
+            {{d-button action="removeUpload" actionParam=upload class="second btn-small cancel-edit" icon="times"}}
+          </span>
+        </li>
+        {{/each}}
+      </ul>
+    {{else}}
+      <p>{{i18n "theme-creator.no_uploads"}}</p>
+    {{/if}}
+    <p>
+      {{#d-button action="addUploadModal" icon="plus"}}{{i18n "theme-creator.new"}}{{/d-button}}
+    </p>
+
     {{#if hasSettings}}
     <h3>{{i18n "theme-creator.theme_settings"}}</h3>
     {{#d-section class="form-horizontal theme settings"}}
