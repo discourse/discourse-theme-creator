@@ -4,7 +4,7 @@
 # author: David Taylor dtaylor.uk
 # url: https://www.github.com/davidtaylorhq/discourse-theme-creator
 
-register_asset 'theme_creator.js'
+# register_asset 'theme_creator.js'
 register_asset "stylesheets/theme-creator.scss"
 
 load File.expand_path('../lib/theme_creator/engine.rb', __FILE__)
@@ -18,6 +18,13 @@ Discourse::Application.routes.append do
 end
 
 after_initialize do
+
+  # We're re-using a lot of locale strings from the admin section
+  # so we need to load it for non-staff users.
+  register_html_builder('server:before-head-close') do |ctx|
+    "<script src='#{ExtraLocalesController.url('admin')}'></script>" +
+    ctx.helpers.preload_script('admin')
+  end
 
   # Override guardian to allow users to preview their own themes using the ?preview_theme_key= variable
   add_to_class(:guardian, :allow_theme?) do |theme_key|
