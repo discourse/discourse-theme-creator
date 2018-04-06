@@ -11,6 +11,7 @@ load File.expand_path('../lib/theme_creator/engine.rb', __FILE__)
 
 Discourse::Application.routes.append do
   mount ::ThemeCreator::Engine, at: "/user_themes"
+  get "theme/:username/:slug" => "theme_creator/theme_creator#share_info", constraints: { username: RouteFormat.username }
   get "u/:username/themes" => "users#index", constraints: { username: RouteFormat.username }
   get "u/:username/themes/:id" => "users#index", constraints: { username: RouteFormat.username }
   get "u/:username/themes/:theme_id/colors/:color_scheme_id" => "users#index", constraints: { username: RouteFormat.username }
@@ -63,15 +64,45 @@ after_initialize do
 
   # Add methods so that a theme can be shared/unshared by the user
   add_to_class(:theme, :is_shared) do 
-    PluginStore.get('discourse-theme-creator', "share:$#{id}") == true
+    !!share_slug
   end
 
-  add_to_class(:theme, :is_shared=) do |val|
-    PluginStore.set('discourse-theme-creator', "share:$#{id}", val==true)
+  # Add methods so that a theme can be shared/unshared by the user
+  add_to_class(:theme, :share_slug) do 
+    @share_slug ||= PluginStore.get('discourse-theme-creator', "share:#{user_id}:#{id}")
+  end
+
+  add_to_class(:theme, :share_slug=) do |val|
+    if !val
+      @share_slug = nil
+      PluginStore.remove('discourse-theme-creator', "share:#{user_id}:#{id}")
+      return
+    end
+
+    val = val.downcase
+    valid = (/^[a-z0-9_-]+$/ =~ val)
+    return false if !valid
+
+    unique = !PluginStoreRow.where(plugin_name: 'discourse-theme-creator')
+                  .where("key LIKE ?", "share:#{user_id}:%")
+                  .where(value: val)
+                  .any?
+    return false if !unique
+
+    @share_slug = val
+    PluginStore.set('discourse-theme-creator', "share:#{user_id}:#{id}", val)
   end
 
   add_to_serializer(:theme, :is_shared) do
     object.is_shared
+  end
+
+  add_to_serializer(:theme, :share_slug) do
+    object.share_slug
+  end
+
+  add_to_serializer(:theme, :base_share_url) do
+    UrlHelper.absolute_without_cdn("/theme/#{object.user.username}/")
   end
 
   add_to_serializer(:theme, :can_share) do

@@ -15,7 +15,6 @@ ThemeCreator::Engine.routes.draw do
   post "fetch_api_key" => "theme_creator#fetch_api_key"
 
   # Sharing with other users
-  get ":id/view" => "theme_creator#share_info"
   post ":id/view" => "theme_creator#share_preview"
 
   # Color scheme

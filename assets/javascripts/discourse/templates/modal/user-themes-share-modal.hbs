@@ -1,29 +1,36 @@
 {{#d-modal-body id="theme-creator-share-modal" title="theme-creator.share_theme"}}
-  {{!-- <h1>
-    {{model.name}}
-  </h1>
-  <p>
-  {{avatar model.user avatarTemplatePath="avatar_template" title=user.username imageSize="extra_large"}}
-  </p>
-  <h3>by {{#if model.user.name}}{{model.user.name}}{{else}}{{model.user.username}}{{/if}}</h3>
-
-  <p>
-  {{i18n 'theme-creator.view_shared_theme_education'}}
-  </p>
-  <p>
-  {{d-button 
-      class='btn-primary btn-large'
-      action='view'
-      title="theme-creator.view_theme"
-      label="theme-creator.view_theme"
-      }}
-  </p> --}}
 
   {{#if model.can_share}}
-    {{inline-edit-checkbox action="applyIsShared" labelKey="theme-creator.is_shared" checked=model.is_shared}}
 
     {{#if model.is_shared}}
-      {{text-field class="preview-url" value=model.shareUrl readonly=true}}
+      <p>{{i18n "theme-creator.is_shared"}}</p>
+      {{#if editingSlug}}
+        <code>
+          {{model.base_share_url}} {{text-field value=model.share_slug autofocus="true"}}
+        </code>
+        {{d-button action="finishedEditingSlug" class="btn-primary btn-small submit-edit" icon="check" disabled=saveDisabled}}
+        {{d-button action="cancelEditingSlug" class="btn-small cancel-edit" icon="times"}}
+      {{else}}
+        <code>
+          {{model.base_share_url}}{{model.share_slug}} <a {{action "startEditingSlug"}}>{{d-icon "pencil"}}</a>
+        </code>
+      {{/if}}
+      <p>
+        {{d-button action="stopSharing" icon="times-circle" class="btn-danger btn-large" label="theme-creator.stop_sharing"}}
+      </p>
+
+    {{else}}
+      
+      <p>{{i18n "theme-creator.share_instructions"}}</p>
+
+      <code>
+        {{model.base_share_url}} {{text-field value=model.share_slug autofocus="true"}}
+      </code>
+
+      <p>
+        {{d-button action="share" icon="users" class="btn-primary btn-large" label="theme-creator.start_sharing" disabled=saveDisabled}}
+      </p>
+
     {{/if}}
 
   {{else}}

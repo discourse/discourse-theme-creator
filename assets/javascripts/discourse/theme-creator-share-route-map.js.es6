@@ -1,3 +1,3 @@
 export default function(){
-    this.route('theme-share', {path: 'user_themes/:id/view'});
+    this.route('theme-share', {path: 'theme/:username/:slug'});
 };

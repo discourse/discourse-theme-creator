@@ -8,7 +8,6 @@ class ThemeCreator::ThemeCreatorController < Admin::ThemesController
   before_action :ensure_logged_in, except: [:preview, :share_preview, :share_info]
 
   before_action :ensure_own_theme, only: [:destroy, :update, :create_color_scheme, :update_color_scheme, :destroy_color_scheme]
-  before_action :ensure_can_see_theme, only: [:share_preview, :share_info]
   skip_before_action :check_xhr, only: [:preview, :share_preview]
 
   def fetch_api_key
@@ -51,7 +50,18 @@ class ThemeCreator::ThemeCreatorController < Admin::ThemesController
   end
 
   def share_info
-    @theme ||= Theme.find(params[:id])
+    theme_owner = User.find_by(username: params[:username])
+    result = PluginStoreRow.where(plugin_name: 'discourse-theme-creator')
+                  .where("key LIKE ?", "share:#{theme_owner.id}:%")
+                  .where(value: params[:slug])
+
+    raise Discourse::InvalidAccess.new() if !result.any?
+
+    psr = result.first
+
+    theme_id = psr.key.remove("share:#{theme_owner.id}:").to_i
+
+    @theme ||= Theme.find(theme_id)
     raise Discourse::InvalidAccess.new() if !guardian.can_see_user_theme?(@theme)
     render json: @theme, serializer: ::BasicUserThemeSerializer, root: 'theme'
   end
@@ -84,11 +94,12 @@ class ThemeCreator::ThemeCreatorController < Admin::ThemesController
     @theme ||= Theme.find(params[:id])
 
     # Set the user_theme specific fields
-    [:is_shared].each do |field|
+    [:share_slug].each do |field|
       if theme_params.key?(field)
         @theme.send("#{field}=", theme_params[field])
       end
     end
+
 
     # Check color scheme permission
     if theme_params.key?(:color_scheme_id) && !theme_params[:color_scheme_id].nil?
@@ -168,12 +179,13 @@ class ThemeCreator::ThemeCreatorController < Admin::ThemesController
     #  - :child_theme_ids
     # But we want to add
     #  - is_shared
+    #  - share_slug
     def theme_params
       @theme_params ||=
         begin
           params.require(:theme).permit(
             :name,
-            :is_shared,
+            :share_slug,
             :color_scheme_id,
             # :default,
             # :user_selectable,
@@ -182,15 +194,6 @@ class ThemeCreator::ThemeCreatorController < Admin::ThemesController
             # child_theme_ids: []
           )
         end
-    end
-
-    def ensure_can_see_theme
-      @theme = Theme.find(params[:id])
-
-      if !guardian.can_see_user_theme?(@theme)
-
-        raise Discourse::InvalidAccess.new("Theme not available.")
-      end
     end
 
     def ensure_own_theme
