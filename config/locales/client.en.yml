@@ -40,6 +40,11 @@ en:
       share_theme: "Share Theme"
       share_unavailable: "To share your themes with others you must belong to the <b>@theme-authors</b> group on <a href='https://meta.discourse.org'>meta.discourse.org</a>. You can request membership <a href='https://meta.discourse.org/groups'>here</a>."
       shared_at: "Available publically at"
+      edit_local: "Edit Locally"
+      edit_local_description: "The <b>Discourse Theme CLI</b> is a console application allowing you to edit a theme on your local computer, and instantly preview changes online. To get started, follow the instructions on <a href='https://meta.discourse.org/t/discourse-theme-cli-console-app-to-help-you-build-themes/82950'>Discourse Meta</a>."
+      edit_local_key: "API Key for Theme CLI:"
+      show_key: "Retrieve API Key"
+      revoke_instructions: "To revoke access for this key, visit the 'Apps' section of your user preferences."
       target:
         common: "Common"
         mobile: "Mobile"

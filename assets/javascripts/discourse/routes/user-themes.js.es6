@@ -46,6 +46,10 @@ export default Discourse.Route.extend({
       showModal('user-themes-import-modal', {admin: true, templateName: 'admin-import-theme'});
     },
 
+    editLocalModal(){
+      showModal('user-themes-edit-local-modal', { model: {apiKey: null} });
+    },
+
     refreshThemes(){
       this.refresh();
     }

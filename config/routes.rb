@@ -11,6 +11,9 @@ ThemeCreator::Engine.routes.draw do
   post "import" => "theme_creator#import"
   post "generate_key_pair" => "theme_creator#generate_key_pair"
 
+  # Access user_api_key for Theme CLI
+  post "fetch_api_key" => "theme_creator#fetch_api_key"
+
   # Sharing with other users
   get ":id/view" => "theme_creator#share_info"
   post ":id/view" => "theme_creator#share_preview"

@@ -104,6 +104,9 @@ after_initialize do
     end
   end
 
+  reloadable_patch do |plugin|
+    UserApiKey::SCOPES[:user_themes] = [[:post, 'theme_creator/theme_creator#import'], [:put, 'theme_creator/theme_creator#update']]
+  end
 
 end
 

@@ -11,6 +11,26 @@ class ThemeCreator::ThemeCreatorController < Admin::ThemesController
   before_action :ensure_can_see_theme, only: [:share_preview, :share_info]
   skip_before_action :check_xhr, only: [:preview, :share_preview]
 
+  def fetch_api_key
+    client_id = "theme_cli_#{current_user.id}"
+
+    api_key = UserApiKey.find_by(user_id: current_user.id, revoked_at: nil, client_id: client_id)
+    
+    if api_key.nil?
+      UserApiKey.where(user_id: current_user.id, client_id: client_id).destroy_all
+
+      api_key = UserApiKey.create!(
+        application_name: I18n.t('theme_creator.api_application_name'),
+        client_id: client_id,
+        user_id: current_user.id,
+        key: SecureRandom.hex,
+        scopes: ['user_themes']
+      )
+    end
+
+    render json: {api_key: api_key.key}
+  end
+
   # Preview is used when actively developing a theme, it uses the GET parameter ?preview_theme_key
   def preview
     @theme ||= Theme.find(params[:id])
