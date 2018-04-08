@@ -2,7 +2,7 @@
   <h2>
     {{text-field value=model.name autofocus="true"}}
   </h2>
-  <h4>({{i18n 'theme-creator.color_scheme_belongs_to'}} {{#link-to 'user.themes.show' model.theme_id replace=true}}{{model.theme_name}}{{/link-to}})</h4>
+  <h4>({{i18n 'theme_creator.color_scheme_belongs_to'}} {{#link-to 'user.themes.show' model.theme_id replace=true}}{{model.theme_name}}{{/link-to}})</h4>
 
   {{#if model.colors.length}}
     <table class="table colors">
@@ -10,9 +10,9 @@
       {{#each model.colors as |c|}}
         <tr class="{{if c.changed 'changed'}} {{if c.valid 'valid' 'invalid'}}">
           <td class="name" title={{c.name}}>
-            <b>{{i18n (concat 'theme-creator.colors.' c.name '.name')}}</b>
+            <b>{{i18n (concat 'theme_creator.colors.' c.name '.name')}}</b>
             <br/>
-            <span class="description">{{i18n (concat 'theme-creator.colors.' c.name '.description')}}</span>
+            <span class="description">{{i18n (concat 'theme_creator.colors.' c.name '.description')}}</span>
           </td>
           <td class="hex">{{color-input hexValue=c.hex brightnessValue=c.brightness valid=c.valid}}</td>
           <td class="actions">
@@ -31,6 +31,6 @@
     {{saveButtonText}}
   {{/d-button}}
 
-  <a href='{{previewUrl}}' title="{{i18n 'theme-creator.explain_preview'}}" target='_blank' class='btn'>{{d-icon 'desktop'}}{{i18n 'theme-creator.preview'}}</a>
+  <a href='{{previewUrl}}' title="{{i18n 'theme_creator.explain_preview'}}" target='_blank' class='btn'>{{d-icon 'desktop'}}{{i18n 'theme_creator.preview'}}</a>
 
 </div>

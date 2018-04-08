@@ -6,7 +6,7 @@ export default Ember.Controller.extend({
 
   @computed('isSaving')
   saveButtonText(isSaving) {
-    return isSaving ? I18n.t('saving') : I18n.t('theme-creator.save');
+    return isSaving ? I18n.t('saving') : I18n.t('theme_creator.save');
   },
 
   actions:{

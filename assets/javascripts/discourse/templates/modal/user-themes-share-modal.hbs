@@ -1,9 +1,9 @@
-{{#d-modal-body id="theme-creator-share-modal" title="theme-creator.share_theme"}}
+{{#d-modal-body id="theme-creator-share-modal" title="theme_creator.share_theme"}}
 
   {{#if model.can_share}}
 
     {{#if model.is_shared}}
-      <p>{{i18n "theme-creator.is_shared"}}</p>
+      <p>{{i18n "theme_creator.is_shared"}}</p>
       {{#if editingSlug}}
         <code>
           {{model.base_share_url}} {{text-field value=model.share_slug autofocus="true"}}
@@ -16,19 +16,19 @@
         </code>
       {{/if}}
       <p>
-        {{d-button action="stopSharing" icon="times-circle" class="btn-danger btn-large" label="theme-creator.stop_sharing"}}
+        {{d-button action="stopSharing" icon="times-circle" class="btn-danger btn-large" label="theme_creator.stop_sharing"}}
       </p>
 
     {{else}}
       
-      <p>{{i18n "theme-creator.share_instructions"}}</p>
+      <p>{{i18n "theme_creator.share_instructions"}}</p>
 
       <code>
         {{model.base_share_url}} {{text-field value=model.share_slug autofocus="true"}}
       </code>
 
       <p>
-        {{d-button action="share" icon="users" class="btn-primary btn-large" label="theme-creator.start_sharing" disabled=saveDisabled}}
+        {{d-button action="share" icon="users" class="btn-primary btn-large" label="theme_creator.start_sharing" disabled=saveDisabled}}
       </p>
 
     {{/if}}
@@ -37,7 +37,7 @@
     <div class="share_unavailable">
       <h1 class='large_theme_share_icon'>{{d-icon 'users'}}</h1>
       <p class='theme_share_unavailable'>
-        {{{i18n 'theme-creator.share_unavailable'}}}
+        {{{i18n 'theme_creator.share_unavailable'}}}
       </p>
     </div>
   {{/if}}

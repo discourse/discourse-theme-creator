@@ -1,6 +1,6 @@
 en:
   js:
-    theme-creator:
+    theme_creator:
       themes: Themes
       my_themes: My Themes
       new_theme: New Theme

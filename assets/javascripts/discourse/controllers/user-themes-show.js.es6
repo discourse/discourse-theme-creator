@@ -46,7 +46,7 @@ export default AdminCustomizeThemesShowController.extend({
     },
 
     destroy() {
-      return bootbox.confirm(I18n.t("theme-creator.delete_confirm"), I18n.t("no_value"), I18n.t("yes_value"), result => {
+      return bootbox.confirm(I18n.t("theme_creator.delete_confirm"), I18n.t("no_value"), I18n.t("yes_value"), result => {
         if (result) {
           const model = this.get('model');
           model.destroyRecord().then(() => {

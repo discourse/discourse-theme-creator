@@ -1,18 +1,18 @@
 
-<h2>{{i18n 'theme-creator.edit_css_html'}} {{#link-to 'user.themes.show' model.id replace=true}}{{model.name}}{{/link-to}}</h2>
+<h2>{{i18n 'theme_creator.edit_css_html'}} {{#link-to 'user.themes.show' model.id replace=true}}{{model.name}}{{/link-to}}</h2>
 
 <ul class='nav nav-pills target'>
   {{#if showCommon}}
     <li>
       {{#link-to 'user.themes.edit' model.id 'common' fieldName replace=true title=field.title}}
-        {{i18n 'theme-creator.target.common'}}
+        {{i18n 'theme_creator.target.common'}}
       {{/link-to}}
     </li>
   {{/if}}
   {{#if showDesktop}}
     <li>
       {{#link-to 'user.themes.edit' model.id 'desktop' fieldName replace=true}}
-        {{i18n 'theme-creator.target.desktop'}}
+        {{i18n 'theme_creator.target.desktop'}}
         {{d-icon 'desktop'}}
       {{/link-to}}
     </li>
@@ -20,7 +20,7 @@
   {{#if showMobile}}
     <li class='mobile'>
       {{#link-to 'user.themes.edit' model.id 'mobile' fieldName replace=true}}
-        {{i18n 'theme-creator.target.mobile'}}
+        {{i18n 'theme_creator.target.mobile'}}
         {{d-icon 'mobile'}}
       {{/link-to}}
     </li>
@@ -28,7 +28,7 @@
   {{#if showSettings}}
     <li class='theme-settings'>
       {{#link-to 'user.themes.edit' model.id 'settings' fieldName replace=true}}
-        {{i18n 'theme-creator.target.settings'}}
+        {{i18n 'theme_creator.target.settings'}}
         {{d-icon 'cog'}}
       {{/link-to}}
     </li>
@@ -37,7 +37,7 @@
 <div class='show-overidden'>
   <label>
     {{input type="checkbox" checked=onlyOverridden}}
-    {{i18n 'theme-creator.show_overridden'}}
+    {{i18n 'theme_creator.show_overridden'}}
   </label>
 </div>
 
@@ -61,4 +61,4 @@
 {{#d-button action="save" disabled=saveDisabled class='btn-primary'}}
   {{saveButtonText}}
 {{/d-button}}
-<a href='{{previewUrl}}' title="{{i18n 'theme-creator.explain_preview'}}" target='_blank' class='btn'>{{d-icon 'desktop'}}{{i18n 'theme-creator.preview'}}</a>
+<a href='{{previewUrl}}' title="{{i18n 'theme_creator.explain_preview'}}" target='_blank' class='btn'>{{d-icon 'desktop'}}{{i18n 'theme_creator.preview'}}</a>

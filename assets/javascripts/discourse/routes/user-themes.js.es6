@@ -34,7 +34,7 @@ export default Discourse.Route.extend({
     },
 
     newTheme(obj) {
-      obj = obj || {name: I18n.t("theme-creator.new_theme_title")};
+      obj = obj || {name: I18n.t("theme_creator.new_theme_title")};
       const item = this.store.createRecord('user_theme');
 
       item.save(obj).then(() => {

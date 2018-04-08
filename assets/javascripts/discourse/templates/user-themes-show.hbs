@@ -11,7 +11,7 @@
 
   {{#if model.is_shared}}
     {{#if model.can_share}}
-      {{i18n 'theme-creator.shared_at'}} <code>{{model.base_share_url}}{{model.share_slug}}</code> <a {{action "shareModal"}}>{{d-icon "pencil"}}</a>
+      {{i18n 'theme_creator.shared_at'}} <code>{{model.base_share_url}}{{model.share_slug}}</code> <a {{action "shareModal"}}>{{d-icon "pencil"}}</a>
     {{/if}}
   {{/if}}
 
@@ -28,7 +28,7 @@
       {{/if}}
     {{/if}}
 
-    <h3>{{i18n "theme-creator.color_scheme"}}</h3>
+    <h3>{{i18n "theme_creator.color_scheme"}}</h3>
 
       <p>
       {{combo-box content=colorSchemes
@@ -42,21 +42,21 @@
        
         {{#link-to 'user.themes.colors' model.id model.color_scheme_id class="btn" disabled=colorSchemeEditDisabled}}
           {{d-icon 'pencil'}}
-          {{i18n 'theme-creator.edit_color_scheme'}}
+          {{i18n 'theme_creator.edit_color_scheme'}}
         {{/link-to}}
 
-        {{d-button action="destroyColorScheme" label="theme-creator.delete_color_scheme" icon="trash" class="btn-danger" disabled=colorSchemeEditDisabled}}
+        {{d-button action="destroyColorScheme" label="theme_creator.delete_color_scheme" icon="trash" class="btn-danger" disabled=colorSchemeEditDisabled}}
       {{/if}}
       </p>
       <p>
-      {{d-button action="createColorScheme" label=(if creatingColorScheme 'theme-creator.adding_color_scheme' 'theme-creator.add_color_scheme') 
+      {{d-button action="createColorScheme" label=(if creatingColorScheme 'theme_creator.adding_color_scheme' 'theme_creator.add_color_scheme') 
                 icon="plus" class="btn" disabled=creatingColorScheme}}
       </p>
         
-    <h3>{{i18n "theme-creator.css_html"}}</h3>
+    <h3>{{i18n "theme_creator.css_html"}}</h3>
 
     {{#if editedDescriptions}}
-      <p>{{i18n "theme-creator.edited_sections"}}</p>
+      <p>{{i18n "theme_creator.edited_sections"}}</p>
       <ul>
         {{#each editedDescriptions as |desc|}}
           <li>{{desc}}</li>
@@ -64,7 +64,7 @@
       </ul>
     {{else}}
       <p>
-        {{i18n "theme-creator.no_edited_sections"}}
+        {{i18n "theme_creator.no_edited_sections"}}
       </p>
     {{/if}}
 
@@ -92,7 +92,7 @@
       {{/if}}
     </p>
 
-    <h3>{{i18n "theme-creator.uploads"}}</h3>
+    <h3>{{i18n "theme_creator.uploads"}}</h3>
     {{#if model.uploads}}
       <ul class='removable-list'>
         {{#each model.uploads as |upload|}}
@@ -105,14 +105,14 @@
         {{/each}}
       </ul>
     {{else}}
-      <p>{{i18n "theme-creator.no_uploads"}}</p>
+      <p>{{i18n "theme_creator.no_uploads"}}</p>
     {{/if}}
     <p>
-      {{#d-button action="addUploadModal" icon="plus"}}{{i18n "theme-creator.new"}}{{/d-button}}
+      {{#d-button action="addUploadModal" icon="plus"}}{{i18n "theme_creator.new"}}{{/d-button}}
     </p>
 
     {{#if hasSettings}}
-    <h3>{{i18n "theme-creator.theme_settings"}}</h3>
+    <h3>{{i18n "theme_creator.theme_settings"}}</h3>
     {{#d-section class="form-horizontal theme settings"}}
       {{#each settings as |setting|}}
         {{theme-setting setting=setting model=model class="theme-setting"}}
@@ -124,10 +124,10 @@
 
   <hr/>
 
-  <a href='{{previewUrl}}' title="{{i18n 'theme-creator.explain_preview'}}" target='_blank' class='btn'>{{d-icon 'desktop'}}{{i18n 'theme-creator.preview'}}</a>
+  <a href='{{previewUrl}}' title="{{i18n 'theme_creator.explain_preview'}}" target='_blank' class='btn'>{{d-icon 'desktop'}}{{i18n 'theme_creator.preview'}}</a>
 
 
-  {{d-button action="shareModal" label="theme-creator.share" icon="users" class="btn"}}
+  {{d-button action="shareModal" label="theme_creator.share" icon="users" class="btn"}}
 
-  {{d-button action="destroy" label="theme-creator.delete" icon="trash" class="btn-danger"}}
+  {{d-button action="destroy" label="theme_creator.delete" icon="trash" class="btn-danger"}}
 </div>

@@ -1,7 +1,7 @@
 <div class="user-theme-creator">
   {{#unless editingTheme}}
   <div class='content-list theme-list'>
-    <h3>{{i18n 'theme-creator.my_themes'}}</h3>
+    <h3>{{i18n 'theme_creator.my_themes'}}</h3>
     <ul>
       {{#each model as |theme|}}
         <li>
@@ -11,8 +11,8 @@
         </li>
       {{/each}}
     </ul>
-    <p>{{d-button label="theme-creator.new_theme" icon="plus" action="newTheme" class="btn-primary"}}</p>
-    <p>{{d-button action="editLocalModal" icon="pencil" label="theme-creator.edit_local"}}</p>
+    <p>{{d-button label="theme_creator.new_theme" icon="plus" action="newTheme" class="btn-primary"}}</p>
+    <p>{{d-button action="editLocalModal" icon="pencil" label="theme_creator.edit_local"}}</p>
     <p>{{d-button action="importModal" icon="upload" label="admin.customize.import"}}</p>
     
   </div>
