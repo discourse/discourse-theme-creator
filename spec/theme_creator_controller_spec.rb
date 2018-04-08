@@ -2,8 +2,10 @@ require 'rails_helper'
 
 RSpec.describe "Theme Creator Controller", type: :request do
   let(:user1) { Fabricate(:user) }
+  let(:user2) { Fabricate(:user) }
   let(:admin) { Fabricate(:admin) }
   let(:theme) { Theme.create!(name: "My New Theme", user_id: user1.id) }
+  let(:color_scheme) { ColorScheme.create!(name: "My Color Scheme", theme_id: theme.id) }
 
   describe 'preview' do
     it "fails to hotlink other users themes" do
@@ -54,6 +56,99 @@ RSpec.describe "Theme Creator Controller", type: :request do
     end
   end
 
-  # TODO: More functionality tests
+  describe 'crud' do
+    context 'logged in as user 2' do
+      before do
+        sign_in(user2)
+      end
+      
+      it 'fails to delete theme owned by user 1' do
+        delete "/user_themes/#{theme.id}.json"
+        expect(response).to have_http_status(403)
+      end
+
+      it 'fails to update theme owned by user 1' do
+        put "/user_themes/#{theme.id}.json", params: {
+          theme: {
+            name: "New Theme Title"
+          }
+        }
+        expect(response).to have_http_status(403)
+        theme.reload
+        expect(theme.name).to eq("My New Theme")
+      end
+
+      it 'fails to create color scheme for theme owned by user 1' do
+        post "/user_themes/#{theme.id}/colors.json"
+        expect(response).to have_http_status(403)
+      end
+
+      it 'fails to edit color scheme for theme owned by user 1' do
+        put "/user_themes/#{theme.id}/colors/#{color_scheme.id}.json", params: {
+          color_scheme: {
+            name: "Some New Name"
+          }
+        }
+        expect(response).to have_http_status(403)
+        color_scheme.reload
+        expect(color_scheme.name).to eq("My Color Scheme")
+      end
+
+      it "fails to delete color scheme for theme owned by user 1" do
+        delete "/user_themes/#{theme.id}/colors/#{color_scheme.id}.json"
+        expect(response).to have_http_status(403)
+      end
+    end
+
+
+    context 'logged in as user 1' do
+      before do
+        sign_in(user1)
+      end
+      
+      it 'can delete theme' do
+        delete "/user_themes/#{theme.id}.json"
+        expect(response).to be_success
+        expect { theme.reload }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+
+      it 'can update theme' do
+        put "/user_themes/#{theme.id}.json", params: {
+          theme: {
+            name: "New Theme Title"
+          }
+        }
+        expect(response).to be_success
+        theme.reload
+        expect(theme.name).to eq("New Theme Title")
+      end
+
+      it 'can create color scheme for theme' do
+        post "/user_themes/#{theme.id}/colors.json"
+        expect(response).to be_success
+        theme.reload
+        expect(theme.color_schemes.count).to eq(1)
+      end
+
+      it 'can edit color scheme' do
+        put "/user_themes/#{theme.id}/colors/#{color_scheme.id}.json", params: {
+          color_scheme: {
+            name: "Some New Name",
+            colors: []
+          }
+        }
+        expect(response).to be_success
+        color_scheme.reload
+        expect(color_scheme.name).to eq("Some New Name")
+      end
+
+      it "can delete color scheme" do
+        delete "/user_themes/#{theme.id}/colors/#{color_scheme.id}.json"
+        expect(response).to be_success
+        expect { color_scheme.reload }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
+
+  end 
 
 end
