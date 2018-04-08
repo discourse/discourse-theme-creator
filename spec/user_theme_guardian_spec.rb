@@ -66,7 +66,7 @@ RSpec.describe ::Guardian do
     end
 
     it 'allows viewing other themes when shared' do
-      theme.is_shared = true;
+      theme.share_slug = "mytheme";
       theme.save!
       SiteSetting.theme_creator_share_groups = ''
 
@@ -74,7 +74,7 @@ RSpec.describe ::Guardian do
     end
 
     it 'disallows viewing other shared themes from disallowed owners' do
-      theme.is_shared = true;
+      theme.share_slug = "mytheme";
       theme.save!
       SiteSetting.theme_creator_share_groups = 'team'
 

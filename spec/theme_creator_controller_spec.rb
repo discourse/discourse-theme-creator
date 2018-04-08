@@ -30,10 +30,11 @@ RSpec.describe "Theme Creator Controller", type: :request do
       expect(response).to have_http_status(302)
     end
 
-    it "previews shared themes" do
+    it "allows previewing shared themes" do
       SiteSetting.theme_creator_share_groups = ''
-      theme.is_shared = true
+      theme.share_slug = 'mytheme'
       theme.save!
+
       post "/user_themes/#{theme.id}/view"
       expect(response).to have_http_status(302)
     end
@@ -41,14 +42,14 @@ RSpec.describe "Theme Creator Controller", type: :request do
 
   describe 'share_info' do
     it "only reveals info for shared themes" do
-      get "/user_themes/#{theme.id}/view.json"
+      SiteSetting.theme_creator_share_groups = 'staff'
+      theme.share_slug = 'mytheme'
+      
+      get "/theme/#{user1.username}/#{theme.share_slug}.json"
       expect(response).to have_http_status(403)
-
-      theme.is_shared = true
-      theme.save!
+      
       SiteSetting.theme_creator_share_groups = ''
-
-      get "/user_themes/#{theme.id}/view.json"
+      get "/theme/#{user1.username}/#{theme.share_slug}.json"
       expect(response).to have_http_status(200)
     end
   end
