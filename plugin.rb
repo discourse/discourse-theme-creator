@@ -57,7 +57,6 @@ after_initialize do
     !!share_slug
   end
 
-  # Add methods so that a theme can be shared/unshared by the user
   add_to_class(:theme, :share_slug) do
     @share_slug ||= PluginStore.get('discourse-theme-creator', "share:#{user_id}:#{id}")
   end
