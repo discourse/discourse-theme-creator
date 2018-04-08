@@ -61,7 +61,7 @@ RSpec.describe "Theme Creator Controller", type: :request do
       before do
         sign_in(user2)
       end
-      
+
       it 'fails to delete theme owned by user 1' do
         delete "/user_themes/#{theme.id}.json"
         expect(response).to have_http_status(403)
@@ -100,12 +100,11 @@ RSpec.describe "Theme Creator Controller", type: :request do
       end
     end
 
-
     context 'logged in as user 1' do
       before do
         sign_in(user1)
       end
-      
+
       it 'can delete theme' do
         delete "/user_themes/#{theme.id}.json"
         expect(response).to be_success
@@ -149,6 +148,6 @@ RSpec.describe "Theme Creator Controller", type: :request do
       end
     end
 
-  end 
+  end
 
 end
