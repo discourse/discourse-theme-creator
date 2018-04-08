@@ -35,8 +35,7 @@ class ThemeCreator::ThemeCreatorController < Admin::ThemesController
     @theme ||= Theme.find(params[:id])
     raise Discourse::InvalidAccess.new() if !guardian.can_hotlink_user_theme?(@theme)
 
-    destination = '/styleguide/' if defined? DiscourseStyleguide else '/'
-    redirect_to path("#{destination}?preview_theme_key=#{@theme.key}")
+    redirect_to path("/?preview_theme_key=#{@theme.key}")
   end
 
   # Shared preview is used when sharing the theme with others. It is only accessible via POST to avoid
@@ -45,8 +44,7 @@ class ThemeCreator::ThemeCreatorController < Admin::ThemesController
     @theme ||= Theme.find(params[:id])
     raise Discourse::InvalidAccess.new() if !guardian.can_see_user_theme?(@theme)
 
-    destination = '/styleguide/' if defined? DiscourseStyleguide else '/'
-    redirect_to path(destination), flash: { user_theme_key: @theme.key }
+    redirect_to path('/'), flash: { user_theme_key: @theme.key }
   end
 
   def share_info
