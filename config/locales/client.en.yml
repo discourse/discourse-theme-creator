@@ -1,111 +1,57 @@
 en:
   js:
     theme_creator:
+
       themes: Themes
-      my_themes: My Themes
-      new_theme: New Theme
-      css_html: "CSS/HTML"
-      custom_sections: "Custom sections:"
-      edit_css_html_help: "You have not edited any CSS"
-      edit_css_html: "Edit CSS/HTML"
-      explain_preview: "Preview this theme"
       preview: "Preview"
-      delete: "Delete"
-      new_theme_title: "My New Theme"
-      is_shared: "Anyone with the link can see this theme?"
-      delete_confirm: "Are you sure you want to delete this theme?"
-      save: "Save"
-      select_a_theme: "Select or create a theme to get started!"
-      color_scheme: "Color Scheme"
-      default_color_scheme: "Preview color scheme"
-      other_color_schemes: "Other included color schemes"
-      edit_color_scheme: "Edit"
-      delete_color_scheme: "Delete"
-      add_color_scheme: "Add Color Scheme"
-      adding_color_scheme: "Adding Color Scheme..."
-      color_scheme_belongs_to: "Color scheme for"
-      sharing: "Sharing"
-      edited_sections: "Edited sections:"
-      no_edited_sections: "You have not edited any CSS or HTML"
-      view_shared_theme: "View Shared Theme"
-      view_theme: "View Theme"
-      cancel: "Cancel"
-      view_shared_theme_education: "(Return to your current theme by refreshing the page)"
-      show_overridden: "Only show overriden"
-      theme_settings: "Theme Settings"
-      uploads: "Uploads"
-      no_uploads: "You can upload assets associated with your theme such as fonts and images"
-      new: "New"
       share: "Share"
-      share_theme: "Share Theme"
-      share_unavailable: "To share your themes with others you must belong to the <b>@theme-authors</b> group on <a href='https://meta.discourse.org'>meta.discourse.org</a>. You can request membership <a href='https://meta.discourse.org/groups'>here</a>."
-      shared_at: "Available to the public at"
-      edit_local: "Edit Locally"
-      edit_local_description: "The <b>Discourse Theme CLI</b> is a console application allowing you to edit a theme on your local computer, and instantly preview changes online. To get started, follow the instructions on <a href='https://meta.discourse.org/t/discourse-theme-cli-console-app-to-help-you-build-themes/82950'>Discourse Meta</a>."
-      edit_local_key: "API Key for Theme CLI:"
-      show_key: "Retrieve API Key"
-      revoke_instructions: "To revoke access for this key, visit the 'Apps' section of your user preferences."
-      share_instructions: "To make your theme available to the public, enter a URL-friendly name for it:"
-      is_shared: "Your theme is currently available at:"
-      start_sharing: "Start Sharing Theme"
-      stop_sharing: "Stop Sharing Theme"
+      delete: "Delete"
+      explain_preview: "Preview this theme"
       target:
         common: "Common"
         mobile: "Mobile"
         desktop: "Desktop"
         settings: "Settings"
-      scss:
-        text: "CSS"
-        title: "Enter custom CSS, we accept all valid CSS and SCSS styles"
-      header:
-        text: "Header"
-        title: "Enter HTML to display above site header"
-      after_header:
-        text: "After Header"
-        title: "Enter HTML to display on all pages after header"
-      footer:
-        text: "Footer"
-        title: "Enter HTML to display on page footer"
-      embedded_scss:
-        text: "Embedded CSS"
-        title: "Enter custom CSS to deliver with embedded version of comments"
-      head_tag:
-        text: "</head>"
-        title: "HTML that will be inserted before the </head> tag"
-      body_tag:
-        text: "</body>"
-        title: "HTML that will be inserted before the </body> tag"
-      yaml:
-        text: "YAML"
-        title: "Define theme settings in YAML format"
-      colors:
-        primary:
-          name: 'primary'
-          description: 'Most text, icons, and borders.'
-        secondary:
-          name: 'secondary'
-          description: 'The main background color, and text color of some buttons.'
-        tertiary:
-          name: 'tertiary'
-          description: 'Links, some buttons, notifications, and accent color.'
-        quaternary:
-          name: "quaternary"
-          description: "Navigation links."
-        header_background:
-          name: "header background"
-          description: "Background color of the site's header."
-        header_primary:
-          name: "header primary"
-          description: "Text and icons in the site's header."
-        highlight:
-          name: 'highlight'
-          description: 'The background color of highlighted elements on the page, such as posts and topics.'
-        danger:
-          name: 'danger'
-          description: 'Highlight color for actions like deleting posts and topics.'
-        success:
-          name: 'success'
-          description: 'Used to indicate an action was successful.'
-        love:
-          name: 'love'
-          description: "The like button's color."
+      show_overridden: "Only show overriden"
+
+      my_themes: My Themes
+      new_theme: New Theme
+      new_theme_title: "My New Theme"
+      select_a_theme: "Select or create a theme to get started!"
+      delete_confirm: "Are you sure you want to delete this theme?"
+      save: "Save"
+      
+      color_scheme: "Color Scheme"
+      color_scheme_belongs_to: "Color scheme for"
+      edit_color_scheme: "Edit"
+      delete_color_scheme: "Delete"
+      add_color_scheme: "Add Color Scheme"
+      adding_color_scheme: "Adding Color Scheme..."
+
+      css_html: "CSS/HTML"
+      edit_css_html: "Edit CSS/HTML"
+      edited_sections: "Edited sections:"
+      no_edited_sections: "You have not edited any CSS or HTML"
+
+      theme_settings: "Theme Settings"
+      
+      uploads: "Uploads"
+      no_uploads: "You can upload assets associated with your theme such as fonts and images"
+      new_upload: "New"
+      
+      share_theme: "Share Theme"
+      start_sharing: "Start Sharing Theme"
+      stop_sharing: "Stop Sharing Theme"
+      share_instructions: "To make your theme available to the public, enter a URL-friendly name for it:"
+      share_unavailable: "To share your themes with others you must belong to the <b>@theme-authors</b> group on <a href='https://meta.discourse.org'>meta.discourse.org</a>. You can request membership <a href='https://meta.discourse.org/groups'>here</a>."
+      shared_at: "Available to the public at"
+
+      view_shared_theme: "View Shared Theme"
+      view_shared_theme_education: "(Return to your current theme by refreshing the page)"
+      view_theme: "View Theme"
+
+      edit_local: "Edit Locally"
+      edit_local_description: "The <b>Discourse Theme CLI</b> is a console application allowing you to edit a theme on your local computer, and instantly preview changes online. To get started, follow the instructions on <a href='https://meta.discourse.org/t/discourse-theme-cli-console-app-to-help-you-build-themes/82950'>Discourse Meta</a>."
+      edit_local_key: "API Key for Theme CLI:"
+      show_key: "Retrieve API Key"
+      revoke_instructions: "To revoke access for this key, visit the 'Apps' section of your user preferences."

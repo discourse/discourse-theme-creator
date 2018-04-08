@@ -3,7 +3,7 @@
   {{#if model.can_share}}
 
     {{#if model.is_shared}}
-      <p>{{i18n "theme_creator.is_shared"}}</p>
+      <p>{{i18n "theme_creator.shared_at"}}</p>
       {{#if editingSlug}}
         <code>
           {{model.base_share_url}} {{text-field value=model.share_slug autofocus="true"}}

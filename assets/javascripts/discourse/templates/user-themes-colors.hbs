@@ -10,9 +10,9 @@
       {{#each model.colors as |c|}}
         <tr class="{{if c.changed 'changed'}} {{if c.valid 'valid' 'invalid'}}">
           <td class="name" title={{c.name}}>
-            <b>{{i18n (concat 'theme_creator.colors.' c.name '.name')}}</b>
+            <b>{{c.translatedName}}</b>
             <br/>
-            <span class="description">{{i18n (concat 'theme_creator.colors.' c.name '.description')}}</span>
+            <span class="description">{{c.description}}</span>
           </td>
           <td class="hex">{{color-input hexValue=c.hex brightnessValue=c.brightness valid=c.valid}}</td>
           <td class="actions">
