@@ -1,5 +1,5 @@
 export default {
-  shouldRender(args, component) {
+  shouldRender(args) {
     return Discourse.User.current().get('id') === args.model.get('id');
   }
-}
+};

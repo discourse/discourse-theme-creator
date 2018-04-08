@@ -1,5 +1,5 @@
 import ModalFunctionality from 'discourse/mixins/modal-functionality';
-import { default as computed, on } from "ember-addons/ember-computed-decorators";
+import { default as computed } from "ember-addons/ember-computed-decorators";
 import { ajax } from 'discourse/lib/ajax';
 
 export default Ember.Controller.extend(ModalFunctionality, {

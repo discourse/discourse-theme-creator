@@ -4,9 +4,9 @@ RSpec.describe ::Guardian do
   let(:user1) { Fabricate(:user) }
   let(:user2) { Fabricate(:user) }
   let(:admin) { Fabricate(:admin) }
-  let(:guardian1) { Guardian.new(user1) } 
+  let(:guardian1) { Guardian.new(user1) }
   let(:guardian2) { Guardian.new(user2) }
-  let(:adminGuardian) { Guardian.new(admin) } 
+  let(:adminGuardian) { Guardian.new(admin) }
   let(:theme) { Theme.create!(name: "My New Theme", user_id: user1.id) }
 
   describe 'hotlinking protection' do
@@ -18,7 +18,7 @@ RSpec.describe ::Guardian do
       expect(guardian2.allow_theme?(theme.key)).to eq(false)
     end
 
-    it 'disallows other themes for admins' do 
+    it 'disallows other themes for admins' do
       # This is to reduce XSS risk
       expect(adminGuardian.allow_theme?(theme.key)).to eq(false)
     end
@@ -33,7 +33,7 @@ RSpec.describe ::Guardian do
       expect(guardian2.can_edit_user_theme?(theme)).to eq(false)
     end
 
-    it 'allows staff to edit other themes' do 
+    it 'allows staff to edit other themes' do
       expect(adminGuardian.can_edit_user_theme?(theme)).to eq(true)
     end
   end
@@ -81,7 +81,5 @@ RSpec.describe ::Guardian do
       expect(guardian2.can_see_user_theme?(theme)).to eq(false)
     end
   end
-
-
 
 end

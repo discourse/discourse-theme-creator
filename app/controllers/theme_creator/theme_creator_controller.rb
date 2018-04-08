@@ -14,7 +14,7 @@ class ThemeCreator::ThemeCreatorController < Admin::ThemesController
     client_id = "theme_cli_#{current_user.id}"
 
     api_key = UserApiKey.find_by(user_id: current_user.id, revoked_at: nil, client_id: client_id)
-    
+
     if api_key.nil?
       UserApiKey.where(user_id: current_user.id, client_id: client_id).destroy_all
 
@@ -27,7 +27,7 @@ class ThemeCreator::ThemeCreatorController < Admin::ThemesController
       )
     end
 
-    render json: {api_key: api_key.key}
+    render json: { api_key: api_key.key }
   end
 
   # Preview is used when actively developing a theme, it uses the GET parameter ?preview_theme_key
@@ -52,8 +52,8 @@ class ThemeCreator::ThemeCreatorController < Admin::ThemesController
   def share_info
     theme_owner = User.find_by(username: params[:username])
     result = PluginStoreRow.where(plugin_name: 'discourse-theme-creator')
-                  .where("key LIKE ?", "share:#{theme_owner.id}:%")
-                  .where(value: params[:slug])
+      .where("key LIKE ?", "share:#{theme_owner.id}:%")
+      .where(value: params[:slug])
 
     raise Discourse::InvalidAccess.new() if !result.any?
 
@@ -100,7 +100,6 @@ class ThemeCreator::ThemeCreatorController < Admin::ThemesController
       end
     end
 
-
     # Check color scheme permission
     if theme_params.key?(:color_scheme_id) && !theme_params[:color_scheme_id].nil?
       color_scheme = ColorScheme.find(theme_params[:color_scheme_id])
@@ -110,7 +109,7 @@ class ThemeCreator::ThemeCreatorController < Admin::ThemesController
     end
 
     super
-  end  
+  end
 
   # def create # Implemented in Admin::ThemesController
 

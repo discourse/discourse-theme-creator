@@ -63,12 +63,12 @@ after_initialize do
   end
 
   # Add methods so that a theme can be shared/unshared by the user
-  add_to_class(:theme, :is_shared) do 
+  add_to_class(:theme, :is_shared) do
     !!share_slug
   end
 
   # Add methods so that a theme can be shared/unshared by the user
-  add_to_class(:theme, :share_slug) do 
+  add_to_class(:theme, :share_slug) do
     @share_slug ||= PluginStore.get('discourse-theme-creator', "share:#{user_id}:#{id}")
   end
 
@@ -84,9 +84,9 @@ after_initialize do
     return false if !valid
 
     unique = !PluginStoreRow.where(plugin_name: 'discourse-theme-creator')
-                  .where("key LIKE ?", "share:#{user_id}:%")
-                  .where(value: val)
-                  .any?
+      .where("key LIKE ?", "share:#{user_id}:%")
+      .where(value: val)
+      .any?
     return false if !unique
 
     @share_slug = val
@@ -108,7 +108,7 @@ after_initialize do
   add_to_serializer(:theme, :can_share) do
     User.find(object.user_id).guardian.can_share_user_theme?(object)
   end
-  
+
   reloadable_patch do |plugin|
     class ::Theme
       belongs_to :user
@@ -124,10 +124,10 @@ after_initialize do
         def handle_theme
           super()
           user_theme_key = flash[:user_theme_key]
-          if user_theme_key && 
+          if user_theme_key &&
              Theme.theme_keys.include?(user_theme_key) && # Has requested a valid theme
              guardian.can_see_user_theme?(Theme.find_by(key: user_theme_key))
-                @theme_key = request.env[:resolved_theme_key] = user_theme_key
+            @theme_key = request.env[:resolved_theme_key] = user_theme_key
           end
         end
       end
@@ -140,5 +140,3 @@ after_initialize do
   end
 
 end
-
-
