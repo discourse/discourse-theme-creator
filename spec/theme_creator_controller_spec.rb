@@ -44,10 +44,10 @@ RSpec.describe "Theme Creator Controller", type: :request do
     it "only reveals info for shared themes" do
       SiteSetting.theme_creator_share_groups = 'staff'
       theme.share_slug = 'mytheme'
-      
+
       get "/theme/#{user1.username}/#{theme.share_slug}.json"
       expect(response).to have_http_status(403)
-      
+
       SiteSetting.theme_creator_share_groups = ''
       get "/theme/#{user1.username}/#{theme.share_slug}.json"
       expect(response).to have_http_status(200)
