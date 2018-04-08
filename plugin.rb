@@ -8,15 +8,6 @@ register_asset "stylesheets/theme-creator.scss"
 
 load File.expand_path('../lib/theme_creator/engine.rb', __FILE__)
 
-Discourse::Application.routes.append do
-  mount ::ThemeCreator::Engine, at: "/user_themes"
-  get "theme/:username/:slug" => "theme_creator/theme_creator#share_info", constraints: { username: RouteFormat.username }
-  get "u/:username/themes" => "users#index", constraints: { username: RouteFormat.username }
-  get "u/:username/themes/:id" => "users#index", constraints: { username: RouteFormat.username }
-  get "u/:username/themes/:theme_id/colors/:color_scheme_id" => "users#index", constraints: { username: RouteFormat.username }
-  get 'u/:username/themes/:id/:target/:field_name/edit' => 'users#index', constraints: { username: RouteFormat.username }
-end
-
 after_initialize do
 
   # We're re-using a lot of locale strings from the admin section
