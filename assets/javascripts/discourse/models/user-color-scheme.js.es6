@@ -5,7 +5,7 @@ export default ColorScheme.extend({
 
   save(){
     var data = {};
-
+    data.name = this.get('name');
     data.colors = [];
     this.get('colors').forEach((c) => {
       if (c.get('changed')) {
