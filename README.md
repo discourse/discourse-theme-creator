@@ -1,3 +1,3 @@
 # discourse-theme-creator
 
-A work in progress, see [here](https://meta.discourse.org/t/easy-theme-development/76086) for more information.
+Allows users to create, edit and share their own themes on theme-creator.discourse.org. This plugin is not designed to be installed on normal discourse instances.
