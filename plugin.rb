@@ -4,7 +4,6 @@
 # author: David Taylor dtaylor.uk
 # url: https://www.github.com/davidtaylorhq/discourse-theme-creator
 
-# register_asset 'theme_creator.js'
 register_asset "stylesheets/theme-creator.scss"
 
 load File.expand_path('../lib/theme_creator/engine.rb', __FILE__)
