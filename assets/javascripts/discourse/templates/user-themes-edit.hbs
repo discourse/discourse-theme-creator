@@ -1,7 +1,7 @@
 
 <h2>{{i18n 'theme_creator.edit_css_html'}} {{#link-to 'user.themes.show' model.id replace=true}}{{model.name}}{{/link-to}}</h2>
 
-<ul class='nav nav-pills target'>
+<ul class='user-theme-nav nav nav-pills target'>
   {{#if showCommon}}
     <li>
       {{#link-to 'user.themes.edit' model.id 'common' fieldName replace=true title=field.title}}
@@ -33,24 +33,26 @@
       {{/link-to}}
     </li>
   {{/if}}
+  <li class='show-overidden'>
+    <label>
+      {{input type="checkbox" checked=onlyOverridden}}
+      {{i18n 'theme_creator.show_overridden'}}
+    </label>
+  </li>
 </ul>
-<div class='show-overidden'>
-  <label>
-    {{input type="checkbox" checked=onlyOverridden}}
-    {{i18n 'theme_creator.show_overridden'}}
-  </label>
-</div>
 
-<ul class='nav nav-pills fields'>
-  {{#each fields as |field|}}
-    <li>
-      {{#link-to 'user.themes.edit' model.id currentTargetName field.name replace=true title=field.title}}
-        {{#if field.icon}}{{d-icon field.icon}} {{/if}}
-        {{i18n field.key}}
-      {{/link-to}}
-    </li>
-  {{/each}}
-</ul>
+<div class="edit-main-nav">
+  <ul class='admin-controls nav nav-pills fields'>
+    {{#each fields as |field|}}
+      <li>
+        {{#link-to 'user.themes.edit' model.id currentTargetName field.name replace=true title=field.title}}
+          {{#if field.icon}}{{d-icon field.icon}} {{/if}}
+          {{i18n field.key}}
+        {{/link-to}}
+      </li>
+    {{/each}}
+  </ul>
+</div>
 
 {{#if error}}
   <pre class='field-error'>{{error}}</pre>
@@ -58,7 +60,7 @@
 
 {{ace-editor content=activeSection editorId=editorId mode=activeSectionMode autofocus="true"}}
 
-{{#d-button action="save" disabled=saveDisabled class='btn-primary'}}
+{{#d-button action="save" disabled=saveDisabled class='user-theme-button btn-primary'}}
   {{saveButtonText}}
 {{/d-button}}
-<a href='{{previewUrl}}' title="{{i18n 'theme_creator.explain_preview'}}" target='_blank' class='btn'>{{d-icon 'desktop'}}{{i18n 'theme_creator.preview'}}</a>
+<a href='{{previewUrl}}' title="{{i18n 'theme_creator.explain_preview'}}" target='_blank' class='user-theme-button btn'>{{d-icon 'desktop'}}{{i18n 'theme_creator.preview'}}</a>
