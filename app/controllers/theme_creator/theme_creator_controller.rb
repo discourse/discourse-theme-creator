@@ -48,18 +48,24 @@ class ThemeCreator::ThemeCreatorController < Admin::ThemesController
   end
 
   def share_info
-    theme_owner = User.find_by(username: params[:username])
-    result = PluginStoreRow.where(plugin_name: 'discourse-theme-creator')
-      .where("key LIKE ?", "share:#{theme_owner.id}:%")
-      .where(value: params[:slug])
+    if params[:theme_key]
+      @theme ||= Theme.find_by(key: params[:theme_key])
+    else
+      theme_owner = User.find_by(username: params[:username])
 
-    raise Discourse::InvalidAccess.new() if !result.any?
+      result = PluginStoreRow.where(plugin_name: 'discourse-theme-creator')
+        .where("key LIKE ?", "share:#{theme_owner.id}:%")
+        .where(value: params[:slug])
 
-    psr = result.first
+      raise Discourse::InvalidAccess.new() if !result.any?
 
-    theme_id = psr.key.remove("share:#{theme_owner.id}:").to_i
+      psr = result.first
 
-    @theme ||= Theme.find(theme_id)
+      theme_id = psr.key.remove("share:#{theme_owner.id}:").to_i
+
+      @theme ||= Theme.find(theme_id)
+    end
+
     raise Discourse::InvalidAccess.new() if !guardian.can_see_user_theme?(@theme)
 
     respond_to do |format|

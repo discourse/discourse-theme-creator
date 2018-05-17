@@ -82,6 +82,22 @@ after_initialize do
     PluginStore.set('discourse-theme-creator', "share:#{user_id}:#{id}", val)
   end
 
+  # We block hotlinking of other users themes.
+  # If an admin wants to see another users theme, redirect them to the share UI.
+  add_to_class(::Admin::ThemesController, :preview) do
+    @theme ||= Theme.find(params[:id])
+
+    can_hotlink = guardian.can_hotlink_user_theme?(@theme)
+    can_view = guardian.can_see_user_theme?(@theme)
+
+    if !can_hotlink && can_view
+      redirect_to path("/theme/#{@theme.key}")
+    else
+      raise Discourse::InvalidAccess.new() if !can_hotlink
+      redirect_to path("/?preview_theme_key=#{@theme.key}")
+    end
+  end
+
   add_to_serializer(:theme, :is_shared) do
     object.is_shared
   end

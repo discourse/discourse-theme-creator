@@ -1,5 +1,6 @@
 Discourse::Application.routes.append do
   mount ::ThemeCreator::Engine, at: "/user_themes"
+  get "theme/:theme_key" => "theme_creator/theme_creator#share_info"
   get "theme/:username/:slug" => "theme_creator/theme_creator#share_info", constraints: { username: RouteFormat.username }
   get "u/:username/themes" => "users#index", constraints: { username: RouteFormat.username }
   get "u/:username/themes/:id" => "users#index", constraints: { username: RouteFormat.username }
