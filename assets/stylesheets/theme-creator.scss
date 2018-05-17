@@ -2,13 +2,10 @@
   // Left/right column interface
   display: flex;
 
-  .theme-list {
-    width: 200px;
-  }
-
   .theme-details {
     flex-grow: 1;
     margin-left: 20px;
+    width: 70%;
   }
 
   // ACE Editor Sizing
