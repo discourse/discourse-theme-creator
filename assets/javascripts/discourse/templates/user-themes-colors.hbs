@@ -6,6 +6,13 @@
 
   {{#if model.colors.length}}
     <table class="table colors">
+      <thead>
+        <tr>
+          <th></th>
+          <th class="hex">{{i18n 'admin.customize.color'}}</th>
+          <th></th>
+        </tr>
+      </thead>
       <tbody>
       {{#each model.colors as |c|}}
         <tr class="{{if c.changed 'changed'}} {{if c.valid 'valid' 'invalid'}}">
