@@ -1,0 +1,3 @@
+<% content_for :head do %>  
+  <%= raw crawlable_meta_data(title: t('theme_creator.meta_title', theme_name: @theme.name, username: @theme.user.username), description: t('theme_creator.meta_description'), image: @theme.user.small_avatar_url) %>
+<% end %>

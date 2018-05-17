@@ -8,7 +8,7 @@ class ThemeCreator::ThemeCreatorController < Admin::ThemesController
   before_action :ensure_logged_in, except: [:preview, :share_preview, :share_info]
 
   before_action :ensure_own_theme, only: [:destroy, :update, :create_color_scheme, :update_color_scheme, :destroy_color_scheme]
-  skip_before_action :check_xhr, only: [:preview, :share_preview]
+  skip_before_action :check_xhr, only: [:share_info, :preview, :share_preview]
 
   def fetch_api_key
     client_id = "theme_cli_#{current_user.id}"
@@ -61,7 +61,16 @@ class ThemeCreator::ThemeCreatorController < Admin::ThemesController
 
     @theme ||= Theme.find(theme_id)
     raise Discourse::InvalidAccess.new() if !guardian.can_see_user_theme?(@theme)
-    render json: @theme, serializer: ::BasicUserThemeSerializer, root: 'theme'
+
+    respond_to do |format|
+      format.html do
+        render :share_info
+      end
+
+      format.json do
+        render json: @theme, serializer: ::BasicUserThemeSerializer, root: 'theme'
+      end
+    end
   end
 
   def list
