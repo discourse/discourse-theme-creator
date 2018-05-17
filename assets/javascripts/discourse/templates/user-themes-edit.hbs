@@ -1,7 +1,7 @@
 
 <h2>{{i18n 'theme_creator.edit_css_html'}} {{#link-to 'user.themes.show' model.id replace=true}}{{model.name}}{{/link-to}}</h2>
 
-<ul class='admin-controls nav nav-pills target'>
+<ul class='nav nav-pills target'>
   {{#if showCommon}}
     <li>
       {{#link-to 'user.themes.edit' model.id 'common' fieldName replace=true title=field.title}}
@@ -36,7 +36,7 @@
 </ul>
 
 <div class="edit-main-nav">
-  <ul class='nav nav-pills fields'>
+  <ul class='admin-controls nav nav-pills fields'>
     {{#each fields as |field|}}
       <li>
         {{#link-to 'user.themes.edit' model.id currentTargetName field.name replace=true title=field.title}}
