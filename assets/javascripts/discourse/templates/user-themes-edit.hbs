@@ -34,23 +34,26 @@
     </li>
   {{/if}}
 </ul>
-<div class='show-overidden'>
-  <label>
-    {{input type="checkbox" checked=onlyOverridden}}
-    {{i18n 'theme_creator.show_overridden'}}
-  </label>
-</div>
 
-<ul class='nav nav-pills fields'>
-  {{#each fields as |field|}}
-    <li>
-      {{#link-to 'user.themes.edit' model.id currentTargetName field.name replace=true title=field.title}}
-        {{#if field.icon}}{{d-icon field.icon}} {{/if}}
-        {{i18n field.key}}
-      {{/link-to}}
-    </li>
-  {{/each}}
-</ul>
+<div class="edit-main-nav">
+  <ul class='nav nav-pills fields'>
+    {{#each fields as |field|}}
+      <li>
+        {{#link-to 'user.themes.edit' model.id currentTargetName field.name replace=true title=field.title}}
+          {{#if field.icon}}{{d-icon field.icon}} {{/if}}
+          {{i18n field.key}}
+        {{/link-to}}
+      </li>
+    {{/each}}
+  </ul>
+  <div class='show-overidden'>
+    <label>
+      {{input type="checkbox" checked=onlyOverridden}}
+      {{i18n 'theme_creator.show_overridden'}}
+    </label>
+  </div>
+  <div class="clearfix"></div>
+</div>
 
 {{#if error}}
   <pre class='field-error'>{{error}}</pre>
