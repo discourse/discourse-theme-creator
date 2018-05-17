@@ -15,7 +15,6 @@
     {{/if}}
   {{/if}}
 
-  <div class="theme-content">
 
     {{#if model.remote_theme}}
       <p>
@@ -121,11 +120,9 @@
     {{/if}}
 
     <hr/>
+    
     {{d-button action="editLocalModal" icon="pencil" label="theme_creator.edit_local"}}
     <a href='{{previewUrl}}' title="{{i18n 'theme_creator.explain_preview'}}" target='_blank' class='btn'>{{d-icon 'desktop'}}{{i18n 'theme_creator.preview'}}</a>
     {{d-button action="shareModal" label="theme_creator.share" icon="users" class="btn"}}
     {{d-button action="destroy" label="theme_creator.delete" icon="trash" class="btn-danger"}}
-
-  </div>
-
 </div>
