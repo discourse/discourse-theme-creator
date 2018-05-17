@@ -119,13 +119,26 @@
 		}
 	}
 
-	// Indent on theme-show view
-	.theme-content {
-		margin-left: 20px;
+	.current-style {
+		.toggle-maximize {
+			float: right;
 
-		.preview-url {
-			width: 300px;
+			i {
+				margin: 0;
+			}
 		}
+
+		&.maximized {
+	    position: fixed;
+	    top: 0;
+	    bottom: 0;
+	    left: 0;
+	    right: 0;
+	    z-index: 1700;
+	    background-color: white;
+	    padding: 10px;
+	    margin: 0;
+    }
 	}
 }
 
