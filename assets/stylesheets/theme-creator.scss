@@ -5,7 +5,6 @@
   margin-top: -0.5em;
   border-top:  1px solid $primary-low;
 
-
   .theme-details {
     margin-left: 20px;
     width: 70%;
@@ -19,17 +18,25 @@
     width: 25%;
   }
   
-  .edit-main-nav {
-     margin-bottom: 10px;
-    
-    .show-overidden {
-      float: right;
-    }
-  }
-  
   .admin-controls {
     margin: 0;
     padding: 10px;
+  }
+  
+  .user-theme-nav {
+    margin: 0;
+    padding: 10px;
+    display: flex;
+  }
+  
+  li.show-overridden {
+    margin: 0;
+    align-self: flex-end;
+    margin-left: auto;
+    
+    input {
+        vertical-align: middle;
+    }
   }
   
   .show-current-style h3 {
