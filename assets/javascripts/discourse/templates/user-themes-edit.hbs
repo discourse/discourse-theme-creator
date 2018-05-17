@@ -33,6 +33,12 @@
       {{/link-to}}
     </li>
   {{/if}}
+  <li class='show-overidden'>
+    <label>
+      {{input type="checkbox" checked=onlyOverridden}}
+      {{i18n 'theme_creator.show_overridden'}}
+    </label>
+  </li>
 </ul>
 
 <div class="edit-main-nav">
@@ -46,13 +52,6 @@
       </li>
     {{/each}}
   </ul>
-  <div class='show-overidden'>
-    <label>
-      {{input type="checkbox" checked=onlyOverridden}}
-      {{i18n 'theme_creator.show_overridden'}}
-    </label>
-  </div>
-  <div class="clearfix"></div>
 </div>
 
 {{#if error}}
