@@ -15,6 +15,8 @@ export default AdminCustomizeThemesShowController.extend({
     return colorSchemeId === null;
   },
 
+  downloadUrl: url('model.id', '/user_themes/%@'),
+
   actions:{
 
     shareModal(){

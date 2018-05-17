@@ -11,6 +11,7 @@ ThemeCreator::Engine.routes.draw do
   # Theme CRUD
   get "" => "theme_creator#list"
   post "" => "theme_creator#create"
+  get ":id" => "theme_creator#show"
   delete ":id" => "theme_creator#destroy"
   put ":id" => "theme_creator#update"
   get ":id/preview" => "theme_creator#preview"
