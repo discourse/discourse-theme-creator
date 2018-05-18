@@ -4,7 +4,7 @@ import { ajax } from 'discourse/lib/ajax';
 export default Ember.Route.extend({
 
   model(params){
-    return ajax(`/theme/${params.username}/${params.slug}.json`).then((response)=>{
+    return ajax(`/theme/${params.theme_key}.json`).then((response)=>{
       return response['theme'];
     });
   },
@@ -13,6 +13,7 @@ export default Ember.Route.extend({
     this.replaceWith('discovery.latest').then(() => {
       Ember.run.next(() => showModal('user-themes-view-modal', { model: model }));
     });
+
   },
 
 
