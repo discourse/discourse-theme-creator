@@ -27,10 +27,10 @@ export default Discourse.Route.extend({
   },
 
   actions:{
-    addTheme(theme) {
+    addTheme(theme, afterTransition) {
       const all = this.modelFor('user.themes');
       all.pushObject(theme);
-      this.transitionTo('user.themes.show', theme.get('id'));
+      this.transitionTo('user.themes.show', theme.get('id')).then(afterTransition);
     },
 
     newTheme(obj) {
@@ -38,7 +38,9 @@ export default Discourse.Route.extend({
       const item = this.store.createRecord('user_theme');
 
       item.save(obj).then(() => {
-        this.send('addTheme', item);
+        this.send('addTheme', item, (route) => {
+          route.controller.send('createColorScheme');
+        });
       }).catch(popupAjaxError);
     },
 

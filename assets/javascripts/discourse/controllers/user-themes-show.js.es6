@@ -17,7 +17,39 @@ export default AdminCustomizeThemesShowController.extend({
 
   downloadUrl: url('model.id', '/user_themes/%@'),
 
+  @computed('advancedOverride', 'colorSchemes', 'model.uploads', 'hasEditedFields')
+  showAdvanced(advancedOverride, colorSchemes, uploads, hasEditedFields){
+    return advancedOverride || uploads.length > 0 || colorSchemes.length > 2 || hasEditedFields;
+  },
+
+  advancedOverride: false,
+
+  @computed('quickColorScheme')
+  hasQuickColorScheme(scheme){
+    return !!scheme;
+  },
+
+  @computed('showAdvanced', 'colorSchemes')
+  quickColorScheme(showAdvanced, schemes){
+    if(showAdvanced){
+      return null;
+    };
+    const scheme = schemes.find((c) => {return c.id !== null; });
+    return scheme;
+  },
+
   actions:{
+
+    showAdvanced(){
+      this.set('advancedOverride', true);
+    },
+
+    saveQuickColorScheme(){
+      this.set('isSaving', true);
+      this.get('quickColorScheme').save().then(()=>{
+        this.set('isSaving', false);
+      });
+    },
 
     shareModal(){
       showModal('user-themes-share-modal', {model: this.get('model')});

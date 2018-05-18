@@ -27,6 +27,8 @@
       {{/if}}
     {{/if}}
 
+    {{#if showAdvanced}}
+
     <h3>{{i18n "theme_creator.color_scheme"}}</h3>
 
       <p>
@@ -118,9 +120,31 @@
     {{/d-section}}
     {{/if}}
 
+    {{else}}
+      {{#if hasQuickColorScheme}}
+        {{color-scheme-editor colors=quickColorScheme.colors}}
+      {{else}}
+        {{d-button action="createColorScheme" label=(if creatingColorScheme 'theme_creator.adding_color_scheme' 'theme_creator.add_color_scheme') 
+            icon="plus" class="btn" disabled=creatingColorScheme}}
+      {{/if}}
+
+    {{/if}}
+
     <hr>
+    {{#if quickColorScheme}}
+      {{d-button action="saveQuickColorScheme" label="theme_creator.save_quick_color_scheme" class="btn btn-primary" disabled=isSaving}}
+    {{/if}}
+
     {{d-button action="shareModal" label="theme_creator.share" icon="users" class="btn-primary"}}
-    {{d-button action="editLocalModal" icon="pencil" label="theme_creator.edit_local"}}
+
+
+    {{#if quickColorScheme}}
+      {{d-button action="showAdvanced" icon="gear" label="theme_creator.show_advanced"}}
+    {{else}}
+      {{d-button action="editLocalModal" icon="pencil" label="theme_creator.edit_local"}}
+    {{/if}}
+
+
     <a href='{{previewUrl}}' title="{{i18n 'theme_creator.explain_preview'}}" target='_blank' class='btn btn-icon-text'>
       {{d-icon 'desktop'}}
       <span class="d-button-label">
