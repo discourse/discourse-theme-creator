@@ -45,7 +45,7 @@
           {{d-icon 'pencil'}}
         {{/link-to}}
 
-        {{d-button action="destroyColorScheme" title="theme_creator.delete_color_scheme" icon="trash" disabled=colorSchemeEditDisabled}}
+        {{d-button action="destroyColorScheme" title="theme_creator.delete_color_scheme" icon="trash" disabled=colorSchemeEditDisabled class="btn btn-danger"}}
       {{/if}}
       </p>
       <p>
@@ -132,7 +132,9 @@
 
     <hr>
     {{#if quickColorScheme}}
-      {{d-button action="saveQuickColorScheme" label="theme_creator.save_quick_color_scheme" class="btn btn-primary" disabled=isSaving}}
+      {{#d-button action="saveQuickColorScheme" class="btn btn-primary" disabled=isSaving}}
+        {{saveButtonText}}
+      {{/d-button}}
     {{/if}}
 
     {{d-button action="shareModal" label="theme_creator.share" icon="users" class="btn-primary"}}
@@ -144,13 +146,14 @@
       {{d-button action="editLocalModal" icon="pencil" label="theme_creator.edit_local"}}
     {{/if}}
 
-
-    <a href='{{previewUrl}}' title="{{i18n 'theme_creator.explain_preview'}}" target='_blank' class='btn btn-icon-text'>
-      {{d-icon 'desktop'}}
-      <span class="d-button-label">
-        {{i18n 'theme_creator.preview'}}
-      </span>
-    </a>
+    {{#unless hidePreview}}
+      <a href='{{previewUrl}}' title="{{i18n 'theme_creator.explain_preview'}}" target='_blank' class='btn btn-icon-text'>
+        {{d-icon 'desktop'}}
+        <span class="d-button-label">
+          {{i18n 'theme_creator.preview'}}
+        </span>
+      </a>
+    {{/unless}}
     <a class="btn" target="_blank" href={{downloadUrl}}>{{d-icon "download"}} {{i18n 'admin.export_json.button_text'}}</a>
-    {{d-button action="destroy" label="theme_creator.delete" icon="trash"}}
+    {{d-button action="destroy" label="theme_creator.delete" icon="trash" class="btn btn-danger"}}
 </div>

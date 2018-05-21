@@ -1,5 +1,6 @@
 export default {
   shouldRender(args) {
-    return Discourse.User.current().get('id') === args.model.get('id');
+    const current = Discourse.User.current();
+    return current && current.get('id') === args.model.get('id');
   }
 };
