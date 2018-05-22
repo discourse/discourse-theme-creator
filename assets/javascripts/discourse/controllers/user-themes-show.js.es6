@@ -4,9 +4,11 @@ import { ajax } from 'discourse/lib/ajax';
 import { popupAjaxError } from 'discourse/lib/ajax-error';
 import showModal from 'discourse/lib/show-modal';
 import AdminCustomizeThemesShowController from 'admin/controllers/admin-customize-themes-show';
+import ThemesColors from 'discourse/plugins/discourse-theme-creator/discourse/mixins/themes-colors';
 
-export default AdminCustomizeThemesShowController.extend({
-  previewUrl: url('model.id', '/user_themes/%@/preview'),
+export default AdminCustomizeThemesShowController.extend(ThemesColors, {
+  id: Ember.computed.alias("model.id"),
+  colors: Ember.computed.alias('quickColorScheme.colors'),
 
   editRouteName: 'user.themes.edit',
 
@@ -46,7 +48,7 @@ export default AdminCustomizeThemesShowController.extend({
 
     saveQuickColorScheme(){
       this.set('isSaving', true);
-      this.get('quickColorScheme').save().then(()=>{
+      this.get('quickColorScheme').save().then(() => {
         this.set('isSaving', false);
       });
     },

@@ -1,13 +1,10 @@
 import { default as computed } from 'ember-addons/ember-computed-decorators';
 import { url } from 'discourse/lib/computed';
+import ThemesColors from 'discourse/plugins/discourse-theme-creator/discourse/mixins/themes-colors';
 
-export default Ember.Controller.extend({
-  previewUrl: url('model.theme_id', '/user_themes/%@/preview'),
-
-  @computed('isSaving')
-  saveButtonText(isSaving) {
-    return isSaving ? I18n.t('saving') : I18n.t('theme_creator.save');
-  },
+export default Ember.Controller.extend(ThemesColors, {
+  id: Ember.computed.alias("model.theme_id"),
+  colors: Ember.computed.alias("model.colors"),
 
   actions:{
     save(){
@@ -17,5 +14,4 @@ export default Ember.Controller.extend({
       });
     }
   }
-
 });
