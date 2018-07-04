@@ -58,3 +58,5 @@ en:
       edit_local_key: "API Key for Theme CLI:"
       show_key: "Retrieve API Key"
       revoke_instructions: "To revoke access for this key, visit the 'Apps' section of your user preferences."
+
+      styleguide: Styleguide
