@@ -18,13 +18,14 @@ after_initialize do
   end
 
   # Override guardian to allow users to preview their own themes using the ?preview_theme_id= variable
-  add_to_class(:guardian, :allow_theme?) do |theme_id|
-    return true if Theme.user_theme_ids.include?(theme_id) # Is a 'user selectable theme'
-    return false if not Theme.theme_ids.include?(theme_id) # Is not a valid theme
+  add_to_class(:guardian, :allow_themes?) do |theme_ids|
+    theme_ids = [theme_ids] unless theme_ids.is_a?(Array)
+    return true if theme_ids.all? { |id| Theme.user_theme_ids.include?(id) } # Is a 'user selectable theme'
+    return false if theme_ids.any? { |id| not Theme.theme_ids.include?(id) } # Is not a valid theme
 
     # If you own the theme, you are allowed to view it using GET param
     # Even staff are not allowed to use GET to access other user's themes, to reduce XSS attack risk
-    can_hotlink_user_theme? Theme.find_by(id: theme_id)
+    theme_ids.all? { |id| can_hotlink_user_theme?(Theme.find_by(id: id)) }
   end
 
   add_to_class(:guardian, :can_hotlink_user_theme?) do |theme|

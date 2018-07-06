@@ -11,16 +11,16 @@ RSpec.describe ::Guardian do
 
   describe 'hotlinking protection' do
     it 'allows own themes' do
-      expect(guardian1.allow_theme?(theme.id)).to eq(true)
+      expect(guardian1.allow_themes?(theme.id)).to eq(true)
     end
 
     it 'disallows other themes' do
-      expect(guardian2.allow_theme?(theme.id)).to eq(false)
+      expect(guardian2.allow_themes?(theme.id)).to eq(false)
     end
 
     it 'disallows other themes for admins' do
       # This is to reduce XSS risk
-      expect(adminGuardian.allow_theme?(theme.id)).to eq(false)
+      expect(adminGuardian.allow_themes?(theme.id)).to eq(false)
     end
   end
 
