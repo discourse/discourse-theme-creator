@@ -17,14 +17,15 @@ after_initialize do
     ctx.helpers.preload_script('admin')
   end
 
-  # Override guardian to allow users to preview their own themes using the ?preview_theme_key= variable
-  add_to_class(:guardian, :allow_theme?) do |theme_key|
-    return true if Theme.user_theme_keys.include?(theme_key) # Is a 'user selectable theme'
-    return false if not Theme.theme_keys.include?(theme_key) # Is not a valid theme
+  # Override guardian to allow users to preview their own themes using the ?preview_theme_id= variable
+  add_to_class(:guardian, :allow_themes?) do |theme_ids|
+    theme_ids = [theme_ids] unless theme_ids.is_a?(Array)
+    return true if theme_ids.all? { |id| Theme.user_theme_ids.include?(id) } # Is a 'user selectable theme'
+    return false if theme_ids.any? { |id| not Theme.theme_ids.include?(id) } # Is not a valid theme
 
     # If you own the theme, you are allowed to view it using GET param
     # Even staff are not allowed to use GET to access other user's themes, to reduce XSS attack risk
-    can_hotlink_user_theme? Theme.find_by(key: theme_key)
+    theme_ids.all? { |id| can_hotlink_user_theme?(Theme.find_by(id: id)) }
   end
 
   add_to_class(:guardian, :can_hotlink_user_theme?) do |theme|
@@ -91,10 +92,10 @@ after_initialize do
     can_view = guardian.can_see_user_theme?(@theme)
 
     if !can_hotlink && can_view
-      redirect_to path("/theme/#{@theme.key}")
+      redirect_to path("/theme/#{@theme.id}")
     else
       raise Discourse::InvalidAccess.new() if !can_hotlink
-      redirect_to path("/?preview_theme_key=#{@theme.key}")
+      redirect_to path("/?preview_theme_id=#{@theme.id}")
     end
   end
 
@@ -121,18 +122,18 @@ after_initialize do
   end
 
   # Allow preview of shared user themes
-  # flash[:user_theme_key] will only be populated after a POST request
+  # flash[:user_theme_id] will only be populated after a POST request
   # after a UI confirmation (theme_creator_controller.rb) to prevent hotlinking
   reloadable_patch do |plugin|
     class ::ApplicationController
       module ThemeCreatorOverrides
         def handle_theme
           super()
-          user_theme_key = flash[:user_theme_key]
-          if user_theme_key &&
-             Theme.theme_keys.include?(user_theme_key) && # Has requested a valid theme
-             guardian.can_see_user_theme?(Theme.find_by(key: user_theme_key))
-            @theme_key = request.env[:resolved_theme_key] = user_theme_key
+          user_theme_id = flash[:user_theme_id]
+          if user_theme_id &&
+             Theme.theme_ids.include?(user_theme_id) && # Has requested a valid theme
+             guardian.can_see_user_theme?(Theme.find_by(id: user_theme_id))
+            @theme_id = request.env[:resolved_theme_id] = user_theme_id
           end
         end
       end

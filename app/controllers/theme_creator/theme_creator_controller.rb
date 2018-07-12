@@ -30,12 +30,12 @@ class ThemeCreator::ThemeCreatorController < Admin::ThemesController
     render json: { api_key: api_key.key }
   end
 
-  # Preview is used when actively developing a theme, it uses the GET parameter ?preview_theme_key
+  # Preview is used when actively developing a theme, it uses the GET parameter ?preview_theme_id
   def preview
     @theme ||= Theme.find(params[:id])
     raise Discourse::InvalidAccess.new() if !guardian.can_hotlink_user_theme?(@theme)
 
-    redirect_to path("/?preview_theme_key=#{@theme.key}")
+    redirect_to path("/?preview_theme_id=#{@theme.id}")
   end
 
   # Shared preview is used when sharing the theme with others. It is only accessible via POST to avoid
@@ -44,12 +44,12 @@ class ThemeCreator::ThemeCreatorController < Admin::ThemesController
     @theme ||= Theme.find(params[:id])
     raise Discourse::InvalidAccess.new() if !guardian.can_see_user_theme?(@theme)
 
-    redirect_to path('/'), flash: { user_theme_key: @theme.key }
+    redirect_to path('/'), flash: { user_theme_id: @theme.id }
   end
 
   def share_info
-    if params[:theme_key]
-      @theme ||= Theme.find_by(key: params[:theme_key])
+    if params[:theme_id]
+      @theme ||= Theme.find_by(id: params[:theme_id])
     else
       theme_owner = User.find_by(username: params[:username])
 

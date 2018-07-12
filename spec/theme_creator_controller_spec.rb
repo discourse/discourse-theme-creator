@@ -107,7 +107,7 @@ RSpec.describe "Theme Creator Controller", type: :request do
 
       it 'can delete theme' do
         delete "/user_themes/#{theme.id}.json"
-        expect(response).to be_success
+        expect(response).to be_successful
         expect { theme.reload }.to raise_error(ActiveRecord::RecordNotFound)
       end
 
@@ -117,14 +117,14 @@ RSpec.describe "Theme Creator Controller", type: :request do
             name: "New Theme Title"
           }
         }
-        expect(response).to be_success
+        expect(response).to be_successful
         theme.reload
         expect(theme.name).to eq("New Theme Title")
       end
 
       it 'can create color scheme for theme' do
         post "/user_themes/#{theme.id}/colors.json"
-        expect(response).to be_success
+        expect(response).to be_successful
         theme.reload
         expect(theme.color_schemes.count).to eq(1)
       end
@@ -136,14 +136,14 @@ RSpec.describe "Theme Creator Controller", type: :request do
             colors: []
           }
         }
-        expect(response).to be_success
+        expect(response).to be_successful
         color_scheme.reload
         expect(color_scheme.name).to eq("Some New Name")
       end
 
       it "can delete color scheme" do
         delete "/user_themes/#{theme.id}/colors/#{color_scheme.id}.json"
-        expect(response).to be_success
+        expect(response).to be_successful
         expect { color_scheme.reload }.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
