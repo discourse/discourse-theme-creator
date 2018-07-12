@@ -21,6 +21,9 @@ export default Ember.Controller.extend(ModalFunctionality, {
         $('#view-theme-form').submit();
       }
     },
+    download() {
+      document.location = `${Discourse.BaseUri}/theme/${this.model.user.username}/${this.model.id}/download`;
+    },
     cancel(){
       this.send('closeModal');
     }

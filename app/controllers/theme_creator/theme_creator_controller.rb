@@ -5,9 +5,11 @@ class ThemeCreator::ThemeCreatorController < Admin::ThemesController
   requires_login(nil) # Override the blanket "require logged in" from the admin controller
   skip_before_action :ensure_staff # Open up to non-staff
 
-  before_action :ensure_logged_in, except: [:preview, :share_preview, :share_info]
+  before_action :ensure_logged_in, except: [:show, :preview, :share_preview, :share_info]
 
-  before_action :ensure_own_theme, only: [:show, :destroy, :update, :create_color_scheme, :update_color_scheme, :destroy_color_scheme]
+  before_action :ensure_own_theme, only: [:destroy, :update, :create_color_scheme, :update_color_scheme, :destroy_color_scheme]
+  before_action :ensure_can_see_user_theme, only: [:show]
+
   skip_before_action :check_xhr, only: [:share_info, :preview, :share_preview]
 
   def fetch_api_key
@@ -213,6 +215,11 @@ class ThemeCreator::ThemeCreatorController < Admin::ThemesController
       if @theme.user_id != current_user.id
         raise Discourse::InvalidAccess.new("Cannot modify another user's theme.")
       end
+    end
+
+    def ensure_can_see_user_theme
+      @theme = Theme.find(params[:id])
+      raise Discourse::InvalidAccess.new() if !guardian.can_see_user_theme?(@theme)
     end
 
 end

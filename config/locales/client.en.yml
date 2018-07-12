@@ -52,6 +52,7 @@ en:
       view_shared_theme: "View Shared Theme"
       view_shared_theme_education: "(Return to your current theme by refreshing the page)"
       view_theme: "View Theme"
+      download_theme: "Download Theme"
 
       edit_local: "Edit Locally"
       edit_local_description: "The <b>Discourse Theme CLI</b> is a console application allowing you to edit a theme on your local computer, and instantly preview changes online. To get started, follow the instructions on <a href='https://meta.discourse.org/t/discourse-theme-cli-console-app-to-help-you-build-themes/82950'>Discourse Meta</a>."
