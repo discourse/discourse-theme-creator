@@ -119,6 +119,10 @@ after_initialize do
     class ::Theme
       belongs_to :user
     end
+
+    class ::ThemeWithEmbeddedUploadsSerializer
+      has_one :color_scheme, serializer: ColorSchemeSerializer, embed: :objects
+    end
   end
 
   # Allow preview of shared user themes
