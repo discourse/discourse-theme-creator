@@ -86,7 +86,7 @@ class ThemeCreator::ThemeCreatorController < Admin::ThemesController
 
     # Only present color schemes that are attached to the user's themes
     @color_schemes = ColorScheme.where(theme_id: @theme.pluck(:id)).to_a
-    light = ColorScheme.new(name: I18n.t("color_schemes.default"))
+    light = ColorScheme.new(name: I18n.t("color_schemes.light"))
     @color_schemes.unshift(light)
 
     payload = {
