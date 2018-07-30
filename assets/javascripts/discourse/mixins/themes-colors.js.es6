@@ -11,6 +11,6 @@ export default Ember.Mixin.create({
 
   @computed("colors.@each.changed")
   hidePreview(colors) {
-    return colors && colors.some(color => color.get("changed"))
+    return colors && colors.some(color => color.get("changed"));
   }
 });

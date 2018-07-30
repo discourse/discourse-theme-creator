@@ -1,5 +1,3 @@
-import { default as computed } from 'ember-addons/ember-computed-decorators';
-import { url } from 'discourse/lib/computed';
 import ThemesColors from 'discourse/plugins/discourse-theme-creator/discourse/mixins/themes-colors';
 
 export default Ember.Controller.extend(ThemesColors, {
