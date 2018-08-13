@@ -137,7 +137,7 @@ after_initialize do
           if user_theme_id &&
              Theme.theme_ids.include?(user_theme_id) && # Has requested a valid theme
              guardian.can_see_user_theme?(Theme.find_by(id: user_theme_id))
-            @theme_id = request.env[:resolved_theme_id] = user_theme_id
+            @theme_ids = request.env[:resolved_theme_ids] = [user_theme_id]
           end
         end
       end

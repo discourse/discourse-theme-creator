@@ -86,7 +86,7 @@ class ThemeCreator::ThemeCreatorController < Admin::ThemesController
 
     # Only present color schemes that are attached to the user's themes
     @color_schemes = ColorScheme.where(theme_id: @theme.pluck(:id)).to_a
-    light = ColorScheme.new(name: I18n.t("color_schemes.default"))
+    light = ColorScheme.new(name: I18n.t("color_schemes.light"))
     @color_schemes.unshift(light)
 
     payload = {
@@ -187,39 +187,38 @@ class ThemeCreator::ThemeCreatorController < Admin::ThemesController
 
   private
 
-    # Override with a restricted version
-    # Users shouldn't be able to modify:
-    #  - :default and :user_selectable
-    #  - :child_theme_ids
-    # But we want to add
-    #  - is_shared
-    #  - share_slug
-    def theme_params
-      @theme_params ||=
-        begin
-          params.require(:theme).permit(
-            :name,
-            :share_slug,
-            :color_scheme_id,
-            # :default,
-            # :user_selectable,
-            settings: {},
-            theme_fields: [:name, :target, :value, :upload_id, :type_id],
-            # child_theme_ids: []
-          )
-        end
-    end
-
-    def ensure_own_theme
-      @theme = Theme.find(params[:id])
-      if @theme.user_id != current_user.id
-        raise Discourse::InvalidAccess.new("Cannot modify another user's theme.")
+  # Override with a restricted version
+  # Users shouldn't be able to modify:
+  #  - :default and :user_selectable
+  #  - :child_theme_ids
+  # But we want to add
+  #  - is_shared
+  #  - share_slug
+  def theme_params
+    @theme_params ||=
+      begin
+        params.require(:theme).permit(
+          :name,
+          :share_slug,
+          :color_scheme_id,
+          # :default,
+          # :user_selectable,
+          settings: {},
+          theme_fields: [:name, :target, :value, :upload_id, :type_id],
+          # child_theme_ids: []
+        )
       end
-    end
+  end
 
-    def ensure_can_see_user_theme
-      @theme = Theme.find(params[:id])
-      raise Discourse::InvalidAccess.new() if !guardian.can_see_user_theme?(@theme)
+  def ensure_own_theme
+    @theme = Theme.find(params[:id])
+    if @theme.user_id != current_user.id
+      raise Discourse::InvalidAccess.new("Cannot modify another user's theme.")
     end
+  end
 
+  def ensure_can_see_user_theme
+    @theme = Theme.find(params[:id])
+    raise Discourse::InvalidAccess.new() if !guardian.can_see_user_theme?(@theme)
+  end
 end

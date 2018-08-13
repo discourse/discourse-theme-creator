@@ -58,13 +58,13 @@ RSpec.describe "Theme Creator Controller", type: :request do
 
   describe 'show' do
     it "fails to download other users themes" do
-      get "/theme/#{user1.username}/#{theme.id}/download"
+      get "/user_themes/#{theme.id}"
       expect(response).to have_http_status(403)
     end
 
     it "downloads own themes" do
       sign_in(user1)
-      get "/theme/#{user1.username}/#{theme.id}/download"
+      get "/user_themes/#{theme.id}"
       expect(response).to have_http_status(200)
     end
 
@@ -73,7 +73,7 @@ RSpec.describe "Theme Creator Controller", type: :request do
       theme.share_slug = 'mytheme'
       theme.save!
 
-      get "/theme/#{user1.username}/#{theme.id}/download"
+      get "/user_themes/#{theme.id}"
       expect(response).to have_http_status(200)
     end
   end
