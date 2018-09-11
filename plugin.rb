@@ -18,7 +18,7 @@ after_initialize do
   end
 
   # Override guardian to allow users to preview their own themes using the ?preview_theme_id= variable
-  add_to_class(:guardian, :allow_themes?) do |theme_ids|
+  add_to_class(:guardian, :allow_themes?) do |theme_ids, include_preview: false|
     theme_ids = [theme_ids] unless theme_ids.is_a?(Array)
     return true if theme_ids.all? { |id| Theme.user_theme_ids.include?(id) } # Is a 'user selectable theme'
     return false if theme_ids.any? { |id| not Theme.theme_ids.include?(id) } # Is not a valid theme
