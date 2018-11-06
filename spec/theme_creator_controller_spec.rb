@@ -53,6 +53,12 @@ RSpec.describe "Theme Creator Controller", type: :request do
       SiteSetting.theme_creator_share_groups = ''
       get "/theme/#{user1.username}/#{theme.share_slug}.json"
       expect(response).to have_http_status(200)
+
+      get "/theme/user-not-found/#{theme.share_slug}.json"
+      expect(response).to have_http_status(404)
+
+      get '/theme/theme-not-found.json'
+      expect(response).to have_http_status(404)
     end
   end
 
