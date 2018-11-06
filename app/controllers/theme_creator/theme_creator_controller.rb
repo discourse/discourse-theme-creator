@@ -51,9 +51,9 @@ class ThemeCreator::ThemeCreatorController < Admin::ThemesController
 
   def share_info
     if params[:theme_id]
-      @theme ||= Theme.find_by(id: params[:theme_id])
+      @theme ||= Theme.find(params[:theme_id])
     else
-      theme_owner = User.find_by(username: params[:username])
+      raise Discourse::NotFound unless theme_owner = User.find_by_username(params[:username])
 
       result = PluginStoreRow.where(plugin_name: 'discourse-theme-creator')
         .where("key LIKE ?", "share:#{theme_owner.id}:%")
