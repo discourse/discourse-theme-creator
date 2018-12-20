@@ -108,7 +108,7 @@ after_initialize do
   end
 
   add_to_serializer(:theme, :base_share_url) do
-    UrlHelper.absolute_without_cdn("/theme/#{object.user.username}/")
+    UrlHelper.absolute_without_cdn("/theme/#{object.user&.username}/")
   end
 
   add_to_serializer(:theme, :can_share) do
