@@ -5,10 +5,9 @@ class ThemeCreator::ThemeCreatorController < Admin::ThemesController
   requires_login(nil) # Override the blanket "require logged in" from the admin controller
   skip_before_action :ensure_staff # Open up to non-staff
 
-  before_action :ensure_logged_in, except: [:show, :preview, :share_preview, :share_info]
+  before_action :ensure_logged_in, except: [:preview, :share_preview, :share_info]
 
-  before_action :ensure_own_theme, only: [:destroy, :update, :create_color_scheme, :update_color_scheme, :destroy_color_scheme]
-  before_action :ensure_can_see_user_theme, only: [:show]
+  before_action :ensure_own_theme, only: [:show, :export, :destroy, :update, :create_color_scheme, :update_color_scheme, :destroy_color_scheme]
 
   skip_before_action :check_xhr, only: [:share_info, :preview, :share_preview]
 
@@ -203,7 +202,9 @@ class ThemeCreator::ThemeCreatorController < Admin::ThemesController
           :color_scheme_id,
           # :default,
           # :user_selectable,
+          :component,
           settings: {},
+          translations: {},
           theme_fields: [:name, :target, :value, :upload_id, :type_id],
           # child_theme_ids: []
         )

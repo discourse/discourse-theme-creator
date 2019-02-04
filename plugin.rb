@@ -115,16 +115,6 @@ after_initialize do
     User.find(object.user_id).guardian.can_share_user_theme?(object)
   end
 
-  reloadable_patch do |plugin|
-    class ::Theme
-      belongs_to :user
-    end
-
-    class ::ThemeWithEmbeddedUploadsSerializer
-      has_one :color_scheme, serializer: ColorSchemeSerializer, embed: :objects
-    end
-  end
-
   # Allow preview of shared user themes
   # flash[:user_theme_id] will only be populated after a POST request
   # after a UI confirmation (theme_creator_controller.rb) to prevent hotlinking
@@ -146,7 +136,13 @@ after_initialize do
   end
 
   reloadable_patch do |plugin|
-    UserApiKey::SCOPES[:user_themes] = [[:post, 'theme_creator/theme_creator#import'], [:put, 'theme_creator/theme_creator#update']]
+    UserApiKey::SCOPES[:user_themes] = [
+      [:post, 'theme_creator/theme_creator#import'],
+      [:put, 'theme_creator/theme_creator#update'],
+      [:get, 'theme_creator/theme_creator#list'],
+      [:get, 'theme_creator/theme_creator#export'],
+      [:get, 'about#index']
+       ]
   end
 
 end

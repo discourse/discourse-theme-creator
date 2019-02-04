@@ -61,3 +61,10 @@ en:
       revoke_instructions: "To revoke access for this key, visit the 'Apps' section of your user preferences."
 
       styleguide: Styleguide
+
+      theme: "Type: Theme"
+      component: "Type: Component"
+      is_a_theme: This is a Discourse theme. Themes are designed to represent separate standalone designs, so multiple themes cannot be used simultaneously.
+      is_a_component: This is a Discourse theme component. Themes components are building blocks which can be combined to customize a Discourse site. Multiple components can be active simultaneously.
+      convert_to_theme: Convert to Theme
+      convert_to_component: Convert to Component

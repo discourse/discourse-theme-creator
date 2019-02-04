@@ -7,6 +7,7 @@ import AdminCustomizeThemesShowController from "admin/controllers/admin-customiz
 import ThemesColors from "discourse/plugins/discourse-theme-creator/discourse/mixins/themes-colors";
 
 export default AdminCustomizeThemesShowController.extend(ThemesColors, {
+  parentController: Ember.Object.create({ model: { content: [] } }),
   id: Ember.computed.alias("model.id"),
   colors: Ember.computed.alias("quickColorScheme.colors"),
 
@@ -17,20 +18,28 @@ export default AdminCustomizeThemesShowController.extend(ThemesColors, {
     return colorSchemeId === null;
   },
 
-  downloadUrl: url("model.id", "/user_themes/%@"),
+  downloadUrl: url("model.id", "/user_themes/%@/export"),
 
   @computed(
     "advancedOverride",
     "colorSchemes",
     "model.uploads",
-    "hasEditedFields"
+    "hasEditedFields",
+    "model.component"
   )
-  showAdvanced(advancedOverride, colorSchemes, uploads, hasEditedFields) {
+  showAdvanced(
+    advancedOverride,
+    colorSchemes,
+    uploads,
+    hasEditedFields,
+    component
+  ) {
     return (
       advancedOverride ||
       uploads.length > 0 ||
       colorSchemes.length > 2 ||
-      hasEditedFields
+      hasEditedFields ||
+      component
     );
   },
 
