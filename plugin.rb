@@ -62,6 +62,10 @@ after_initialize do
     @share_slug ||= PluginStore.get('discourse-theme-creator', "share:#{user_id}:#{id}")
   end
 
+  add_model_callback(:theme, :after_destroy) do
+    PluginStore.remove('discourse-theme-creator', "share:#{user_id}:#{id}")
+  end
+
   add_to_class(:theme, :share_slug=) do |val|
     if !val
       @share_slug = nil
