@@ -11,7 +11,7 @@
 
   {{#if model.is_shared}}
     {{#if model.can_share}}
-      {{i18n 'theme_creator.shared_at'}} <code>{{model.base_share_url}}{{model.share_slug}}</code> <a {{action "shareModal"}}>{{d-icon "pencil"}}</a>
+      <div class="control-unit share-information">{{i18n 'theme_creator.shared_at'}} <code>{{model.base_share_url}}{{model.share_slug}}</code> <a {{action "shareModal"}}>{{d-icon "pencil"}}</a></div>
     {{/if}}
   {{/if}}
 
