@@ -24,7 +24,7 @@ export default AdminCustomizeThemesShowController.extend(ThemesColors, {
     "advancedOverride",
     "colorSchemes",
     "model.uploads",
-    "hasEditedFields",
+    "model.hasEditedFields",
     "model.component"
   )
   showAdvanced(
