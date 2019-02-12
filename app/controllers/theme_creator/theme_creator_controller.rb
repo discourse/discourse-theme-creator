@@ -81,7 +81,7 @@ class ThemeCreator::ThemeCreatorController < Admin::ThemesController
   end
 
   def list
-    @theme = Theme.where(user_id: current_user.id).order(:name).includes(:theme_fields, :remote_theme)
+    @theme = Theme.where(user_id: theme_user.id).order(:name).includes(:theme_fields, :remote_theme)
 
     # Only present color schemes that are attached to the user's themes
     @color_schemes = ColorScheme.where(theme_id: @theme.pluck(:id)).to_a
@@ -213,7 +213,7 @@ class ThemeCreator::ThemeCreatorController < Admin::ThemesController
 
   def ensure_own_theme
     @theme = Theme.find(params[:id])
-    if @theme.user_id != current_user.id
+    if !(@theme.user_id == current_user.id || current_user.staff?)
       raise Discourse::InvalidAccess.new("Cannot modify another user's theme.")
     end
   end
@@ -221,5 +221,11 @@ class ThemeCreator::ThemeCreatorController < Admin::ThemesController
   def ensure_can_see_user_theme
     @theme = Theme.find(params[:id])
     raise Discourse::InvalidAccess.new() if !guardian.can_see_user_theme?(@theme)
+  end
+
+  def theme_user
+    user_id = params[:user_id] || params.dig(:theme, :user_id) || current_user.id
+    raise Discourse::InvalidAccess.new() unless (user_id == current_user.id) || current_user.staff?
+    User.find(user_id)
   end
 end

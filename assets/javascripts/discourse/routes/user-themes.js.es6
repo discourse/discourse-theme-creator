@@ -5,33 +5,35 @@ import showModal from "discourse/lib/show-modal";
 
 export default Discourse.Route.extend({
   model() {
-    return this.store.findAll("user-theme").then(data => {
-      var ColorSchemes = Ember.ArrayProxy.extend({});
-      var colorSchemes = ColorSchemes.create({ content: [], loading: true });
-      data.extras.color_schemes.forEach(colorScheme => {
-        colorSchemes.pushObject(
-          UserColorScheme.create({
-            id: colorScheme.id,
-            name: colorScheme.name,
-            is_base: colorScheme.is_base,
-            theme_id: colorScheme.theme_id,
-            theme_name: colorScheme.theme_name,
-            base_scheme_id: colorScheme.base_scheme_id,
-            colors: colorScheme.colors.map(function(c) {
-              return ColorSchemeColor.create({
-                name: c.name,
-                hex: c.hex,
-                default_hex: c.default_hex
-              });
+    return this.store
+      .findAll("user-theme", { user_id: this.modelFor("user").id })
+      .then(data => {
+        var ColorSchemes = Ember.ArrayProxy.extend({});
+        var colorSchemes = ColorSchemes.create({ content: [], loading: true });
+        data.extras.color_schemes.forEach(colorScheme => {
+          colorSchemes.pushObject(
+            UserColorScheme.create({
+              id: colorScheme.id,
+              name: colorScheme.name,
+              is_base: colorScheme.is_base,
+              theme_id: colorScheme.theme_id,
+              theme_name: colorScheme.theme_name,
+              base_scheme_id: colorScheme.base_scheme_id,
+              colors: colorScheme.colors.map(function(c) {
+                return ColorSchemeColor.create({
+                  name: c.name,
+                  hex: c.hex,
+                  default_hex: c.default_hex
+                });
+              })
             })
-          })
-        );
+          );
+        });
+
+        data.set("colorSchemes", colorSchemes);
+
+        return data;
       });
-
-      data.set("colorSchemes", colorSchemes);
-
-      return data;
-    });
   },
 
   actions: {
@@ -45,6 +47,7 @@ export default Discourse.Route.extend({
 
     newTheme(obj) {
       obj = obj || { name: I18n.t("theme_creator.new_theme_title") };
+      obj["user_id"] = this.modelFor("user").id;
       const item = this.store.createRecord("user_theme");
 
       item
@@ -60,7 +63,8 @@ export default Discourse.Route.extend({
     importModal() {
       showModal("user-themes-import-modal", {
         admin: true,
-        templateName: "admin-import-theme"
+        templateName: "admin-import-theme",
+        model: { user_id: this.modelFor("user").id }
       });
     },
 
