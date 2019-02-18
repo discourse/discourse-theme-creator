@@ -225,7 +225,7 @@ class ThemeCreator::ThemeCreatorController < Admin::ThemesController
 
   def theme_user
     user_id = params[:user_id] || params.dig(:theme, :user_id) || current_user.id
-    raise Discourse::InvalidAccess.new() unless (user_id == current_user.id) || current_user.staff?
+    raise Discourse::InvalidAccess.new() unless (user_id.to_i == current_user.id) || current_user.staff?
     User.find(user_id)
   end
 end
