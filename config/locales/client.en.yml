@@ -7,11 +7,7 @@ en:
       share: "Share"
       delete: "Delete"
       explain_preview: "Preview this theme"
-      target:
-        common: "Common"
-        mobile: "Mobile"
-        desktop: "Desktop"
-        settings: "Settings"
+      
       show_overridden: "Only show overriden"
 
       my_themes: My Themes

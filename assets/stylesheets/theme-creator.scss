@@ -5,40 +5,23 @@
   margin-top: -0.5em;
   border-top: 1px solid $primary-low;
 
-  .error {
-    color: $danger;
-  }
-
   .theme-details {
     margin-left: 20px;
     width: 70%;
-  }
 
-  .theme.settings {
-    .theme-setting,
-    .theme-translation {
-      padding-bottom: 0;
-      margin-top: 18px;
-      min-height: 35px;
+    &.editing {
+      margin-left: 0px;
+      width: 100%;
     }
-    .setting-label {
-      width: 25%;
-      word-wrap: break-word;
-      h3 {
-        margin-top: 0;
-        margin-bottom: 0.5rem;
-      }
+
+    .wrapper {
+      display: block;
+      width: 100%;
     }
   }
 
   .user-theme-button {
     margin: 0.5em 0.45em 0 0;
-  }
-
-  .admin-controls {
-    margin: 0;
-    padding: 10px;
-    position: relative;
   }
 
   .user-theme-nav {
@@ -47,22 +30,13 @@
     display: flex;
   }
 
-  li.show-overidden {
-    margin: 0;
-    align-self: flex-end;
-    margin-left: auto;
-
-    input {
-      vertical-align: middle;
-    }
-  }
-
   h1 {
     margin-bottom: 10px;
   }
 
   .show-current-style {
-    display: inline-block;
+    display: block;
+    width: 100%;
     vertical-align: top;
 
     .btn {
@@ -178,47 +152,6 @@
       background-color: white;
       color: black;
       border-color: $danger;
-    }
-  }
-
-  .current-style {
-    .toggle-maximize {
-      margin-right: 0;
-      position: absolute;
-      right: 0;
-      .d-icon {
-        margin: 0;
-      }
-    }
-
-    &.maximized {
-      position: fixed;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      z-index: 1700;
-      background-color: white;
-      padding: 10px;
-      margin: 0;
-    }
-
-    .nav.target {
-      margin-top: 15px;
-
-      li {
-        position: relative;
-
-        a {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-        }
-      }
-
-      .fa {
-        margin-left: 8px;
-      }
     }
   }
 }

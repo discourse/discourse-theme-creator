@@ -6,10 +6,5 @@ export default AdminCustomizeThemesEdit.extend({
   previewUrl: url("model.id", "/user_themes/%@/preview"),
 
   editRouteName: "user.themes.edit",
-
-  // YAML isn't shown in admin interface, so we need to override
-  @computed("onlyOverridden")
-  showSettings() {
-    return this.shouldShow("settings");
-  }
+  showRouteName: "user.themes.show"
 });

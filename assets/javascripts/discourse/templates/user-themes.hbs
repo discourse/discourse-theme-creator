@@ -1,4 +1,4 @@
-<div class="user-theme-creator">
+<div class="user-theme-creator admin-customize">
   {{#unless editingTheme}}
   <div class='content-list theme-list'>
     <h3>{{i18n 'theme_creator.my_themes'}}</h3>
@@ -16,7 +16,7 @@
     
   </div>
   {{/unless}}
-  <div class="theme-details">
+  <div class="theme-details {{if editingTheme "editing"}}">
   {{outlet}}
   </div>
 </div>
