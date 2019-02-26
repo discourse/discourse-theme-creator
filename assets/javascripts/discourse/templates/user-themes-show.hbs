@@ -212,8 +212,11 @@
       {{#if hasQuickColorScheme}}
         {{color-scheme-editor colors=quickColorScheme.colors}}
       {{else}}
-        {{d-button action="createColorScheme" label=(if creatingColorScheme 'theme_creator.adding_color_scheme' 'theme_creator.add_color_scheme') 
-            icon="plus" class="btn" disabled=creatingColorScheme}}
+        <div class="control-unit">
+          {{d-button action="createColorScheme" label=(if creatingColorScheme 'theme_creator.adding_color_scheme' 'theme_creator.add_color_scheme') 
+              icon="plus" class="btn" disabled=creatingColorScheme class="btn-primary"}}
+          {{d-button action="showAdvanced" icon="gear" label="theme_creator.show_advanced"}}
+        </div>
       {{/if}}
   {{/if}}
 
@@ -227,7 +230,7 @@
 
   {{#if quickColorScheme}}
     {{d-button action="showAdvanced" icon="gear" label="theme_creator.show_advanced"}}
-  {{else}}
+  {{else if showAdvanced}}
     {{d-button action="editLocalModal" icon="pencil" label="theme_creator.edit_local"}}
   {{/if}}
 

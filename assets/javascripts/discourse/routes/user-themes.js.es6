@@ -45,25 +45,10 @@ export default Discourse.Route.extend({
       );
     },
 
-    newTheme(obj) {
-      obj = obj || { name: I18n.t("theme_creator.new_theme_title") };
-      obj["user_id"] = this.modelFor("user").id;
-      const item = this.store.createRecord("user_theme");
-
-      item
-        .save(obj)
-        .then(() => {
-          this.send("addTheme", item, route => {
-            route.controller.send("createColorScheme");
-          });
-        })
-        .catch(popupAjaxError);
-    },
-
-    importModal() {
-      showModal("user-themes-import-modal", {
+    installModal() {
+      showModal("user-themes-install-modal", {
         admin: true,
-        templateName: "admin-import-theme",
+        templateName: "admin-install-theme",
         model: { user_id: this.modelFor("user").id }
       });
     },

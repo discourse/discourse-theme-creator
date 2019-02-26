@@ -11,8 +11,7 @@
         </li>
       {{/each}}
     </ul>
-    <p>{{d-button label="theme_creator.new_theme" icon="plus" action="newTheme" class="btn-primary"}}</p>
-    <p>{{d-button action="importModal" icon="upload" label="admin.customize.import"}}</p>
+    <p>{{d-button action=(route-action 'installModal') icon="plus" label="theme_creator.new_theme" class="btn-primary"}}</p>
     
   </div>
   {{/unless}}
