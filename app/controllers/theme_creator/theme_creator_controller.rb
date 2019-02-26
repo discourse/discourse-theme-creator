@@ -81,10 +81,20 @@ class ThemeCreator::ThemeCreatorController < Admin::ThemesController
   end
 
   def list
-    @theme = Theme.where(user_id: theme_user.id).order(:name).includes(:theme_fields, :remote_theme)
+    @theme = Theme.where(user_id: theme_user.id).order(:name).includes(
+      :child_themes,
+      :parent_themes,
+      :remote_theme,
+      :theme_settings,
+      :settings_field,
+      # :locale_fields, # Fails due to https://github.com/rails/rails/issues/34456
+      :user,
+      :color_scheme,
+      theme_fields: :upload
+      )
 
     # Only present color schemes that are attached to the user's themes
-    @color_schemes = ColorScheme.where(theme_id: @theme.pluck(:id)).to_a
+    @color_schemes = ColorScheme.where(theme_id: @theme.pluck(:id)).includes(color_scheme_colors: :color_scheme).to_a
     light = ColorScheme.new(name: I18n.t("color_schemes.light"))
     @color_schemes.unshift(light)
 
