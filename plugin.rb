@@ -9,6 +9,7 @@ register_asset "stylesheets/theme-creator.scss"
 load File.expand_path('../lib/theme_creator/engine.rb', __FILE__)
 
 after_initialize do
+  require_relative "app/jobs/scheduled/cleanup_topics"
 
   # We're re-using a lot of locale strings from the admin section
   # so we need to load it for non-staff users.

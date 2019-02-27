@@ -2,3 +2,6 @@ plugins:
   theme_creator_share_groups:
     default: 'trust_level_3'
     type: 'list'
+  theme_creator_junk_category_ids:
+    type: 'list'
+    default: ""
