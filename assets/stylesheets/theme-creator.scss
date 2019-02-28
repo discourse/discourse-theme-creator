@@ -5,6 +5,15 @@
   margin-top: -0.5em;
   border-top: 1px solid $primary-low;
 
+  .control-unit.metadata {
+    .metadata-field {
+      margin-bottom: 0.5em;
+    }
+    .label {
+      font-weight: bold;
+    }
+  }
+
   .theme-details {
     margin-left: 20px;
     width: 70%;
@@ -37,7 +46,6 @@
   .show-current-style {
     display: block;
     width: 100%;
-    vertical-align: top;
 
     .btn {
       line-height: $line-height-medium; // Temporary button-height fix

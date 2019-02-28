@@ -62,6 +62,10 @@ export default AdminCustomizeThemesShowController.extend(ThemesColors, {
   },
 
   actions: {
+    saveMetadata() {
+      return this.get("model").saveChanges("remote_theme");
+    },
+
     showAdvanced() {
       this.set("advancedOverride", true);
     },

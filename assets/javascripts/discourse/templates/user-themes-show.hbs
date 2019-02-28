@@ -29,7 +29,7 @@
         {{i18n "admin.customize.theme.required_version.minimum" version=model.remote_theme.minimum_discourse_version}}
       {{/if}}
       {{#if model.remote_theme.maximum_discourse_version}}
-        {{i18n "admin.customize.theme.required_version.minimum" version=model.remote_theme.maximum_discourse_version}}
+        {{i18n "admin.customize.theme.required_version.maximum" version=model.remote_theme.maximum_discourse_version}}
       {{/if}}
     </div>
   {{/unless}}
@@ -91,10 +91,6 @@
               {{/if}}
             {{/if}}
           </span>
-      {{else}}
-        <span class='status-message'>
-          {{d-icon "info-circle"}} {{i18n "admin.customize.theme.imported_from_archive"}}
-        </span>
       {{/if}}
     </div>
   {{/if}}
@@ -122,6 +118,47 @@
           {{d-button action=(action "switchType") label="theme_creator.convert_to_component" icon=convertIcon class="btn-default btn-normal" title=convertTooltip}}
         {{/if}}
       </div>
+    </div>
+
+    <div class="control-unit metadata">
+      <div class="mini-title">{{i18n "theme_creator.metadata"}}</div>
+      
+      {{theme-metadata-field 
+        icon="link"
+        label="theme_creator.about_url"
+        value=model.remote_theme.about_url 
+        save=(action "saveMetadata")
+      }}
+      {{theme-metadata-field 
+        icon="link"
+        label="theme_creator.license_url"
+        value=model.remote_theme.license_url 
+        save=(action "saveMetadata")
+      }}
+      {{theme-metadata-field 
+        icon="users"
+        label="theme_creator.authors"
+        value=model.remote_theme.authors 
+        save=(action "saveMetadata")
+      }}
+      {{theme-metadata-field 
+        icon="info-circle"
+        label="theme_creator.theme_version"
+        value=model.remote_theme.theme_version 
+        save=(action "saveMetadata")
+      }}
+      {{theme-metadata-field 
+        icon="arrow-left"
+        label="theme_creator.minimum_discourse_version"
+        value=model.remote_theme.minimum_discourse_version 
+        save=(action "saveMetadata")
+      }}
+      {{theme-metadata-field 
+        icon="arrow-right"
+        label="theme_creator.maximum_discourse_version"
+        value=model.remote_theme.maximum_discourse_version 
+        save=(action "saveMetadata")
+      }}
     </div>
 
     {{#unless model.component}}

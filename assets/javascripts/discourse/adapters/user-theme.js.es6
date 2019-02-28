@@ -33,5 +33,15 @@ export default Theme.extend({
         return new Result(json[typeField], json);
       }
     );
+  },
+
+  afterFindAll(results) {
+    results = this._super(results);
+    results.forEach(theme => {
+      if (!theme.get("remote_theme")) {
+        theme.set("remote_theme", {});
+      }
+    });
+    return results;
   }
 });

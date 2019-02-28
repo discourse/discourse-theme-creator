@@ -124,6 +124,15 @@ class ThemeCreator::ThemeCreatorController < Admin::ThemesController
       end
     end
 
+    # Set the user_theme specific fields
+    [:about_url, :license_url, :theme_version, :authors, :minimum_discourse_version, :maximum_discourse_version].each do |field|
+      if theme_params[:remote_theme]&.key?(field)
+        @theme.build_remote_theme(remote_url: "") unless @theme.remote_theme
+        @theme.remote_theme.send("#{field}=", theme_params[:remote_theme][field])
+        @theme.remote_theme.save!
+      end
+    end
+
     # Check color scheme permission
     if theme_params.key?(:color_scheme_id) && !theme_params[:color_scheme_id].nil?
       color_scheme = ColorScheme.find(theme_params[:color_scheme_id])
@@ -215,6 +224,7 @@ class ThemeCreator::ThemeCreatorController < Admin::ThemesController
           :component,
           settings: {},
           translations: {},
+          remote_theme: {},
           theme_fields: [:name, :target, :value, :upload_id, :type_id],
           # child_theme_ids: []
         )

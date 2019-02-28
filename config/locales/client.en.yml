@@ -33,6 +33,8 @@ en:
       no_edited_sections: "You have not edited any CSS or HTML"
 
       theme_settings: "Theme Settings"
+
+      metadata: "Metadata"
       
       uploads: "Uploads"
       no_uploads: "You can upload assets associated with your theme such as fonts and images"
@@ -64,3 +66,12 @@ en:
       is_a_component: This is a Discourse theme component. Themes components are building blocks which can be combined to customize a Discourse site. Multiple components can be active simultaneously.
       convert_to_theme: Convert to Theme
       convert_to_component: Convert to Component
+
+      about_url: About URL
+      license_url: License URL
+      authors: Authors
+      theme_version: Theme Version
+      minimum_discourse_version: Minimum Discourse Version
+      maximum_discourse_version: Maximum Discourse Version
+
+      missing_metadata: "(none)"
