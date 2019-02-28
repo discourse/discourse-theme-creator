@@ -5,5 +5,6 @@ export default AdminInstallTheme.extend({
   themesController: Ember.inject.controller("user.themes"),
   keyGenUrl: "/user_themes/generate_key_pair",
   importUrl: "/user_themes/import",
-  selection: "create"
+  selection: "create",
+  recordType: "user-theme"
 });
