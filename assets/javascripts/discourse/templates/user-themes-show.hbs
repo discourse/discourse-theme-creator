@@ -26,10 +26,10 @@
     <div class="alert alert-error">
       {{i18n "admin.customize.theme.required_version.error"}}
       {{#if model.remote_theme.minimum_discourse_version}}
-        {{i18n "admin.customize.theme.required_version.minimum" version=model.remote_theme.minimum_discourse_version}}
+        {{i18n "admin.customize.theme.required_version.minimum" version=(unbound model.remote_theme.minimum_discourse_version)}}
       {{/if}}
       {{#if model.remote_theme.maximum_discourse_version}}
-        {{i18n "admin.customize.theme.required_version.maximum" version=model.remote_theme.maximum_discourse_version}}
+        {{i18n "admin.customize.theme.required_version.maximum" version=(unbound model.remote_theme.maximum_discourse_version)}}
       {{/if}}
     </div>
   {{/unless}}
