@@ -87,14 +87,14 @@ class ThemeCreator::ThemeCreatorController < Admin::ThemesController
       :remote_theme,
       :theme_settings,
       :settings_field,
-      # :locale_fields, # Fails due to https://github.com/rails/rails/issues/34456
+      :locale_fields,
       :user,
       :color_scheme,
       theme_fields: :upload
       )
 
     # Only present color schemes that are attached to the user's themes
-    @color_schemes = ColorScheme.where(theme_id: @theme.pluck(:id)).includes(color_scheme_colors: :color_scheme).to_a
+    @color_schemes = ColorScheme.where(theme_id: @theme.map(&:id)).includes(color_scheme_colors: :color_scheme).to_a
     light = ColorScheme.new(name: I18n.t("color_schemes.light"))
     @color_schemes.unshift(light)
 
