@@ -36,6 +36,10 @@ export default Discourse.Route.extend({
       });
   },
 
+  titleToken() {
+    return I18n.t("theme_creator.my_themes");
+  },
+
   actions: {
     addTheme(theme, afterTransition) {
       const all = this.modelFor("user.themes");
