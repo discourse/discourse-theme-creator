@@ -1,4 +1,3 @@
-import { popupAjaxError } from "discourse/lib/ajax-error";
 import UserColorScheme from "../models/user-color-scheme";
 import ColorSchemeColor from "admin/models/color-scheme-color";
 import showModal from "discourse/lib/show-modal";

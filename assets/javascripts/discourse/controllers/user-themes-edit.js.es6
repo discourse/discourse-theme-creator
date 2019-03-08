@@ -1,4 +1,3 @@
-import { default as computed } from "ember-addons/ember-computed-decorators";
 import { url } from "discourse/lib/computed";
 import AdminCustomizeThemesEdit from "admin/controllers/admin-customize-themes-edit";
 
