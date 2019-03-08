@@ -64,23 +64,23 @@ RSpec.describe "Theme Creator Controller", type: :request do
 
   describe 'show' do
     it "fails to download other users themes" do
-      get "/user_themes/#{theme.id}"
-      expect(response).to have_http_status(403)
+      get "/user_themes/#{theme.id}/export"
+      expect(response).to have_http_status(404)
     end
 
     it "downloads own themes" do
       sign_in(user1)
-      get "/user_themes/#{theme.id}"
+      get "/user_themes/#{theme.id}/export"
       expect(response).to have_http_status(200)
     end
 
-    it "allows downloading shared themes" do
+    it "doesn't allow downloading shared themes" do
       SiteSetting.theme_creator_share_groups = ''
       theme.share_slug = 'mytheme'
       theme.save!
 
-      get "/user_themes/#{theme.id}"
-      expect(response).to have_http_status(200)
+      get "/user_themes/#{theme.id}/download"
+      expect(response).to have_http_status(404)
     end
   end
 
