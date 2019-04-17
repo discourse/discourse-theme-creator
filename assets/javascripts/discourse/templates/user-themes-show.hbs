@@ -62,9 +62,8 @@
      {{model.remote_theme.theme_version}}</span>{{/if}}
   </span>
 
-  <div class="control-unit">
-   {{#if model.remote_theme.is_git}}
-
+  {{#if model.remote_theme.is_git}}
+   <div class="control-unit">
     {{#if showRemoteError}}
      <div class="error-message">
       {{d-icon "exclamation-triangle"}} {{I18n "admin.customize.theme.repo_unreachable"}}
@@ -98,8 +97,8 @@
       {{/if}}
      {{/if}}
     </span>
-   {{/if}}
-  </div>
+   </div>
+  {{/if}}
  {{/if}}
 
  {{#if showAdvanced}}
