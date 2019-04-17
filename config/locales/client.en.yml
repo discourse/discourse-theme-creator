@@ -13,6 +13,7 @@ en:
       new_theme: New Theme
 
       new_theme_title: "My New Theme"
+      install_theme: Install
       select_a_theme: "Select or create a theme to get started!"
       delete_confirm: "Are you sure you want to delete this theme?"
       save: "Save"
