@@ -1,21 +1,21 @@
 <div class="user-theme-creator admin-customize">
-  {{#unless editingTheme}}
+ {{#unless editingTheme}}
   <div class='content-list theme-list'>
-    <h3>{{i18n 'theme_creator.my_themes'}}</h3>
-    <ul>
-      {{#each model as |theme|}}
-        <li>
-          {{#link-to 'user.themes.show' theme replace=true}}
-            {{theme.name}}
-          {{/link-to}}
-        </li>
-      {{/each}}
-    </ul>
-    <p>{{d-button action=(route-action 'installModal') icon="plus" label="theme_creator.new_theme" class="btn-primary"}}</p>
-    
+   <h3>{{i18n 'theme_creator.my_themes'}}</h3>
+   <ul>
+    {{#each model as |theme|}}
+     <li>
+      {{#link-to 'user.themes.show' theme replace=true}}
+       {{theme.name}}
+      {{/link-to}}
+     </li>
+    {{/each}}
+   </ul>
+   <p>{{d-button action=(route-action 'installModal') icon="plus" label="theme_creator.new_theme" class="btn-primary"}}</p>
+
   </div>
-  {{/unless}}
-  <div class="theme-details {{if editingTheme "editing"}}">
+ {{/unless}}
+ <div class="theme-details {{if editingTheme "editing"}}">
   {{outlet}}
-  </div>
+ </div>
 </div>
