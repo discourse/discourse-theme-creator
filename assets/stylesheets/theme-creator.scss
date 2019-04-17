@@ -1,22 +1,75 @@
 .user-theme-creator {
-  // Left/right column interface
-  display: flex;
-  padding-top: 1.5em;
-  margin-top: -0.5em;
+  grid-column-start: 1;
+  grid-column-end: 3;
+  display: grid;
+  grid-template-columns: 0.2fr 0.8fr;
+  grid-template-rows: 1fr;
+  grid-column-gap: 20px;
   border-top: 1px solid $primary-low;
 
-  .control-unit.metadata {
-    .metadata-field {
-      margin-bottom: 0.5em;
-    }
-    .label {
+  // user themes are in user pages, we need this because the grid gap comes from
+  // parent elements
+  margin-top: -15px;
+
+  .user-theme-list {
+    grid-column-start: 1;
+
+    .user-theme-list-heading {
+      color: $primary-medium;
+      font-size: $font-up-1;
       font-weight: bold;
+      padding: 10px;
+      margin-bottom: 0;
+      border-right: 1px solid $primary-low;
+      border-left: 1px solid $primary-low;
+    }
+
+    ul {
+      border-right: 1px solid $primary-low;
+      border-left: 1px solid $primary-low;
+      box-sizing: border-box;
+      list-style: none;
+      margin: 0 0 1em 0;
+      overflow-y: auto;
+      max-height: 60vh;
+      width: 100%;
+
+      li {
+        border-bottom: 1px solid $primary-low;
+
+        &:first-of-type {
+          border-top: 1px solid $primary-low;
+        }
+
+        a {
+          display: block;
+          padding: 10px;
+          color: $primary;
+
+          &:hover {
+            background-color: $primary-very-low;
+          }
+
+          &.active {
+            font-weight: bold;
+            color: $secondary;
+            background-color: $tertiary;
+          }
+        }
+      }
     }
   }
 
-  .theme-details {
-    margin-left: 20px;
-    width: 70%;
+  .user-create-theme {
+    grid-column-start: 1;
+    grid-column-end: 1;
+    grid-row-start: 2;
+  }
+
+  .user-theme-details {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    padding-top: 1em;
 
     &.editing {
       margin-left: 0px;
@@ -26,6 +79,27 @@
     .wrapper {
       display: block;
       width: 100%;
+    }
+
+    // Reset some admin page styles
+    .themes-intro {
+      width: 70%;
+    }
+  }
+
+  .control-unit.metadata {
+    .metadata-field {
+      margin-bottom: 0.5em;
+    }
+    input[type="text"] {
+      margin-bottom: 0;
+    }
+    .label {
+      font-weight: bold;
+
+      .d-icon {
+        fill: $primary-medium;
+      }
     }
   }
 
@@ -94,6 +168,8 @@
     }
     .description {
       margin-bottom: 12px;
+      width: 650px;
+      max-width: 100%;
     }
   }
 
