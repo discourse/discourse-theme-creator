@@ -1,284 +1,293 @@
 <div class="show-current-style">
-  <h1>
-    {{#if editingName}}
-      {{text-field value=model.name autofocus="true"}}
-      {{d-button action="finishedEditingName" class="btn-primary btn-small submit-edit" icon="check"}}
-      {{d-button action="cancelEditingName" class="btn-small cancel-edit" icon="times"}}
+ <h1>
+  {{#if editingName}}
+   {{text-field value=model.name autofocus="true"}}
+   {{d-button action="finishedEditingName" class="btn-primary btn-small submit-edit" icon="check"}}
+   {{d-button action="cancelEditingName" class="btn-small cancel-edit" icon="times"}}
+  {{else}}
+   {{model.name}} <a {{action "startEditingName"}}>{{d-icon "pencil"}}</a>
+  {{/if}}
+ </h1>
+
+ {{#if model.is_shared}}
+  {{#if model.can_share}}
+   <div class="control-unit share-information">{{i18n 'theme_creator.shared_at'}}
+    <code>{{model.base_share_url}}{{model.share_slug}}</code> <a
+     {{action "shareModal"}}>{{d-icon "pencil"}}</a></div>
+  {{/if}}
+ {{/if}}
+
+ {{#each model.errors as |error|}}
+  <div class="alert alert-error">
+   <button class="close" data-dismiss="alert">×</button>
+   {{error}}
+  </div>
+ {{/each}}
+
+ {{#unless model.enabled}}
+  <div class="alert alert-error">
+   {{i18n "admin.customize.theme.required_version.error"}}
+   {{#if model.remote_theme.minimum_discourse_version}}
+    {{i18n "admin.customize.theme.required_version.minimum" version=(unbound model.remote_theme.minimum_discourse_version)}}
+   {{/if}}
+   {{#if model.remote_theme.maximum_discourse_version}}
+    {{i18n "admin.customize.theme.required_version.maximum" version=(unbound model.remote_theme.maximum_discourse_version)}}
+   {{/if}}
+  </div>
+ {{/unless}}
+
+ {{#if model.remote_theme}}
+
+  {{#if model.remote_theme.remote_url}}
+   <a class="remote-url" href="{{model.remote_theme.remote_url}}">{{i18n "admin.customize.theme.source_url"}}
+    {{d-icon "link"}}</a>
+  {{/if}}
+  {{#if model.remote_theme.about_url}}
+   <a class="url about-url" href="{{model.remote_theme.about_url}}">{{i18n "admin.customize.theme.about_theme"}}
+    {{d-icon "link"}}</a>
+  {{/if}}
+  {{#if model.remote_theme.license_url}}
+   <a class="url license-url" href="{{model.remote_theme.license_url}}">{{i18n "admin.customize.theme.license"}}
+    {{d-icon "link"}}</a>
+  {{/if}}
+
+  {{#if model.description}}
+   <span class="theme-description">{{model.description}}</span>
+  {{/if}}
+
+  <span class="metadata">
+   {{#if model.remote_theme.authors}}<span class="authors"><span class="heading">{{i18n "admin.customize.theme.authors"}}</span>
+     {{model.remote_theme.authors}}</span>{{/if}}
+   {{#if model.remote_theme.theme_version}}<span class="version"><span class="heading">{{i18n "admin.customize.theme.version"}}</span>
+     {{model.remote_theme.theme_version}}</span>{{/if}}
+  </span>
+
+  <div class="control-unit">
+   {{#if model.remote_theme.is_git}}
+
+    {{#if showRemoteError}}
+     <div class="error-message">
+      {{d-icon "exclamation-triangle"}} {{I18n "admin.customize.theme.repo_unreachable"}}
+     </div>
+     <div class="raw-error">
+      <code>{{model.remoteError}}</code>
+     </div>
+    {{/if}}
+
+    {{#if model.remote_theme.commits_behind}}
+     {{#d-button action=(action "updateToLatest") icon="download" class='btn-primary'}}{{i18n "admin.customize.theme.update_to_latest"}}{{/d-button}}
     {{else}}
-      {{model.name}} <a {{action "startEditingName"}}>{{d-icon "pencil"}}</a>
+     {{#d-button action=(action "checkForThemeUpdates") icon="refresh" class="btn-default"}}{{i18n "admin.customize.theme.check_for_updates"}}{{/d-button}}
     {{/if}}
-  </h1>
 
-  {{#if model.is_shared}}
-    {{#if model.can_share}}
-      <div class="control-unit share-information">{{i18n 'theme_creator.shared_at'}} <code>{{model.base_share_url}}{{model.share_slug}}</code> <a {{action "shareModal"}}>{{d-icon "pencil"}}</a></div>
-    {{/if}}
-  {{/if}}
-
-  {{#each model.errors as |error|}}
-    <div class="alert alert-error">
-      <button class="close" data-dismiss="alert">×</button>
-      {{error}}
-    </div>
-  {{/each}}
-
-  {{#unless model.enabled}}
-    <div class="alert alert-error">
-      {{i18n "admin.customize.theme.required_version.error"}}
-      {{#if model.remote_theme.minimum_discourse_version}}
-        {{i18n "admin.customize.theme.required_version.minimum" version=(unbound model.remote_theme.minimum_discourse_version)}}
+    <span class='status-message'>
+     {{#if updatingRemote}}
+      {{i18n 'admin.customize.theme.updating'}}
+     {{else}}
+      {{#if model.remote_theme.commits_behind}}
+       {{i18n 'admin.customize.theme.commits_behind' count=model.remote_theme.commits_behind}}
+       {{#if model.remote_theme.github_diff_link}}
+        <a href="{{model.remote_theme.github_diff_link}}">
+         {{i18n 'admin.customize.theme.compare_commits'}}
+        </a>
+       {{/if}}
+      {{else}}
+       {{#unless showRemoteError}}
+        {{i18n 'admin.customize.theme.up_to_date'}} {{format-date model.remote_theme.updated_at leaveAgo="true"}}
+       {{/unless}}
       {{/if}}
-      {{#if model.remote_theme.maximum_discourse_version}}
-        {{i18n "admin.customize.theme.required_version.maximum" version=(unbound model.remote_theme.maximum_discourse_version)}}
-      {{/if}}
-    </div>
-  {{/unless}}
-
-  {{#if model.remote_theme}}
-
-    {{#if model.remote_theme.remote_url}}
-      <a class="remote-url" href="{{model.remote_theme.remote_url}}">{{i18n "admin.customize.theme.source_url"}} {{d-icon "link"}}</a>
-    {{/if}}
-    {{#if model.remote_theme.about_url}}
-    <a class="url about-url" href="{{model.remote_theme.about_url}}">{{i18n "admin.customize.theme.about_theme"}} {{d-icon "link"}}</a>
-    {{/if}}
-    {{#if model.remote_theme.license_url}}
-      <a class="url license-url" href="{{model.remote_theme.license_url}}">{{i18n "admin.customize.theme.license"}} {{d-icon "link"}}</a>
-    {{/if}}
-
-    {{#if model.description}}
-      <span class="theme-description">{{model.description}}</span>
-    {{/if}}
-
-    <span class="metadata">
-      {{#if model.remote_theme.authors}}<span class="authors"><span class="heading">{{i18n "admin.customize.theme.authors"}}</span> {{model.remote_theme.authors}}</span>{{/if}}
-      {{#if model.remote_theme.theme_version}}<span class="version"><span class="heading">{{i18n "admin.customize.theme.version"}}</span> {{model.remote_theme.theme_version}}</span>{{/if}}
+     {{/if}}
     </span>
+   {{/if}}
+  </div>
+ {{/if}}
 
-    <div class="control-unit">
-      {{#if model.remote_theme.is_git}}
+ {{#if showAdvanced}}
+  <div class="control-unit">
+   <div class="mini-title">
+    {{#if model.component}}
+     {{i18n "theme_creator.component"}}
+    {{else}}
+     {{i18n 'theme_creator.theme'}}
+    {{/if}}
+   </div>
+   <div class="description">
+    {{#if model.component}}
+     {{i18n 'theme_creator.is_a_component'}}
+    {{else}}
+     {{i18n 'theme_creator.is_a_theme'}}
+    {{/if}}
+   </div>
+   <div class="control">
+    {{#if model.component}}
+     {{d-button action=(action "switchType") label="theme_creator.convert_to_theme" icon=convertIcon class="btn-default btn-normal" title=convertTooltip}}
+    {{else}}
+     {{d-button action=(action "switchType") label="theme_creator.convert_to_component" icon=convertIcon class="btn-default btn-normal" title=convertTooltip}}
+    {{/if}}
+   </div>
+  </div>
 
-        {{#if showRemoteError}}
-          <div class="error-message">
-            {{d-icon "exclamation-triangle"}} {{I18n "admin.customize.theme.repo_unreachable"}}
-          </div>
-          <div class="raw-error">
-            <code>{{model.remoteError}}</code>
-          </div>
-        {{/if}}
-        
-        {{#if model.remote_theme.commits_behind}}
-          {{#d-button action=(action "updateToLatest") icon="download" class='btn-primary'}}{{i18n "admin.customize.theme.update_to_latest"}}{{/d-button}}
-        {{else}}
-          {{#d-button action=(action "checkForThemeUpdates") icon="refresh" class="btn-default"}}{{i18n "admin.customize.theme.check_for_updates"}}{{/d-button}}
-        {{/if}}
-        
-        <span class='status-message'>
-            {{#if updatingRemote}}
-              {{i18n 'admin.customize.theme.updating'}}
-            {{else}}
-              {{#if model.remote_theme.commits_behind}}
-                {{i18n 'admin.customize.theme.commits_behind' count=model.remote_theme.commits_behind}}
-                {{#if model.remote_theme.github_diff_link}}
-                  <a href="{{model.remote_theme.github_diff_link}}">
-                    {{i18n 'admin.customize.theme.compare_commits'}}
-                  </a>
-                {{/if}}
-              {{else}}
-                {{#unless showRemoteError}}
-                  {{i18n 'admin.customize.theme.up_to_date'}} {{format-date model.remote_theme.updated_at leaveAgo="true"}}
-                {{/unless}}
-              {{/if}}
-            {{/if}}
-          </span>
-      {{/if}}
-    </div>
-  {{/if}}
+  <div class="control-unit metadata">
+   <div class="mini-title">{{i18n "theme_creator.metadata"}}</div>
 
-  {{#if showAdvanced}}
-    <div class="control-unit">
-      <div class="mini-title">
-        {{#if model.component}}
-          {{i18n "theme_creator.component"}}
-        {{else}}
-          {{i18n 'theme_creator.theme'}}
-        {{/if}}
-      </div>
-      <div class="description">
-        {{#if model.component}}
-          {{i18n 'theme_creator.is_a_component'}}
-        {{else}}
-          {{i18n 'theme_creator.is_a_theme'}}
-        {{/if}}
-      </div>
-      <div class="control">
-        {{#if model.component}}
-          {{d-button action=(action "switchType") label="theme_creator.convert_to_theme" icon=convertIcon class="btn-default btn-normal" title=convertTooltip}}
-        {{else}}
-          {{d-button action=(action "switchType") label="theme_creator.convert_to_component" icon=convertIcon class="btn-default btn-normal" title=convertTooltip}}
-        {{/if}}
-      </div>
-    </div>
-
-    <div class="control-unit metadata">
-      <div class="mini-title">{{i18n "theme_creator.metadata"}}</div>
-      
-      {{theme-metadata-field 
+   {{theme-metadata-field
         icon="link"
         label="theme_creator.about_url"
-        value=model.remote_theme.about_url 
+        value=model.remote_theme.about_url
         save=(action "saveMetadata")
       }}
-      {{theme-metadata-field 
+   {{theme-metadata-field
         icon="link"
         label="theme_creator.license_url"
-        value=model.remote_theme.license_url 
+        value=model.remote_theme.license_url
         save=(action "saveMetadata")
       }}
-      {{theme-metadata-field 
+   {{theme-metadata-field
         icon="users"
         label="theme_creator.authors"
-        value=model.remote_theme.authors 
+        value=model.remote_theme.authors
         save=(action "saveMetadata")
       }}
-      {{theme-metadata-field 
+   {{theme-metadata-field
         icon="info-circle"
         label="theme_creator.theme_version"
-        value=model.remote_theme.theme_version 
+        value=model.remote_theme.theme_version
         save=(action "saveMetadata")
       }}
-      {{theme-metadata-field 
+   {{theme-metadata-field
         icon="arrow-left"
         label="theme_creator.minimum_discourse_version"
-        value=model.remote_theme.minimum_discourse_version 
+        value=model.remote_theme.minimum_discourse_version
         save=(action "saveMetadata")
       }}
-      {{theme-metadata-field 
+   {{theme-metadata-field
         icon="arrow-right"
         label="theme_creator.maximum_discourse_version"
-        value=model.remote_theme.maximum_discourse_version 
+        value=model.remote_theme.maximum_discourse_version
         save=(action "saveMetadata")
       }}
-    </div>
+  </div>
 
-    {{#unless model.component}}
-      <div class="control-unit">
-        <div class="mini-title">{{i18n "admin.customize.theme.color_scheme"}}</div>
-        <div class="description">{{i18n "admin.customize.theme.color_scheme_select"}}</div>
-        <div class="control">{{combo-box content=colorSchemes
+  {{#unless model.component}}
+   <div class="control-unit">
+    <div class="mini-title">{{i18n "admin.customize.theme.color_scheme"}}</div>
+    <div class="description">{{i18n "admin.customize.theme.color_scheme_select"}}</div>
+    <div class="control">{{combo-box content=colorSchemes
                                         filterable=true
                                         forceEscape=true
                                         value=colorSchemeId
                                         icon="paint-brush"}}
-          {{#if colorSchemeChanged}}
-              {{d-button action=(action "changeScheme") class="btn-primary submit-edit" icon="check"}}
-              {{d-button action=(action "cancelChangeScheme") class="btn-default cancel-edit" icon="times"}}
-          {{else}}
-            {{#link-to 'user.themes.colors' model.id model.color_scheme_id class="btn no-text" title='theme_creator.edit_color_scheme' disabled=colorSchemeEditDisabled}}
-              {{d-icon 'pencil'}}
-            {{/link-to}}
-            {{d-button action="destroyColorScheme" title="theme_creator.delete_color_scheme" icon="trash" disabled=colorSchemeEditDisabled class="btn btn-danger"}}
-          {{/if}}
-        </div>
-        {{d-button action="createColorScheme" label=(if creatingColorScheme 'theme_creator.adding_color_scheme' 'theme_creator.add_color_scheme') 
+     {{#if colorSchemeChanged}}
+      {{d-button action=(action "changeScheme") class="btn-primary submit-edit" icon="check"}}
+      {{d-button action=(action "cancelChangeScheme") class="btn-default cancel-edit" icon="times"}}
+     {{else}}
+      {{#link-to 'user.themes.colors' model.id model.color_scheme_id class="btn no-text" title='theme_creator.edit_color_scheme' disabled=colorSchemeEditDisabled}}
+       {{d-icon 'pencil'}}
+      {{/link-to}}
+      {{d-button action="destroyColorScheme" title="theme_creator.delete_color_scheme" icon="trash" disabled=colorSchemeEditDisabled class="btn btn-danger"}}
+     {{/if}}
+    </div>
+    {{d-button action="createColorScheme" label=(if creatingColorScheme 'theme_creator.adding_color_scheme' 'theme_creator.add_color_scheme')
               icon="plus" class="btn" disabled=creatingColorScheme}}
-        
-      </div>
-    {{/unless}}
 
-    <div class="control-unit">
-      <div class="mini-title">{{i18n "admin.customize.theme.css_html"}}</div>
-      {{#if model.hasEditedFields}}
-        <div class="description">{{i18n "admin.customize.theme.custom_sections"}}</div>
-        <ul>
-          {{#each editedFieldsFormatted as |field|}}
-            <li>{{field}}</li>
-          {{/each}}
-        </ul>
-      {{else}}
-        <div class="description">
-          {{i18n "admin.customize.theme.edit_css_html_help"}}
-        </div>
-      {{/if}}
-
-      {{#d-button action=(action "editTheme") class="btn btn-default edit"}}{{i18n 'admin.customize.theme.edit_css_html'}}{{/d-button}}
-    </div>
-
-    <div class="control-unit">
-      <div class="mini-title">{{i18n "admin.customize.theme.uploads"}}</div>
-      {{#if model.uploads}}
-        <ul class='removable-list'>
-          {{#each model.uploads as |upload|}}
-          <li>
-            <span class='col'>${{upload.name}}: <a href={{upload.url}} target='_blank'>{{upload.filename}}</a></span>
-            <span class='col'>
-              {{d-button action=(action "removeUpload") actionParam=upload class="second btn-default btn-default cancel-edit" icon="times"}}
-            </span>
-          </li>
-          {{/each}}
-        </ul>
-      {{else}}
-        <div class="description">{{i18n "admin.customize.theme.no_uploads"}}</div>
-      {{/if}}
-      {{#d-button action=(action "addUploadModal") class="btn-default" icon="plus"}}{{i18n "admin.customize.theme.add"}}{{/d-button}}
-    </div>
-
-    {{#if hasSettings}}
-      <div class="control-unit">
-        <div class="mini-title">{{i18n "admin.customize.theme.theme_settings"}}</div>
-        {{#d-section class="form-horizontal theme settings"}}
-          {{#each settings as |setting|}}
-            {{theme-setting-editor setting=setting model=model class="theme-setting"}}
-          {{/each}}
-        {{/d-section}}
-      </div>
-    {{/if}}
-
-    {{#if hasTranslations}}
-      <div class="control-unit">
-        <div class="mini-title">{{i18n "admin.customize.theme.theme_translations"}}</div>
-        {{#d-section class="form-horizontal theme settings translations"}}
-          {{#each translations as |translation|}}
-            {{theme-translation translation=translation model=model class="theme-translation"}}
-          {{/each}}
-        {{/d-section}}
-      </div>
-    {{/if}}
-
-  {{else}}
-      {{#if hasQuickColorScheme}}
-        {{color-scheme-editor colors=quickColorScheme.colors}}
-      {{else}}
-        <div class="control-unit">
-          {{d-button action="createColorScheme" label=(if creatingColorScheme 'theme_creator.adding_color_scheme' 'theme_creator.add_color_scheme') 
-              icon="plus" class="btn" disabled=creatingColorScheme class="btn-primary"}}
-          {{d-button action="showAdvanced" icon="gear" label="theme_creator.show_advanced"}}
-        </div>
-      {{/if}}
-  {{/if}}
-
-  {{#if quickColorScheme}}
-    {{#d-button action="saveQuickColorScheme" class="btn btn-primary" disabled=isSaving}}
-      {{saveButtonText}}
-    {{/d-button}}
-  {{/if}}
-
-  {{d-button action="shareModal" label="theme_creator.share" icon="users" class="btn-primary"}}
-
-  {{#if quickColorScheme}}
-    {{d-button action="showAdvanced" icon="gear" label="theme_creator.show_advanced"}}
-  {{else if showAdvanced}}
-    {{d-button action="editLocalModal" icon="pencil" label="theme_creator.edit_local"}}
-  {{/if}}
-
-  {{#unless hidePreview}}
-    <a href='{{previewUrl}}' title="{{i18n 'theme_creator.explain_preview'}}" target='_blank' class='btn btn-icon-text'>
-      {{d-icon 'desktop'}}
-      <span class="d-button-label">
-        {{i18n 'theme_creator.preview'}}
-      </span>
-    </a>
+   </div>
   {{/unless}}
-  <a class="btn" target="_blank" href={{downloadUrl}}>{{d-icon "download"}} {{i18n 'admin.export_json.button_text'}}</a>
-  {{d-button action="destroy" label="theme_creator.delete" icon="trash" class="btn btn-danger"}}
+
+  <div class="control-unit">
+   <div class="mini-title">{{i18n "admin.customize.theme.css_html"}}</div>
+   {{#if model.hasEditedFields}}
+    <div class="description">{{i18n "admin.customize.theme.custom_sections"}}</div>
+    <ul>
+     {{#each editedFieldsFormatted as |field|}}
+      <li>{{field}}</li>
+     {{/each}}
+    </ul>
+   {{else}}
+    <div class="description">
+     {{i18n "admin.customize.theme.edit_css_html_help"}}
+    </div>
+   {{/if}}
+
+   {{#d-button action=(action "editTheme") class="btn btn-default edit"}}{{i18n 'admin.customize.theme.edit_css_html'}}{{/d-button}}
+  </div>
+
+  <div class="control-unit">
+   <div class="mini-title">{{i18n "admin.customize.theme.uploads"}}</div>
+   {{#if model.uploads}}
+    <ul class='removable-list'>
+     {{#each model.uploads as |upload|}}
+      <li>
+       <span class='col'>${{upload.name}}: <a href={{upload.url}} target='_blank'>{{upload.filename}}</a></span>
+       <span class='col'>
+        {{d-button action=(action "removeUpload") actionParam=upload class="second btn-default btn-default cancel-edit" icon="times"}}
+       </span>
+      </li>
+     {{/each}}
+    </ul>
+   {{else}}
+    <div class="description">{{i18n "admin.customize.theme.no_uploads"}}</div>
+   {{/if}}
+   {{#d-button action=(action "addUploadModal") class="btn-default" icon="plus"}}{{i18n "admin.customize.theme.add"}}{{/d-button}}
+  </div>
+
+  {{#if hasSettings}}
+   <div class="control-unit">
+    <div class="mini-title">{{i18n "admin.customize.theme.theme_settings"}}</div>
+    {{#d-section class="form-horizontal theme settings"}}
+     {{#each settings as |setting|}}
+      {{theme-setting-editor setting=setting model=model class="theme-setting"}}
+     {{/each}}
+    {{/d-section}}
+   </div>
+  {{/if}}
+
+  {{#if hasTranslations}}
+   <div class="control-unit">
+    <div class="mini-title">{{i18n "admin.customize.theme.theme_translations"}}</div>
+    {{#d-section class="form-horizontal theme settings translations"}}
+     {{#each translations as |translation|}}
+      {{theme-translation translation=translation model=model class="theme-translation"}}
+     {{/each}}
+    {{/d-section}}
+   </div>
+  {{/if}}
+
+ {{else}}
+  {{#if hasQuickColorScheme}}
+   {{color-scheme-editor colors=quickColorScheme.colors}}
+  {{else}}
+   <div class="control-unit">
+    {{d-button action="createColorScheme" label=(if creatingColorScheme 'theme_creator.adding_color_scheme' 'theme_creator.add_color_scheme')
+              icon="plus" class="btn" disabled=creatingColorScheme class="btn-primary"}}
+    {{d-button action="showAdvanced" icon="gear" label="theme_creator.show_advanced"}}
+   </div>
+  {{/if}}
+ {{/if}}
+
+ {{#if quickColorScheme}}
+  {{#d-button action="saveQuickColorScheme" class="btn btn-primary" disabled=isSaving}}
+   {{saveButtonText}}
+  {{/d-button}}
+ {{/if}}
+
+ {{d-button action="shareModal" label="theme_creator.share" icon="users" class="btn-primary"}}
+
+ {{#if quickColorScheme}}
+  {{d-button action="showAdvanced" icon="gear" label="theme_creator.show_advanced"}}
+ {{else if showAdvanced}}
+  {{d-button action="editLocalModal" icon="pencil" label="theme_creator.edit_local"}}
+ {{/if}}
+
+ {{#unless hidePreview}}
+  <a href='{{previewUrl}}' title="{{i18n 'theme_creator.explain_preview'}}"
+   target='_blank' class='btn btn-icon-text'>
+   {{d-icon 'desktop'}}
+   <span class="d-button-label">
+    {{i18n 'theme_creator.preview'}}
+   </span>
+  </a>
+ {{/unless}}
+ <a class="btn" target="_blank" href={{downloadUrl}}>{{d-icon "download"}}
+  {{i18n 'admin.export_json.button_text'}}</a>
+ {{d-button action="destroy" label="theme_creator.delete" icon="trash" class="btn btn-danger"}}
 </div>
