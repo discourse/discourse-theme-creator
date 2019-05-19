@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # name: discourse-theme-creator
 # about: Allows users to create and share their own themes.
 # version: 0.1
@@ -67,6 +69,10 @@ after_initialize do
     @share_slug ||= PluginStore.get('discourse-theme-creator', "share:#{user_id}:#{id}")
   end
 
+  add_to_class(:theme, :share_destination) do
+    @share_destination ||= PluginStore.get('discourse-theme-creator', "share_destination:#{user_id}:#{id}")
+  end
+
   add_model_callback(:theme, :after_destroy) do
     PluginStore.remove('discourse-theme-creator', "share:#{user_id}:#{id}")
   end
@@ -90,6 +96,17 @@ after_initialize do
 
     @share_slug = val
     PluginStore.set('discourse-theme-creator', "share:#{user_id}:#{id}", val)
+  end
+
+  add_to_class(:theme, :share_destination=) do |val|
+    if !val
+      @share_slug = nil
+      PluginStore.remove('discourse-theme-creator', "share_destination:#{user_id}:#{id}")
+      return
+    end
+
+    @share_destination = val
+    PluginStore.set('discourse-theme-creator', "share_destination:#{user_id}:#{id}", val)
   end
 
   # We block hotlinking of other users themes.
@@ -116,8 +133,16 @@ after_initialize do
     object.share_slug
   end
 
+  add_to_serializer(:theme, :share_destination) do
+    object.share_destination
+  end
+
   add_to_serializer(:theme, :base_share_url) do
     UrlHelper.absolute_without_cdn("/theme/#{object.user&.username}/")
+  end
+
+  add_to_serializer(:theme, :base_destination_url) do
+    Discourse.base_url_no_prefix
   end
 
   add_to_serializer(:theme, :can_share) do

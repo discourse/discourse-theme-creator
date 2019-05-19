@@ -32,7 +32,7 @@ export default Ember.Controller.extend(ModalFunctionality, {
 
   actions: {
     share() {
-      this.get("model").saveChanges("share_slug");
+      this.get("model").saveChanges("share_slug", "share_destination");
     },
 
     stopSharing() {
@@ -42,14 +42,16 @@ export default Ember.Controller.extend(ModalFunctionality, {
 
     startEditingSlug() {
       this.set("oldSlug", this.get("model.share_slug"));
+      this.set("oldDestination", this.get("model.share_destination"));
       this.set("editingSlug", true);
     },
     cancelEditingSlug() {
       this.set("model.share_slug", this.get("oldSlug"));
+      this.set("model.share_destination", this.get("oldDestination"));
       this.set("editingSlug", false);
     },
     finishedEditingSlug() {
-      this.get("model").saveChanges("share_slug");
+      this.get("model").saveChanges("share_slug", "share_destination");
       this.set("editingSlug", false);
     }
   }

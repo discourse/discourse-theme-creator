@@ -10,9 +10,19 @@
         </code>
         {{d-button action="finishedEditingSlug" class="btn-primary btn-small submit-edit" icon="check" disabled=saveDisabled}}
         {{d-button action="cancelEditingSlug" class="btn-small cancel-edit" icon="times"}}
+        <p>{{i18n "theme_creator.share_destination"}}</p>
+        <code>
+          {{model.base_destination_url}}{{text-field value=model.share_destination autofocus="true"}}
+        </code>
+        {{d-button action="finishedEditingSlug" class="btn-primary btn-small submit-edit" icon="check" disabled=saveDisabled}}
+        {{d-button action="cancelEditingSlug" class="btn-small cancel-edit" icon="times"}}
       {{else}}
         <code>
           {{model.base_share_url}}{{model.share_slug}} <a {{action "startEditingSlug"}}>{{d-icon "pencil"}}</a>
+        </code>
+        <p>{{i18n "theme_creator.share_destination"}}</p>
+        <code>
+          {{model.base_destination_url}}{{model.share_destination}} <a {{action "startEditingSlug"}}>{{d-icon "pencil"}}</a>
         </code>
       {{/if}}
       <p>
@@ -25,6 +35,12 @@
 
       <code>
         {{model.base_share_url}} {{text-field value=model.share_slug autofocus="true"}}
+      </code>
+
+      <p>{{i18n "theme_creator.share_destination_instructions"}}</p>
+
+      <code>
+        {{model.base_destination_url}} {{text-field value=model.share_destination placeholder="/"}}
       </code>
 
       <p>

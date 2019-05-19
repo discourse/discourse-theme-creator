@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # We're going to extend the admin theme controller, so we don't repeat all the logic there
 
 class ThemeCreator::ThemeCreatorController < Admin::ThemesController
@@ -45,7 +47,21 @@ class ThemeCreator::ThemeCreatorController < Admin::ThemesController
     @theme ||= Theme.find(params[:id])
     raise Discourse::InvalidAccess.new() if !guardian.can_see_user_theme?(@theme)
 
-    redirect_to path('/'), flash: { user_theme_id: @theme.id }
+    dest_path = "/"
+
+    if @theme.share_destination
+      parsed = begin
+        URI.parse(@theme.share_destination)
+      rescue URI::Error
+      end
+
+      if parsed && (parsed.host == nil || parsed.host == Discourse.current_hostname)
+        dest_path = +"#{parsed.path}"
+        dest_path << "?#{parsed.query}" if parsed.query
+      end
+    end
+
+    redirect_to path(dest_path), flash: { user_theme_id: @theme.id }
   end
 
   def share_info
@@ -118,7 +134,7 @@ class ThemeCreator::ThemeCreatorController < Admin::ThemesController
     @theme ||= Theme.find(params[:id])
 
     # Set the user_theme specific fields
-    [:share_slug].each do |field|
+    [:share_slug, :share_destination].each do |field|
       if theme_params.key?(field)
         @theme.send("#{field}=", theme_params[field])
       end
@@ -218,6 +234,7 @@ class ThemeCreator::ThemeCreatorController < Admin::ThemesController
         params.require(:theme).permit(
           :name,
           :share_slug,
+          :share_destination,
           :color_scheme_id,
           # :default,
           # :user_selectable,

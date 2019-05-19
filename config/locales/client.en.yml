@@ -45,6 +45,8 @@ en:
       start_sharing: "Start Sharing Theme"
       stop_sharing: "Stop Sharing Theme"
       share_instructions: "To make your theme available to the public, enter a URL-friendly name for it:"
+      share_destination: "Automatically redirect users to"
+      share_destination_instructions: "Enter a URL to automatically redirect users when they preview your theme (e.g. /c/school/homework):"
       share_unavailable: "To share your themes with others you must belong to the <b>@theme-authors</b> group on <a href='https://meta.discourse.org'>meta.discourse.org</a>. You can request membership <a href='https://meta.discourse.org/groups'>here</a>."
       shared_at: "Available to the public at"
 
