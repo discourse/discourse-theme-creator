@@ -5,9 +5,7 @@
   <h3>{{i18n "theme_creator.edit_local_key"}}</h3>
   {{#conditional-loading-spinner condition=loading}}
     {{#if model.apiKey}}
-      <pre>
-        {{model.apiKey}}
-      </pre>
+      <pre>{{model.apiKey}}</pre>
     {{else}}
       {{d-button action="showKey" icon="eye" label="theme_creator.show_key"}}
     {{/if}}
