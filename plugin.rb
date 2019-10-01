@@ -170,6 +170,24 @@ after_initialize do
   end
 
   reloadable_patch do |plugin|
+    class ::ExtraLocalesController
+      module ThemeCreatorOverrides
+        def show
+          bundle = params[:bundle]
+
+          if params[:v]&.size == 32
+            hash = ExtraLocalesController.bundle_js_hash(bundle)
+            immutable_for(24.hours) if hash == params[:v]
+          end
+
+          render plain: ExtraLocalesController.bundle_js(bundle), content_type: "application/javascript"
+        end
+      end
+      prepend ThemeCreatorOverrides
+    end
+  end
+
+  reloadable_patch do |plugin|
     UserApiKey::SCOPES[:user_themes] = [
       [:post, 'theme_creator/theme_creator#import'],
       [:put, 'theme_creator/theme_creator#update'],
