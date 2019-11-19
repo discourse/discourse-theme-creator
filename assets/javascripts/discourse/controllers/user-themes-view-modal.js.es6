@@ -22,7 +22,7 @@ export default Ember.Controller.extend(ModalFunctionality, {
       }
     },
     download() {
-      document.location = `${Discourse.BaseUri}/user_themes/${this.model.id}`;
+      document.location = `${Discourse.BaseUri}/user_themes/${this.model.id}/export`;
     },
     cancel() {
       this.send("closeModal");
