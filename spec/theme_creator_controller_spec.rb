@@ -47,6 +47,15 @@ RSpec.describe "Theme Creator Controller", type: :request do
     end
   end
 
+  describe '#diff_local_changes' do
+
+    it "should return empty for a default theme" do
+      sign_in(user1)
+      get "/user_themes/#{theme.id}/diff_local_changes.json"
+      expect(response.body).to eq("{}")
+    end
+  end
+
   describe 'share_preview' do
     it "fails to preview other users themes" do
       post "/user_themes/#{theme.id}/view"

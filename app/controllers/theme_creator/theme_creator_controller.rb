@@ -9,7 +9,7 @@ class ThemeCreator::ThemeCreatorController < Admin::ThemesController
 
   before_action :ensure_logged_in, except: [:preview, :share_preview, :share_info]
 
-  before_action :ensure_own_theme, only: [:show, :export, :destroy, :update, :create_color_scheme, :update_color_scheme, :destroy_color_scheme, :update_single_setting]
+  before_action :ensure_own_theme, only: [:show, :export, :destroy, :update, :create_color_scheme, :update_color_scheme, :destroy_color_scheme, :update_single_setting, :diff_local_changes]
 
   skip_before_action :check_xhr, only: [:share_info, :preview, :share_preview]
 
