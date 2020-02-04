@@ -17,6 +17,7 @@ ThemeCreator::Engine.routes.draw do
   put ":id" => "theme_creator#update"
   get ":id/preview" => "theme_creator#preview"
   get ":id/export" => "theme_creator#export"
+  put ":id/setting" => "theme_creator#update_single_setting"
 
   # Additional theme endpoints
   post "upload_asset" => "theme_creator#upload_asset"

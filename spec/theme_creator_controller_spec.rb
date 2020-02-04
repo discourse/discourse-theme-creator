@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'rails_helper'
 
 RSpec.describe "Theme Creator Controller", type: :request do
@@ -17,6 +18,32 @@ RSpec.describe "Theme Creator Controller", type: :request do
       sign_in(user1)
       get "/user_themes/#{theme.id}/preview"
       expect(response).to have_http_status(302)
+    end
+  end
+
+  describe 'update_single_setting' do
+    before do
+      sign_in(user1)
+      theme.set_field(target: :settings, name: :yaml, value: "bg: red")
+      theme.save!
+    end
+
+    it "updates the setting of own themes" do
+      put "/user_themes/#{theme.id}/setting.json", params: {
+        name: "bg",
+        value: "green"
+      }
+
+      expect(response.status).to eq(200)
+      expect(JSON.parse(response.body)["bg"]).to eq("green")
+
+      theme.reload
+      expect(theme.included_settings[:bg]).to eq("green")
+      user_history = UserHistory.last
+
+      expect(user_history.action).to eq(
+        UserHistory.actions[:change_theme_setting]
+      )
     end
   end
 
