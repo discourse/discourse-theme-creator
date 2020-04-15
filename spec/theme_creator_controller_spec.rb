@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe "Theme Creator Controller", type: :request do
@@ -11,13 +12,13 @@ RSpec.describe "Theme Creator Controller", type: :request do
   describe 'preview' do
     it "fails to hotlink other users themes" do
       get "/user_themes/#{theme.id}/preview"
-      expect(response).to have_http_status(403)
+      expect(response).to have_http_status(:forbidden)
     end
 
     it "allows hotlinking own themes" do
       sign_in(user1)
       get "/user_themes/#{theme.id}/preview"
-      expect(response).to have_http_status(302)
+      expect(response).to have_http_status(:found)
     end
   end
 
@@ -59,13 +60,13 @@ RSpec.describe "Theme Creator Controller", type: :request do
   describe 'share_preview' do
     it "fails to preview other users themes" do
       post "/user_themes/#{theme.id}/view"
-      expect(response).to have_http_status(403)
+      expect(response).to have_http_status(:forbidden)
     end
 
     it "previews own themes" do
       sign_in(user1)
       post "/user_themes/#{theme.id}/view"
-      expect(response).to have_http_status(302)
+      expect(response).to have_http_status(:found)
     end
 
     it "allows previewing shared themes" do
@@ -74,7 +75,7 @@ RSpec.describe "Theme Creator Controller", type: :request do
       theme.save!
 
       post "/user_themes/#{theme.id}/view"
-      expect(response).to have_http_status(302)
+      expect(response).to have_http_status(:found)
     end
   end
 
@@ -84,30 +85,30 @@ RSpec.describe "Theme Creator Controller", type: :request do
       theme.share_slug = 'mytheme'
 
       get "/theme/#{user1.username}/#{theme.share_slug}.json"
-      expect(response).to have_http_status(403)
+      expect(response).to have_http_status(:forbidden)
 
       SiteSetting.theme_creator_share_groups = ''
       get "/theme/#{user1.username}/#{theme.share_slug}.json"
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
 
       get "/theme/user-not-found/#{theme.share_slug}.json"
-      expect(response).to have_http_status(404)
+      expect(response).to have_http_status(:not_found)
 
       get '/theme/theme-not-found.json'
-      expect(response).to have_http_status(404)
+      expect(response).to have_http_status(:not_found)
     end
   end
 
   describe 'show' do
     it "fails to download other users themes" do
       get "/user_themes/#{theme.id}/export"
-      expect(response).to have_http_status(404)
+      expect(response).to have_http_status(:not_found)
     end
 
     it "downloads own themes" do
       sign_in(user1)
       get "/user_themes/#{theme.id}/export"
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
     end
 
     it "doesn't allow downloading shared themes" do
@@ -116,7 +117,7 @@ RSpec.describe "Theme Creator Controller", type: :request do
       theme.save!
 
       get "/user_themes/#{theme.id}/download"
-      expect(response).to have_http_status(404)
+      expect(response).to have_http_status(:not_found)
     end
   end
 
@@ -128,7 +129,7 @@ RSpec.describe "Theme Creator Controller", type: :request do
 
       it 'fails to delete theme owned by user 1' do
         delete "/user_themes/#{theme.id}.json"
-        expect(response).to have_http_status(403)
+        expect(response).to have_http_status(:forbidden)
       end
 
       it 'fails to update theme owned by user 1' do
@@ -137,14 +138,14 @@ RSpec.describe "Theme Creator Controller", type: :request do
             name: "New Theme Title"
           }
         }
-        expect(response).to have_http_status(403)
+        expect(response).to have_http_status(:forbidden)
         theme.reload
         expect(theme.name).to eq("My New Theme")
       end
 
       it 'fails to create color scheme for theme owned by user 1' do
         post "/user_themes/#{theme.id}/colors.json"
-        expect(response).to have_http_status(403)
+        expect(response).to have_http_status(:forbidden)
       end
 
       it 'fails to edit color scheme for theme owned by user 1' do
@@ -153,14 +154,14 @@ RSpec.describe "Theme Creator Controller", type: :request do
             name: "Some New Name"
           }
         }
-        expect(response).to have_http_status(403)
+        expect(response).to have_http_status(:forbidden)
         color_scheme.reload
         expect(color_scheme.name).to eq("My Color Scheme")
       end
 
       it "fails to delete color scheme for theme owned by user 1" do
         delete "/user_themes/#{theme.id}/colors/#{color_scheme.id}.json"
-        expect(response).to have_http_status(403)
+        expect(response).to have_http_status(:forbidden)
       end
     end
 
