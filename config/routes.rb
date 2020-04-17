@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Discourse::Application.routes.append do
   mount ::ThemeCreator::Engine, at: "/user_themes"
   get "theme/:theme_id" => "theme_creator/theme_creator#share_info"

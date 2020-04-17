@@ -5,7 +5,7 @@ export default Ember.Route.extend({
 
   model(params) {
     const all = this.modelFor("user.themes");
-    const model = all.findBy("id", parseInt(params.theme_id));
+    const model = all.findBy("id", parseInt(params.theme_id, 10));
     return model ? model : this.replaceWith("user.themes.index");
   },
 

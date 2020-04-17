@@ -16,19 +16,13 @@ class ThemeCreator::ThemeCreatorController < Admin::ThemesController
   def fetch_api_key
     client_id = "theme_cli_#{current_user.id}"
 
-    api_key = UserApiKey.find_by(user_id: current_user.id, revoked_at: nil, client_id: client_id)
-
-    if api_key.nil?
-      UserApiKey.where(user_id: current_user.id, client_id: client_id).destroy_all
-
-      api_key = UserApiKey.create!(
-        application_name: I18n.t('theme_creator.api_application_name'),
-        client_id: client_id,
-        user_id: current_user.id,
-        key: SecureRandom.hex,
-        scopes: ['user_themes']
-      )
-    end
+    UserApiKey.where(user_id: current_user.id, client_id: client_id).destroy_all
+    api_key = UserApiKey.create!(
+      application_name: I18n.t('theme_creator.api_application_name'),
+      client_id: client_id,
+      user_id: current_user.id,
+      scopes: ['user_themes']
+    )
 
     render json: { api_key: api_key.key }
   end
