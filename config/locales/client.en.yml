@@ -55,10 +55,11 @@ en:
       view_theme: "View Theme"
       download_theme: "Download Theme"
 
+      cli: "CLI"
       edit_local: "Edit Locally"
       edit_local_description: "The <b>Discourse Theme CLI</b> is a console application allowing you to edit a theme on your local computer, and instantly preview changes online. To get started, follow the instructions on <a href='https://meta.discourse.org/t/discourse-theme-cli-console-app-to-help-you-build-themes/82950'>Discourse Meta</a>."
       edit_local_key: "API Key for Theme CLI:"
-      show_key: "Retrieve API Key"
+      show_key: "Generate API Key"
       revoke_instructions: "To revoke access for this key, visit the 'Apps' section of your user preferences."
 
       styleguide: Styleguide

@@ -13,6 +13,7 @@ load File.expand_path('../lib/theme_creator/engine.rb', __FILE__)
 after_initialize do
   register_svg_icon "arrow-left"
   register_svg_icon "arrow-right"
+  register_svg_icon "laptop-code"
 
   require_relative "app/jobs/scheduled/cleanup_topics"
 
