@@ -1,8 +1,9 @@
 import UserColorScheme from "../models/user-color-scheme";
 import ColorSchemeColor from "admin/models/color-scheme-color";
 import showModal from "discourse/lib/show-modal";
+import DiscourseRoute from "discourse/routes/discourse";
 
-export default Discourse.Route.extend({
+export default DiscourseRoute.extend({
   model() {
     return this.store
       .findAll("user-theme", { user_id: this.modelFor("user").id })

@@ -1,4 +1,6 @@
-export default Ember.Route.extend({
+import DiscourseRoute from "discourse/routes/discourse";
+
+export default DiscourseRoute.extend({
   templateName: "adminCustomizeThemesEdit",
 
   model(params) {

@@ -1,7 +1,8 @@
 import showModal from "discourse/lib/show-modal";
 import { ajax } from "discourse/lib/ajax";
+import DiscourseRoute from "discourse/routes/discourse";
 
-export default Ember.Route.extend({
+export default DiscourseRoute.extend({
   model(params) {
     return ajax(`/theme/${params.username}/${params.slug}.json`).then(
       response => {
