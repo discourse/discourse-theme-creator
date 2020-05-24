@@ -1,4 +1,6 @@
-export default Ember.Route.extend({
+import DiscourseRoute from "discourse/routes/discourse";
+
+export default DiscourseRoute.extend({
   serialize(model) {
     return {
       theme_id: model.get("theme_id"),
