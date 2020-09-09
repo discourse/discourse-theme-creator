@@ -36,6 +36,11 @@ after_initialize do
     theme_ids.all? { |id| can_hotlink_user_theme?(Theme.find_by(id: id)) }
   end
 
+  add_to_class(:guardian, :allowed_theme_repo_import?) do |repo|
+    # Skip checking the allowed_theme_repos allowlist
+    true
+  end
+
   add_to_class(:guardian, :can_hotlink_user_theme?) do |theme|
     is_my_own?(theme)
   end
