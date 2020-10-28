@@ -193,14 +193,12 @@ after_initialize do
     end
   end
 
-  reloadable_patch do |plugin|
-    UserApiKey::SCOPES[:user_themes] = [
-      [:post, 'theme_creator/theme_creator#import'],
-      [:put, 'theme_creator/theme_creator#update'],
-      [:get, 'theme_creator/theme_creator#list'],
-      [:get, 'theme_creator/theme_creator#export'],
-      [:get, 'about#index']
-       ]
-  end
+  add_user_api_key_scope(:user_themes, [
+      { methods: :post, actions: 'theme_creator/theme_creator#import' },
+      { methods: :put, actions: 'theme_creator/theme_creator#update' },
+      { methods: :get, actions: 'theme_creator/theme_creator#list' },
+      { methods: :get, actions: 'theme_creator/theme_creator#export' },
+      { methods: :get, actions: 'about#index' }
+  ])
 
 end

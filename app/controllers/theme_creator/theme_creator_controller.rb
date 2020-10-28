@@ -21,7 +21,7 @@ class ThemeCreator::ThemeCreatorController < Admin::ThemesController
       application_name: I18n.t('theme_creator.api_application_name'),
       client_id: client_id,
       user_id: current_user.id,
-      scopes: ['user_themes']
+      scopes: [UserApiKeyScope.new(name: 'discourse-theme-creator:user_themes')]
     )
 
     render json: { api_key: api_key.key }
