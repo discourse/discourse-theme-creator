@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class UpdateUserApiKeyScopes < ActiveRecord::Migration[6.0]
-  def change
+  def up
     execute <<~SQL
       UPDATE user_api_key_scopes
       SET name = 'discourse-theme-creator:user_themes'
