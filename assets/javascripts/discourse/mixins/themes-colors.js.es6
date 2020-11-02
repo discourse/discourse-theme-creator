@@ -1,3 +1,4 @@
+import I18n from "I18n";
 import { default as computed } from "ember-addons/ember-computed-decorators";
 import { url } from "discourse/lib/computed";
 
@@ -11,6 +12,6 @@ export default Ember.Mixin.create({
 
   @computed("colors.@each.changed")
   hidePreview(colors) {
-    return colors && colors.some(color => color.get("changed"));
-  }
+    return colors && colors.some((color) => color.get("changed"));
+  },
 });

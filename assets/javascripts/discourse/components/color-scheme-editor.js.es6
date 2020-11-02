@@ -6,6 +6,6 @@ export default Ember.Component.extend({
 
     undo(color) {
       color.undo();
-    }
-  }
+    },
+  },
 });

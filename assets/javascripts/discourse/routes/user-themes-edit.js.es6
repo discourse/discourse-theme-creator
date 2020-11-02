@@ -1,3 +1,4 @@
+import I18n from "I18n";
 import DiscourseRoute from "discourse/routes/discourse";
 
 export default DiscourseRoute.extend({
@@ -10,7 +11,7 @@ export default DiscourseRoute.extend({
       ? {
           model,
           target: params.target,
-          field_name: params.field_name
+          field_name: params.field_name,
         }
       : this.replaceWith("user.themes.index");
   },
@@ -20,12 +21,14 @@ export default DiscourseRoute.extend({
       model: wrapper.model,
       target: wrapper.target || "common",
       field_name: wrapper.field_name || "scss",
-      theme_id: wrapper.model.get("id")
+      theme_id: wrapper.model.get("id"),
     };
   },
 
   setupController(controller, wrapper) {
-    const fields = wrapper.model.get("fields")[wrapper.target].map(f => f.name);
+    const fields = wrapper.model
+      .get("fields")
+      [wrapper.target].map((f) => f.name);
     if (!fields.includes(wrapper.field_name)) {
       this.transitionTo(
         "user.themes.edit",
@@ -54,7 +57,7 @@ export default DiscourseRoute.extend({
           I18n.t("admin.customize.theme.unsaved_changes_alert"),
           I18n.t("admin.customize.theme.discard"),
           I18n.t("admin.customize.theme.stay"),
-          result => {
+          (result) => {
             if (!result) {
               this.set("shouldAlertUnsavedChanges", false);
               transition.retry();
@@ -62,6 +65,6 @@ export default DiscourseRoute.extend({
           }
         );
       }
-    }
-  }
+    },
+  },
 });

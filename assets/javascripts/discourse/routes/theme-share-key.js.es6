@@ -4,7 +4,7 @@ import DiscourseRoute from "discourse/routes/discourse";
 
 export default DiscourseRoute.extend({
   model(params) {
-    return ajax(`/theme/${params.theme_id}.json`).then(response => {
+    return ajax(`/theme/${params.theme_id}.json`).then((response) => {
       return response["theme"];
     });
   },
@@ -15,5 +15,5 @@ export default DiscourseRoute.extend({
         showModal("user-themes-view-modal", { model: model })
       );
     });
-  }
+  },
 });

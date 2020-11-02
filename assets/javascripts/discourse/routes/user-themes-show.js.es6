@@ -27,5 +27,5 @@ export default DiscourseRoute.extend({
     controller.set("colorSchemeId", model.get("color_scheme_id"));
 
     controller.set("advancedOverride", false);
-  }
+  },
 });

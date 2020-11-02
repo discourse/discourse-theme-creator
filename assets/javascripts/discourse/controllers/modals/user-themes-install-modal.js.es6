@@ -6,5 +6,5 @@ export default AdminInstallTheme.extend({
   keyGenUrl: "/user_themes/generate_key_pair",
   importUrl: "/user_themes/import",
   selection: "create",
-  recordType: "user-theme"
+  recordType: "user-theme",
 });

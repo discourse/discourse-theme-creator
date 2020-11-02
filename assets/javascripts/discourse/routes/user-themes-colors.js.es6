@@ -4,7 +4,7 @@ export default DiscourseRoute.extend({
   serialize(model) {
     return {
       theme_id: model.get("theme_id"),
-      id: model.get("id")
+      id: model.get("id"),
     };
   },
 
@@ -18,5 +18,5 @@ export default DiscourseRoute.extend({
     }
 
     return model;
-  }
+  },
 });
