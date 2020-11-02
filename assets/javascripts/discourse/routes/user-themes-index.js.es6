@@ -7,5 +7,5 @@ export default AdminCustomizeThemesIndex.extend({
     this._super(...arguments);
     const parentController = this.controllerFor("user.themes");
     parentController.set("editingTheme", false);
-  }
+  },
 });

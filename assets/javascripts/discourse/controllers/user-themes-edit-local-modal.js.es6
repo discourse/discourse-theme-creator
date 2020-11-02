@@ -8,13 +8,13 @@ export default Ember.Controller.extend(ModalFunctionality, {
       this.set("loading", true);
 
       ajax("/user_themes/fetch_api_key", {
-        type: "POST"
+        type: "POST",
       })
-        .then(data => {
+        .then((data) => {
           this.set("loading", false);
           this.set("model.apiKey", data["api_key"]);
         })
         .catch(popupAjaxError);
-    }
-  }
+    },
+  },
 });

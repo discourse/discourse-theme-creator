@@ -1,3 +1,4 @@
+import I18n from "I18n";
 import UserColorScheme from "../models/user-color-scheme";
 import ColorSchemeColor from "admin/models/color-scheme-color";
 import showModal from "discourse/lib/show-modal";
@@ -7,10 +8,10 @@ export default DiscourseRoute.extend({
   model() {
     return this.store
       .findAll("user-theme", { user_id: this.modelFor("user").id })
-      .then(data => {
+      .then((data) => {
         var ColorSchemes = Ember.ArrayProxy.extend({});
         var colorSchemes = ColorSchemes.create({ content: [], loading: true });
-        data.extras.color_schemes.forEach(colorScheme => {
+        data.extras.color_schemes.forEach((colorScheme) => {
           colorSchemes.pushObject(
             UserColorScheme.create({
               id: colorScheme.id,
@@ -19,13 +20,13 @@ export default DiscourseRoute.extend({
               theme_id: colorScheme.theme_id,
               theme_name: colorScheme.theme_name,
               base_scheme_id: colorScheme.base_scheme_id,
-              colors: colorScheme.colors.map(function(c) {
+              colors: colorScheme.colors.map(function (c) {
                 return ColorSchemeColor.create({
                   name: c.name,
                   hex: c.hex,
-                  default_hex: c.default_hex
+                  default_hex: c.default_hex,
                 });
-              })
+              }),
             })
           );
         });
@@ -53,7 +54,7 @@ export default DiscourseRoute.extend({
       showModal("user-themes-install-modal", {
         admin: true,
         templateName: "admin-install-theme",
-        model: { user_id: this.modelFor("user").id }
+        model: { user_id: this.modelFor("user").id },
       });
     },
 
@@ -63,6 +64,6 @@ export default DiscourseRoute.extend({
 
     refreshThemes() {
       this.refresh();
-    }
-  }
+    },
+  },
 });

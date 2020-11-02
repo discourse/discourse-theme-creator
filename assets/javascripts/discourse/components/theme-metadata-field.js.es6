@@ -14,6 +14,6 @@ export default Ember.Component.extend({
       this.save().then(() => {
         this.set("editing", false);
       });
-    }
-  }
+    },
+  },
 });

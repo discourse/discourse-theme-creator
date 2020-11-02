@@ -5,5 +5,5 @@ export default AdminCustomizeThemesEdit.extend({
   previewUrl: url("model.id", "/user_themes/%@/preview"),
 
   editRouteName: "user.themes.edit",
-  showRouteName: "user.themes.show"
+  showRouteName: "user.themes.show",
 });

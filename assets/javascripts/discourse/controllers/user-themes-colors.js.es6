@@ -12,6 +12,6 @@ export default Ember.Controller.extend(ThemesColors, {
         .then(() => {
           this.set("isSaving", false);
         });
-    }
-  }
+    },
+  },
 });

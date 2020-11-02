@@ -6,7 +6,7 @@ export default ColorScheme.extend({
     var data = {};
     data.name = this.get("name");
     data.colors = [];
-    this.get("colors").forEach(c => {
+    this.get("colors").forEach((c) => {
       if (c.get("changed")) {
         data.colors.pushObject({ name: c.get("name"), hex: c.get("hex") });
       }
@@ -19,10 +19,10 @@ export default ColorScheme.extend({
       data: JSON.stringify({ color_scheme: data }),
       type: "PUT",
       dataType: "json",
-      contentType: "application/json"
+      contentType: "application/json",
     }).then(() => {
       this.startTrackingChanges();
-      this.get("colors").forEach(c => {
+      this.get("colors").forEach((c) => {
         c.startTrackingChanges();
       });
     });
@@ -35,5 +35,5 @@ export default ColorScheme.extend({
         { type: "DELETE" }
       );
     }
-  }
+  },
 });

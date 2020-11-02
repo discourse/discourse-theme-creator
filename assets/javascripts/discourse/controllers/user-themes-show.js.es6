@@ -1,3 +1,4 @@
+import I18n from "I18n";
 import { url } from "discourse/lib/computed";
 import { default as computed } from "ember-addons/ember-computed-decorators";
 import { ajax } from "discourse/lib/ajax";
@@ -55,7 +56,7 @@ export default AdminCustomizeThemesShowController.extend(ThemesColors, {
     if (showAdvanced) {
       return null;
     }
-    const scheme = schemes.find(c => {
+    const scheme = schemes.find((c) => {
       return c.id !== null;
     });
     return scheme;
@@ -87,7 +88,7 @@ export default AdminCustomizeThemesShowController.extend(ThemesColors, {
       showModal("user-themes-upload-modal", {
         name: "",
         admin: true,
-        templateName: "admin-add-upload"
+        templateName: "admin-add-upload",
       });
     },
 
@@ -97,7 +98,7 @@ export default AdminCustomizeThemesShowController.extend(ThemesColors, {
       const theme_id = this.get("model.id");
       ajax(`/user_themes/${theme_id}/colors`, {
         type: "POST",
-        data: {}
+        data: {},
       })
         .then(() => {
           this.set("creatingColorScheme", false);
@@ -120,7 +121,7 @@ export default AdminCustomizeThemesShowController.extend(ThemesColors, {
         I18n.t("theme_creator.delete_confirm"),
         I18n.t("no_value"),
         I18n.t("yes_value"),
-        result => {
+        (result) => {
           if (result) {
             const model = this.get("model");
             model.destroyRecord().then(() => {
@@ -130,6 +131,6 @@ export default AdminCustomizeThemesShowController.extend(ThemesColors, {
           }
         }
       );
-    }
-  }
+    },
+  },
 });

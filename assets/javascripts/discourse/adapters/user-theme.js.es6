@@ -19,7 +19,7 @@ export default Theme.extend({
     return ajax(
       this.pathFor(store, type, id),
       this.getPayload("PUT", data)
-    ).then(function(json) {
+    ).then(function (json) {
       return new Result(json[typeField], json);
     });
   },
@@ -29,7 +29,7 @@ export default Theme.extend({
     const typeField = this.get("typeField");
     data[typeField] = attrs;
     return ajax(this.pathFor(store, type), this.getPayload("POST", data)).then(
-      function(json) {
+      function (json) {
         return new Result(json[typeField], json);
       }
     );
@@ -37,11 +37,11 @@ export default Theme.extend({
 
   afterFindAll(results) {
     results = this._super(results);
-    results.forEach(theme => {
+    results.forEach((theme) => {
       if (!theme.get("remote_theme")) {
         theme.set("remote_theme", {});
       }
     });
     return results;
-  }
+  },
 });
