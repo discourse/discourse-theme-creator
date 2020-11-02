@@ -274,7 +274,7 @@
  {{#if quickColorScheme}}
   {{d-button action="showAdvanced" icon="gear" label="theme_creator.show_advanced"}}
  {{else if showAdvanced}}
-  {{d-button action="editLocalModal" icon="pencil" label="theme_creator.edit_local"}}
+  {{d-button action="editLocalModal" icon="pencil-alt" label="theme_creator.edit_local"}}
  {{/if}}
 
  {{#unless hidePreview}}
@@ -288,5 +288,5 @@
  {{/unless}}
  <a class="btn" target="_blank" href={{downloadUrl}}>{{d-icon "download"}}
   {{i18n 'admin.export_json.button_text'}}</a>
- {{d-button action="destroy" label="theme_creator.delete" icon="trash" class="btn btn-danger"}}
+ {{d-button action="destroy" label="theme_creator.delete" icon="trash-alt" class="btn btn-danger"}}
 </div>
