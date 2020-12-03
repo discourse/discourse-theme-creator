@@ -17,7 +17,7 @@ export default DiscourseRoute.extend({
     parentController.set("editingTheme", false);
     controller.set("allThemes", parentController.get("model"));
 
-    var colorSchemes = parentController
+    const colorSchemes = parentController
       .get("model.colorSchemes")
       .filterBy("theme_id", model.get("id"));
     colorSchemes.unshift(

@@ -9,8 +9,11 @@ export default DiscourseRoute.extend({
     return this.store
       .findAll("user-theme", { user_id: this.modelFor("user").id })
       .then((data) => {
-        var ColorSchemes = Ember.ArrayProxy.extend({});
-        var colorSchemes = ColorSchemes.create({ content: [], loading: true });
+        const ColorSchemes = Ember.ArrayProxy.extend({});
+        const colorSchemes = ColorSchemes.create({
+          content: [],
+          loading: true,
+        });
         data.extras.color_schemes.forEach((colorScheme) => {
           colorSchemes.pushObject(
             UserColorScheme.create({
