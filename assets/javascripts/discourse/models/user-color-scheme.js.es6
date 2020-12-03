@@ -3,7 +3,7 @@ import { ajax } from "discourse/lib/ajax";
 
 export default ColorScheme.extend({
   save() {
-    var data = {};
+    const data = {};
     data.name = this.get("name");
     data.colors = [];
     this.get("colors").forEach((c) => {
