@@ -1,6 +1,6 @@
 {
   "name": "discourse-theme-creator",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "repository": "git@github.com:discourse/discourse-theme-creator.git",
   "author": "Discourse",
   "license": "MIT",
