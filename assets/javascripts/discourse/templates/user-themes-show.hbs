@@ -123,21 +123,19 @@
         {{/if}}
 
         {{#if model.remote_theme.commits_behind}}
-          {{#d-button
+          {{d-button
             action=(action "updateToLatest")
             icon="download"
             class="btn-primary"
+            label="admin.customize.theme.update_to_latest"
           }}
-            {{i18n "admin.customize.theme.update_to_latest"}}
-          {{/d-button}}
         {{else}}
-          {{#d-button
+          {{d-button
             action=(action "checkForThemeUpdates")
-            icon="refresh"
+            icon="sync"
             class="btn-default"
+            label="admin.customize.theme.check_for_updates"
           }}
-            {{i18n "admin.customize.theme.check_for_updates"}}
-          {{/d-button}}
         {{/if}}
 
         <span class="status-message">
@@ -284,12 +282,12 @@
               title="theme_creator.edit_color_scheme"
               disabled=colorSchemeEditDisabled
             }}
-              {{d-icon "pencil"}}
+              {{d-icon "pencil-alt"}}
             {{/link-to}}
             {{d-button
               action="destroyColorScheme"
               title="theme_creator.delete_color_scheme"
-              icon="trash"
+              icon="trash-alt"
               disabled=colorSchemeEditDisabled
               class="btn btn-danger"
             }}
@@ -330,9 +328,11 @@
         </div>
       {{/if}}
 
-      {{#d-button action=(action "editTheme") class="btn btn-default edit"}}
-        {{i18n "admin.customize.theme.edit_css_html"}}
-      {{/d-button}}
+      {{d-button
+        class="btn-default edit"
+        action=(action "editTheme")
+        label="admin.customize.theme.edit_css_html"
+      }}
     </div>
 
     <div class="control-unit">
@@ -365,13 +365,12 @@
           {{i18n "admin.customize.theme.no_uploads"}}
         </div>
       {{/if}}
-      {{#d-button
+      {{d-button
         action=(action "addUploadModal")
         class="btn-default"
         icon="plus"
+        label="admin.customize.theme.add"
       }}
-        {{i18n "admin.customize.theme.add"}}
-      {{/d-button}}
     </div>
 
     {{#if hasSettings}}
@@ -426,7 +425,7 @@
         }}
         {{d-button
           action="showAdvanced"
-          icon="gear"
+          icon="cog"
           label="theme_creator.show_advanced"
         }}
       </div>
@@ -453,7 +452,7 @@
   {{#if quickColorScheme}}
     {{d-button
       action="showAdvanced"
-      icon="gear"
+      icon="cog"
       label="theme_creator.show_advanced"
     }}
   {{else if showAdvanced}}
