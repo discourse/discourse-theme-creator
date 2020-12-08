@@ -10,6 +10,7 @@ register_asset "stylesheets/theme-creator.scss"
 register_svg_icon "arrow-left"
 register_svg_icon "arrow-right"
 register_svg_icon "laptop-code"
+register_svg_icon "eye"
 
 load File.expand_path('../lib/theme_creator/engine.rb', __FILE__)
 
