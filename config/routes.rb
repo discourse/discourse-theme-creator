@@ -20,7 +20,6 @@ ThemeCreator::Engine.routes.draw do
   get ":id/preview" => "theme_creator#preview"
   get ":id/export" => "theme_creator#export"
   put ":id/setting" => "theme_creator#update_single_setting"
-  get ":id/diff_local_changes" => "theme_creator#diff_local_changes"
 
   # Additional theme endpoints
   post "upload_asset" => "theme_creator#upload_asset"
