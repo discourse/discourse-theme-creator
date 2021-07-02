@@ -1,8 +1,8 @@
 {{#d-modal-body id="theme-creator-edit-local-modal" title="theme_creator.edit_local"}}
-  <p>{{{i18n "theme_creator.edit_local_description"}}}</p>
-
+  <p>{{html-safe (i18n "theme_creator.edit_local_description")}}</p>
 
   <h3>{{i18n "theme_creator.edit_local_key"}}</h3>
+
   {{#conditional-loading-spinner condition=loading}}
     {{#if model.apiKey}}
       <pre>{{model.apiKey}}</pre>
@@ -11,5 +11,5 @@
     {{/if}}
   {{/conditional-loading-spinner}}
 
-  <p>{{{i18n "theme_creator.revoke_instructions"}}}</p>
+  <p>{{html-safe (i18n "theme_creator.revoke_instructions")}}</p>
 {{/d-modal-body}}
