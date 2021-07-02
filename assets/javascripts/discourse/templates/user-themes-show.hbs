@@ -14,7 +14,7 @@
       }}
     {{else}}
       {{model.name}}
-      <a {{action "startEditingName"}}>
+      <a href {{action "startEditingName"}}>
         {{d-icon "pencil"}}
       </a>
     {{/if}}
@@ -28,7 +28,7 @@
           {{model.base_share_url}}{{model.share_slug}}
         </code>
 
-        <a {{action "shareModal"}}>
+        <a href {{action "shareModal"}}>
           {{d-icon "pencil"}}
         </a>
       </div>
@@ -37,7 +37,7 @@
 
   {{#each model.errors as |error|}}
     <div class="alert alert-error">
-      <button class="close" data-dismiss="alert">
+      <button type="button" class="close" data-dismiss="alert">
         ×
       </button>
       {{error}}
@@ -50,13 +50,13 @@
       {{#if model.remote_theme.minimum_discourse_version}}
         {{i18n
           "admin.customize.theme.required_version.minimum"
-          version=(unbound model.remote_theme.minimum_discourse_version)
+          version=model.remote_theme.minimum_discourse_version
         }}
       {{/if}}
       {{#if model.remote_theme.maximum_discourse_version}}
         {{i18n
           "admin.customize.theme.required_version.maximum"
-          version=(unbound model.remote_theme.maximum_discourse_version)
+          version=model.remote_theme.maximum_discourse_version
         }}
       {{/if}}
     </div>
@@ -64,19 +64,19 @@
 
   {{#if model.remote_theme}}
     {{#if model.remote_theme.remote_url}}
-      <a class="remote-url" href="{{model.remote_theme.remote_url}}">
+      <a class="remote-url" href={{model.remote_theme.remote_url}}>
         {{i18n "admin.customize.theme.source_url"}}
         {{d-icon "link"}}
       </a>
     {{/if}}
     {{#if model.remote_theme.about_url}}
-      <a class="url about-url" href="{{model.remote_theme.about_url}}">
+      <a class="url about-url" href={{model.remote_theme.about_url}}>
         {{i18n "admin.customize.theme.about_theme"}}
         {{d-icon "link"}}
       </a>
     {{/if}}
     {{#if model.remote_theme.license_url}}
-      <a class="url license-url" href="{{model.remote_theme.license_url}}">
+      <a class="url license-url" href={{model.remote_theme.license_url}}>
         {{i18n "admin.customize.theme.license"}}
         {{d-icon "link"}}
       </a>
@@ -111,7 +111,7 @@
       <div class="control-unit">
         {{#if showRemoteError}}
           <div class="error-message">
-            {{d-icon "exclamation-triangle"}} {{I18n
+            {{d-icon "exclamation-triangle"}} {{i18n
               "admin.customize.theme.repo_unreachable"
             }}
           </div>
@@ -148,7 +148,7 @@
                 count=model.remote_theme.commits_behind
               }}
               {{#if model.remote_theme.github_diff_link}}
-                <a href="{{model.remote_theme.github_diff_link}}">
+                <a href={{model.remote_theme.github_diff_link}}>
                   {{i18n "admin.customize.theme.compare_commits"}}
                 </a>
               {{/if}}
@@ -345,7 +345,7 @@
             <li>
               <span class="col">
                 ${{upload.name}}:
-                <a href={{upload.url}} target="_blank">
+                <a href={{upload.url}} target="_blank" rel="noopener noreferrer">
                   {{upload.filename}}
                 </a>
               </span>
@@ -419,9 +419,8 @@
             "theme_creator.add_color_scheme"
           )
           icon="plus"
-          class="btn"
+          class="btn btn-primary"
           disabled=creatingColorScheme
-          class="btn-primary"
         }}
         {{d-button
           action="showAdvanced"
@@ -465,10 +464,11 @@
 
   {{#unless hidePreview}}
     <a
-      href="{{previewUrl}}"
-      title="{{i18n "theme_creator.explain_preview"}}"
-      target="_blank"
+      href={{previewUrl}}
+      title={{i18n "theme_creator.explain_preview"}}
       class="btn btn-icon-text"
+      target="_blank"
+      rel="noopener noreferrer"
     >
       {{d-icon "desktop"}}
       <span class="d-button-label">
@@ -476,7 +476,7 @@
       </span>
     </a>
   {{/unless}}
-  <a class="btn" target="_blank" href={{downloadUrl}}>
+  <a href={{downloadUrl}} class="btn" target="_blank" rel="noopener noreferrer">
     {{d-icon "download"}}
     {{i18n "admin.export_json.button_text"}}
   </a>

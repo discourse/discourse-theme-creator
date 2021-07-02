@@ -1,26 +1,28 @@
 <div class="user-theme-creator">
- {{#unless editingTheme}}
-  <div class="user-theme-list">
-   {{#link-to 'user.themes'}}
-    <div class="user-theme-list-heading">{{i18n 'theme_creator.my_themes'}}</div>
-   {{/link-to}}
-   <ul>
-    {{#each model as |theme|}}
-     <li>
-      {{#link-to 'user.themes.show' theme replace=true}}
-       {{theme.name}}
+  {{#unless editingTheme}}
+    <div class="user-theme-list">
+      {{#link-to "user.themes"}}
+        <div class="user-theme-list-heading">{{i18n "theme_creator.my_themes"}}</div>
       {{/link-to}}
-     </li>
-    {{/each}}
-   </ul>
-   <div class="user-create-theme">
-    {{d-button action=(route-action 'installModal') icon="upload" label="theme_creator.install_theme" class="btn-primary"}}
-    {{d-button action=(route-action "editLocalModal") icon="laptop-code" label="theme_creator.api_key"}}
-   </div>
-  </div>
- {{/unless}}
 
- <div class="user-theme-details {{if editingTheme "editing"}}">
-  {{outlet}}
- </div>
+      <ul>
+        {{#each model as |theme|}}
+          <li>
+            {{#link-to "user.themes.show" theme replace=true}}
+              {{theme.name}}
+            {{/link-to}}
+          </li>
+        {{/each}}
+      </ul>
+
+      <div class="user-create-theme">
+        {{d-button action=(route-action "installModal") icon="upload" label="theme_creator.install_theme" class="btn-primary"}}
+        {{d-button action=(route-action "editLocalModal") icon="laptop-code" label="theme_creator.api_key"}}
+      </div>
+    </div>
+  {{/unless}}
+
+  <div class="user-theme-details {{if editingTheme "editing"}}">
+    {{outlet}}
+  </div>
 </div>
