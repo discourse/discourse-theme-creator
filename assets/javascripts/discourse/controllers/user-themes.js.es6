@@ -1,8 +1,8 @@
-import { default as computed } from "ember-addons/ember-computed-decorators";
+import discourseComputed from "discourse-common/utils/decorators";
 
 export default Ember.Controller.extend({
-  @computed("model", "model.@each.component")
+  @discourseComputed("model", "model.@each.component")
   installedThemes(themes) {
-    return themes.map((t) => t.name);
-  },
+    return themes.map(t => t.name);
+  }
 });
