@@ -1,10 +1,10 @@
 import getURL from "discourse-common/lib/get-url";
 import ModalFunctionality from "discourse/mixins/modal-functionality";
-import { default as computed } from "ember-addons/ember-computed-decorators";
+import discourseComputed from "discourse-common/utils/decorators";
 import { ajax } from "discourse/lib/ajax";
 
 export default Ember.Controller.extend(ModalFunctionality, {
-  @computed("model.id")
+  @discourseComputed("model.id")
   postURL(id) {
     return `${Discourse.BaseUri}/user_themes/${id}/view`;
   },

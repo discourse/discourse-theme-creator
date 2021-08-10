@@ -1,6 +1,6 @@
 import I18n from "I18n";
 import { url } from "discourse/lib/computed";
-import { default as computed } from "ember-addons/ember-computed-decorators";
+import discourseComputed from "discourse-common/utils/decorators";
 import { ajax } from "discourse/lib/ajax";
 import { popupAjaxError } from "discourse/lib/ajax-error";
 import showModal from "discourse/lib/show-modal";
@@ -14,14 +14,14 @@ export default AdminCustomizeThemesShowController.extend(ThemesColors, {
 
   editRouteName: "user.themes.edit",
 
-  @computed("model.color_scheme_id")
+  @discourseComputed("model.color_scheme_id")
   colorSchemeEditDisabled(colorSchemeId) {
     return colorSchemeId === null;
   },
 
   downloadUrl: url("model.id", "/user_themes/%@/export"),
 
-  @computed(
+  @discourseComputed(
     "advancedOverride",
     "colorSchemes",
     "model.uploads",
@@ -46,12 +46,12 @@ export default AdminCustomizeThemesShowController.extend(ThemesColors, {
 
   advancedOverride: false,
 
-  @computed("quickColorScheme")
+  @discourseComputed("quickColorScheme")
   hasQuickColorScheme(scheme) {
     return !!scheme;
   },
 
-  @computed("showAdvanced", "colorSchemes")
+  @discourseComputed("showAdvanced", "colorSchemes")
   quickColorScheme(showAdvanced, schemes) {
     if (showAdvanced) {
       return null;

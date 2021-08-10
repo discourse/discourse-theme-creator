@@ -1,10 +1,10 @@
 import ModalFunctionality from "discourse/mixins/modal-functionality";
-import { default as computed } from "ember-addons/ember-computed-decorators";
+import discourseComputed from "discourse-common/utils/decorators";
 
 export default Ember.Controller.extend(ModalFunctionality, {
   userThemes: Ember.inject.controller("user.themes"),
 
-  @computed("model.share_slug")
+  @discourseComputed("model.share_slug")
   slugUnique(slug) {
     const existingSlugs = this.get("userThemes.model").map((theme) => {
       if (theme.get("id") !== this.get("model.id")) {
@@ -17,7 +17,7 @@ export default Ember.Controller.extend(ModalFunctionality, {
     });
   },
 
-  @computed("model.share_slug")
+  @discourseComputed("model.share_slug")
   slugValid(slug) {
     if (slug == null) {
       return false;
@@ -25,7 +25,7 @@ export default Ember.Controller.extend(ModalFunctionality, {
     return slug.match(/^[a-z0-9_-]+$/i);
   },
 
-  @computed("slugValid", "slugUnique")
+  @discourseComputed("slugValid", "slugUnique")
   saveDisabled(slugValid, slugUnique) {
     return !slugValid || !slugUnique;
   },
