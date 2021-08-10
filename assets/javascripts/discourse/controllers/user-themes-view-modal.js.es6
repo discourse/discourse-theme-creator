@@ -12,7 +12,7 @@ export default Ember.Controller.extend(ModalFunctionality, {
   actions: {
     view() {
       if (!this.get("session.csrfToken")) {
-        ajax(getURL("/session/csrf"), { cache: false }).then(result => {
+        ajax(getURL("/session/csrf"), { cache: false }).then((result) => {
           this.set("session.csrfToken", result.csrf);
           Ember.run.next(() => $("#view-theme-form").submit());
         });
@@ -25,6 +25,6 @@ export default Ember.Controller.extend(ModalFunctionality, {
     },
     cancel() {
       this.send("closeModal");
-    }
-  }
+    },
+  },
 });

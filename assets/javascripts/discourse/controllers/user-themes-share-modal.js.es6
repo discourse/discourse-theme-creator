@@ -6,13 +6,13 @@ export default Ember.Controller.extend(ModalFunctionality, {
 
   @discourseComputed("model.share_slug")
   slugUnique(slug) {
-    const existingSlugs = this.get("userThemes.model").map(theme => {
+    const existingSlugs = this.get("userThemes.model").map((theme) => {
       if (theme.get("id") !== this.get("model.id")) {
         return theme.get("share_slug");
       }
     });
 
-    return !existingSlugs.some(other_slug => {
+    return !existingSlugs.some((other_slug) => {
       return other_slug === slug;
     });
   },
@@ -53,6 +53,6 @@ export default Ember.Controller.extend(ModalFunctionality, {
     finishedEditingSlug() {
       this.get("model").saveChanges("share_slug", "share_destination");
       this.set("editingSlug", false);
-    }
-  }
+    },
+  },
 });
