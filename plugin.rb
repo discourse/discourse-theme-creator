@@ -51,7 +51,7 @@ after_initialize do
     return true if is_my_own?(theme)
 
     # Theme is shared and theme owner has permission to share
-    theme.is_shared && User.find(theme.user_id).guardian.can_share_user_theme?(theme)
+    theme.is_shared && User.find_by(id: theme.user_id)&.guardian&.can_share_user_theme?(theme)
   end
 
   add_to_class(:guardian, :can_edit_user_theme?) do |theme|
@@ -152,7 +152,7 @@ after_initialize do
   end
 
   add_to_serializer(:theme, :can_share) do
-    User.find(object.user_id).guardian.can_share_user_theme?(object)
+    User.find_by(id: object.user_id)&.guardian&.can_share_user_theme?(object)
   end
 
   # Allow preview of shared user themes
