@@ -257,10 +257,11 @@
         <div class="control">
           {{combo-box
             content=colorSchemes
-            filterable=true
-            forceEscape=true
             value=colorSchemeId
             icon="paint-brush"
+            options=(hash
+              filterable=true
+            )
           }}
           {{#if colorSchemeChanged}}
             {{d-button
