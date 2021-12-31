@@ -3,6 +3,7 @@ import UserColorScheme from "../models/user-color-scheme";
 import ColorSchemeColor from "admin/models/color-scheme-color";
 import showModal from "discourse/lib/show-modal";
 import DiscourseRoute from "discourse/routes/discourse";
+import { action } from "@ember/object";
 
 export default DiscourseRoute.extend({
   model() {
@@ -44,29 +45,31 @@ export default DiscourseRoute.extend({
     return I18n.t("theme_creator.my_themes");
   },
 
-  actions: {
-    addTheme(theme, afterTransition) {
-      const all = this.modelFor("user.themes");
-      all.pushObject(theme);
-      this.transitionTo("user.themes.show", theme.get("id")).then(
-        afterTransition
-      );
-    },
+  @action
+  addTheme(theme, afterTransition) {
+    const all = this.modelFor("user.themes");
+    all.pushObject(theme);
+    this.transitionTo("user.themes.show", theme.get("id")).then(
+      afterTransition
+    );
+  },
 
-    installModal() {
-      showModal("user-themes-install-modal", {
-        admin: true,
-        templateName: "admin-install-theme",
-        model: { user_id: this.modelFor("user").id },
-      });
-    },
+  @action
+  installModal() {
+    showModal("user-themes-install-modal", {
+      admin: true,
+      templateName: "admin-install-theme",
+      model: { user_id: this.modelFor("user").id },
+    });
+  },
 
-    editLocalModal() {
-      showModal("user-themes-edit-local-modal", { model: { apiKey: null } });
-    },
+  @action
+  editLocalModal() {
+    showModal("user-themes-edit-local-modal", { model: { apiKey: null } });
+  },
 
-    refreshThemes() {
-      this.refresh();
-    },
+  @action
+  refreshThemes() {
+    this.refresh();
   },
 });
