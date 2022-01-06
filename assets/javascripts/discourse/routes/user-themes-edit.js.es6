@@ -1,5 +1,6 @@
 import I18n from "I18n";
 import DiscourseRoute from "discourse/routes/discourse";
+import { action } from "@ember/object";
 
 export default DiscourseRoute.extend({
   templateName: "adminCustomizeThemesEdit",
@@ -45,26 +46,25 @@ export default DiscourseRoute.extend({
     this.set("shouldAlertUnsavedChanges", true);
   },
 
-  actions: {
-    willTransition(transition) {
-      if (
-        this.get("controller.model.changed") &&
-        this.get("shouldAlertUnsavedChanges") &&
-        transition.intent.name !== this.routeName
-      ) {
-        transition.abort();
-        bootbox.confirm(
-          I18n.t("admin.customize.theme.unsaved_changes_alert"),
-          I18n.t("admin.customize.theme.discard"),
-          I18n.t("admin.customize.theme.stay"),
-          (result) => {
-            if (!result) {
-              this.set("shouldAlertUnsavedChanges", false);
-              transition.retry();
-            }
+  @action
+  willTransition(transition) {
+    if (
+      this.get("controller.model.changed") &&
+      this.get("shouldAlertUnsavedChanges") &&
+      transition.intent.name !== this.routeName
+    ) {
+      transition.abort();
+      bootbox.confirm(
+        I18n.t("admin.customize.theme.unsaved_changes_alert"),
+        I18n.t("admin.customize.theme.discard"),
+        I18n.t("admin.customize.theme.stay"),
+        (result) => {
+          if (!result) {
+            this.set("shouldAlertUnsavedChanges", false);
+            transition.retry();
           }
-        );
-      }
-    },
+        }
+      );
+    }
   },
 });
