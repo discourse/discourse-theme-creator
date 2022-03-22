@@ -39,7 +39,7 @@ RSpec.describe "Theme Creator Controller", type: :request do
       expect(JSON.parse(response.body)["bg"]).to eq("green")
 
       theme.reload
-      expect(theme.included_settings[:bg]).to eq("green")
+      expect(theme.cached_settings["bg"]).to eq("green")
       user_history = UserHistory.last
 
       expect(user_history.action).to eq(
