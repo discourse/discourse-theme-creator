@@ -4,13 +4,14 @@ import ColorSchemeColor from "admin/models/color-scheme-color";
 import showModal from "discourse/lib/show-modal";
 import DiscourseRoute from "discourse/routes/discourse";
 import { action } from "@ember/object";
+import ArrayProxy from "@ember/array/proxy";
 
 export default DiscourseRoute.extend({
   model() {
     return this.store
       .findAll("user-theme", { user_id: this.modelFor("user").id })
       .then((data) => {
-        const ColorSchemes = Ember.ArrayProxy.extend({});
+        const ColorSchemes = ArrayProxy.extend({});
         const colorSchemes = ColorSchemes.create({
           content: [],
           loading: true,

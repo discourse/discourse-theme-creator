@@ -1,6 +1,7 @@
 import I18n from "I18n";
 import DiscourseRoute from "discourse/routes/discourse";
 import { action } from "@ember/object";
+import bootbox from "bootbox";
 
 export default DiscourseRoute.extend({
   templateName: "adminCustomizeThemesEdit",

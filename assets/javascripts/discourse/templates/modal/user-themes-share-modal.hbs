@@ -8,8 +8,8 @@
           {{model.base_share_url}} {{text-field value=model.share_slug autofocus="true"}}
         </code>
 
-        {{d-button action="finishedEditingSlug" class="btn-primary btn-small submit-edit" icon="check" disabled=saveDisabled}}
-        {{d-button action="cancelEditingSlug" class="btn-small cancel-edit" icon="times"}}
+        {{d-button action=(action "finishedEditingSlug") class="btn-primary btn-small submit-edit" icon="check" disabled=saveDisabled}}
+        {{d-button action=(action "cancelEditingSlug") class="btn-small cancel-edit" icon="times"}}
 
         <p>{{i18n "theme_creator.share_destination"}}</p>
 
@@ -17,8 +17,8 @@
           {{model.base_destination_url}}{{text-field value=model.share_destination autofocus="true"}}
         </code>
 
-        {{d-button action="finishedEditingSlug" class="btn-primary btn-small submit-edit" icon="check" disabled=saveDisabled}}
-        {{d-button action="cancelEditingSlug" class="btn-small cancel-edit" icon="times"}}
+        {{d-button action=(action "finishedEditingSlug") class="btn-primary btn-small submit-edit" icon="check" disabled=saveDisabled}}
+        {{d-button action=(action "cancelEditingSlug") class="btn-small cancel-edit" icon="times"}}
       {{else}}
         <code>
           {{model.base_share_url}}{{model.share_slug}} <a href {{action "startEditingSlug"}}>{{d-icon "pencil"}}</a>
@@ -32,7 +32,7 @@
       {{/if}}
 
       <p>
-        {{d-button action="stopSharing" icon="times-circle" class="btn-danger btn-large" label="theme_creator.stop_sharing"}}
+        {{d-button action=(action "stopSharing") icon="times-circle" class="btn-danger btn-large" label="theme_creator.stop_sharing"}}
       </p>
     {{else}}
       <p>{{i18n "theme_creator.share_instructions"}}</p>
@@ -48,7 +48,7 @@
       </code>
 
       <p>
-        {{d-button action="share" icon="users" class="btn-primary btn-large" label="theme_creator.start_sharing" disabled=saveDisabled}}
+        {{d-button action=(action "share") icon="users" class="btn-primary btn-large" label="theme_creator.start_sharing" disabled=saveDisabled}}
       </p>
     {{/if}}
   {{else}}

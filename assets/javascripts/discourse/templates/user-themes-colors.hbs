@@ -7,7 +7,7 @@
 
   {{color-scheme-editor colors=model.colors}}
 
-  {{#d-button action="save" disabled=isSaving class="btn-primary"}}
+  {{#d-button action=(action "save") disabled=isSaving class="btn-primary"}}
     {{saveButtonText}}
   {{/d-button}}
 
