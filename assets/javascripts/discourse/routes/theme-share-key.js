@@ -1,6 +1,7 @@
 import showModal from "discourse/lib/show-modal";
 import { ajax } from "discourse/lib/ajax";
 import DiscourseRoute from "discourse/routes/discourse";
+import { next } from "@ember/runloop";
 
 export default DiscourseRoute.extend({
   model(params) {
@@ -11,9 +12,7 @@ export default DiscourseRoute.extend({
 
   afterModel(model) {
     this.replaceWith("discovery.latest").then(() => {
-      Ember.run.next(() =>
-        showModal("user-themes-view-modal", { model: model })
-      );
+      next(() => showModal("user-themes-view-modal", { model }));
     });
   },
 });

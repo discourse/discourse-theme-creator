@@ -6,11 +6,14 @@ import { popupAjaxError } from "discourse/lib/ajax-error";
 import showModal from "discourse/lib/show-modal";
 import AdminCustomizeThemesShowController from "admin/controllers/admin-customize-themes-show";
 import ThemesColors from "discourse/plugins/discourse-theme-creator/discourse/mixins/themes-colors";
+import { alias } from "@ember/object/computed";
+import EmberObject, { action } from "@ember/object";
+import bootbox from "bootbox";
 
 export default AdminCustomizeThemesShowController.extend(ThemesColors, {
-  parentController: Ember.Object.create({ model: { content: [] } }),
-  id: Ember.computed.alias("model.id"),
-  colors: Ember.computed.alias("quickColorScheme.colors"),
+  parentController: EmberObject.create({ model: { content: [] } }),
+  id: alias("model.id"),
+  colors: alias("quickColorScheme.colors"),
 
   editRouteName: "user.themes.edit",
 
@@ -62,75 +65,81 @@ export default AdminCustomizeThemesShowController.extend(ThemesColors, {
     return scheme;
   },
 
-  actions: {
-    saveMetadata() {
-      return this.get("model").saveChanges("remote_theme");
-    },
+  @action
+  saveMetadata() {
+    return this.get("model").saveChanges("remote_theme");
+  },
 
-    showAdvanced() {
-      this.set("advancedOverride", true);
-    },
+  @action
+  showAdvanced() {
+    this.set("advancedOverride", true);
+  },
 
-    saveQuickColorScheme() {
-      this.set("isSaving", true);
-      this.get("quickColorScheme")
-        .save()
-        .then(() => {
-          this.set("isSaving", false);
-        });
-    },
-
-    shareModal() {
-      showModal("user-themes-share-modal", { model: this.get("model") });
-    },
-
-    addUploadModal() {
-      showModal("user-themes-upload-modal", {
-        name: "",
-        admin: true,
-        templateName: "admin-add-upload",
+  @action
+  saveQuickColorScheme() {
+    this.set("isSaving", true);
+    this.get("quickColorScheme")
+      .save()
+      .then(() => {
+        this.set("isSaving", false);
       });
-    },
+  },
 
-    createColorScheme() {
-      this.set("creatingColorScheme", true);
+  @action
+  shareModal() {
+    showModal("user-themes-share-modal", { model: this.get("model") });
+  },
 
-      const theme_id = this.get("model.id");
-      ajax(`/user_themes/${theme_id}/colors`, {
-        type: "POST",
-        data: {},
+  @action
+  addUploadModal() {
+    showModal("user-themes-upload-modal", {
+      name: "",
+      admin: true,
+      templateName: "admin-add-upload",
+    });
+  },
+
+  @action
+  createColorScheme() {
+    this.set("creatingColorScheme", true);
+
+    const theme_id = this.get("model.id");
+    ajax(`/user_themes/${theme_id}/colors`, {
+      type: "POST",
+      data: {},
+    })
+      .then(() => {
+        this.set("creatingColorScheme", false);
+        this.send("refreshThemes");
       })
-        .then(() => {
-          this.set("creatingColorScheme", false);
-          this.send("refreshThemes");
-        })
-        .catch(popupAjaxError);
-    },
+      .catch(popupAjaxError);
+  },
 
-    destroyColorScheme() {
-      this.get("colorSchemes")
-        .findBy("id", this.get("model.color_scheme_id"))
-        .destroy()
-        .then(() => {
-          this.send("refreshThemes");
-        });
-    },
+  @action
+  destroyColorScheme() {
+    this.get("colorSchemes")
+      .findBy("id", this.get("model.color_scheme_id"))
+      .destroy()
+      .then(() => {
+        this.send("refreshThemes");
+      });
+  },
 
-    destroy() {
-      return bootbox.confirm(
-        I18n.t("theme_creator.delete_confirm"),
-        I18n.t("no_value"),
-        I18n.t("yes_value"),
-        (result) => {
-          if (result) {
-            const model = this.get("model");
-            model.destroyRecord().then(() => {
-              this.get("allThemes").removeObject(model);
-              this.transitionToRoute("user.themes");
-            });
-          }
+  @action
+  destroy() {
+    return bootbox.confirm(
+      I18n.t("theme_creator.delete_confirm"),
+      I18n.t("no_value"),
+      I18n.t("yes_value"),
+      (result) => {
+        if (result) {
+          const model = this.get("model");
+          model.destroyRecord().then(() => {
+            this.get("allThemes").removeObject(model);
+            this.transitionToRoute("user.themes");
+          });
         }
-      );
-    },
+      }
+    );
   },
 });

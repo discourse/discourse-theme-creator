@@ -1,8 +1,10 @@
+import Controller, { inject as controller } from "@ember/controller";
 import ModalFunctionality from "discourse/mixins/modal-functionality";
 import discourseComputed from "discourse-common/utils/decorators";
+import { action } from "@ember/object";
 
-export default Ember.Controller.extend(ModalFunctionality, {
-  userThemes: Ember.inject.controller("user.themes"),
+export default Controller.extend(ModalFunctionality, {
+  userThemes: controller("user.themes"),
 
   @discourseComputed("model.share_slug")
   slugUnique(slug) {
@@ -30,29 +32,34 @@ export default Ember.Controller.extend(ModalFunctionality, {
     return !slugValid || !slugUnique;
   },
 
-  actions: {
-    share() {
-      this.get("model").saveChanges("share_slug", "share_destination");
-    },
+  @action
+  share() {
+    this.get("model").saveChanges("share_slug", "share_destination");
+  },
 
-    stopSharing() {
-      this.set("model.share_slug", null);
-      this.get("model").saveChanges("share_slug");
-    },
+  @action
+  stopSharing() {
+    this.set("model.share_slug", null);
+    this.get("model").saveChanges("share_slug");
+  },
 
-    startEditingSlug() {
-      this.set("oldSlug", this.get("model.share_slug"));
-      this.set("oldDestination", this.get("model.share_destination"));
-      this.set("editingSlug", true);
-    },
-    cancelEditingSlug() {
-      this.set("model.share_slug", this.get("oldSlug"));
-      this.set("model.share_destination", this.get("oldDestination"));
-      this.set("editingSlug", false);
-    },
-    finishedEditingSlug() {
-      this.get("model").saveChanges("share_slug", "share_destination");
-      this.set("editingSlug", false);
-    },
+  @action
+  startEditingSlug() {
+    this.set("oldSlug", this.get("model.share_slug"));
+    this.set("oldDestination", this.get("model.share_destination"));
+    this.set("editingSlug", true);
+  },
+
+  @action
+  cancelEditingSlug() {
+    this.set("model.share_slug", this.get("oldSlug"));
+    this.set("model.share_destination", this.get("oldDestination"));
+    this.set("editingSlug", false);
+  },
+
+  @action
+  finishedEditingSlug() {
+    this.get("model").saveChanges("share_slug", "share_destination");
+    this.set("editingSlug", false);
   },
 });

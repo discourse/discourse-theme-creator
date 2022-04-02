@@ -7,7 +7,7 @@
     {{#if model.apiKey}}
       <pre>{{model.apiKey}}</pre>
     {{else}}
-      {{d-button action="showKey" icon="eye" label="theme_creator.show_key"}}
+      {{d-button action=(action "showKey") icon="eye" label="theme_creator.show_key"}}
     {{/if}}
   {{/conditional-loading-spinner}}
 

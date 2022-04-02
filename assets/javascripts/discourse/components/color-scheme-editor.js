@@ -1,11 +1,14 @@
-export default Ember.Component.extend({
-  actions: {
-    revert(color) {
-      color.revert();
-    },
+import Component from "@ember/component";
+import { action } from "@ember/object";
 
-    undo(color) {
-      color.undo();
-    },
+export default Component.extend({
+  @action
+  revert(color) {
+    color.revert();
+  },
+
+  @action
+  undo(color) {
+    color.undo();
   },
 });

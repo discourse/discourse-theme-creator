@@ -3,12 +3,12 @@
     {{#if editingName}}
       {{text-field value=model.name autofocus="true"}}
       {{d-button
-        action="finishedEditingName"
+        action=(action "finishedEditingName")
         class="btn-primary btn-small submit-edit"
         icon="check"
       }}
       {{d-button
-        action="cancelEditingName"
+        action=(action "cancelEditingName")
         class="btn-small cancel-edit"
         icon="times"
       }}
@@ -286,7 +286,7 @@
               {{d-icon "pencil-alt"}}
             {{/link-to}}
             {{d-button
-              action="destroyColorScheme"
+              action=(action "destroyColorScheme")
               title="theme_creator.delete_color_scheme"
               icon="trash-alt"
               disabled=colorSchemeEditDisabled
@@ -295,7 +295,7 @@
           {{/if}}
         </div>
         {{d-button
-          action="createColorScheme"
+          action=(action "createColorScheme")
           label=(if
             creatingColorScheme
             "theme_creator.adding_color_scheme"
@@ -413,7 +413,7 @@
     {{else}}
       <div class="control-unit">
         {{d-button
-          action="createColorScheme"
+          action=(action "createColorScheme")
           label=(if
             creatingColorScheme
             "theme_creator.adding_color_scheme"
@@ -424,7 +424,7 @@
           disabled=creatingColorScheme
         }}
         {{d-button
-          action="showAdvanced"
+          action=(action "showAdvanced")
           icon="cog"
           label="theme_creator.show_advanced"
         }}
@@ -434,7 +434,7 @@
 
   {{#if quickColorScheme}}
     {{#d-button
-      action="saveQuickColorScheme"
+      action=(action "saveQuickColorScheme")
       class="btn btn-primary"
       disabled=isSaving
     }}
@@ -443,7 +443,7 @@
   {{/if}}
 
   {{d-button
-    action="shareModal"
+    action=(action "shareModal")
     label="theme_creator.share"
     icon="users"
     class="btn-primary"
@@ -451,13 +451,13 @@
 
   {{#if quickColorScheme}}
     {{d-button
-      action="showAdvanced"
+      action=(action "showAdvanced")
       icon="cog"
       label="theme_creator.show_advanced"
     }}
   {{else if showAdvanced}}
     {{d-button
-      action="editLocalModal"
+      action=(action "editLocalModal")
       icon="pencil-alt"
       label="theme_creator.edit_local"
     }}
@@ -482,7 +482,7 @@
     {{i18n "admin.export_json.button_text"}}
   </a>
   {{d-button
-    action="destroy"
+    action=(action "destroy")
     label="theme_creator.delete"
     icon="trash-alt"
     class="btn btn-danger"
