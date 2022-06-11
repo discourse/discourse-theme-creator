@@ -2,7 +2,11 @@
   {{#unless editingTheme}}
     <div class="user-theme-list">
       {{#link-to "user.themes"}}
-        <div class="user-theme-list-heading">{{i18n "theme_creator.my_themes"}}</div>
+        <div class="user-theme-list-heading">
+          {{i18n
+            "theme_creator.my_themes"
+          }}
+        </div>
       {{/link-to}}
 
       <ul>
@@ -16,8 +20,17 @@
       </ul>
 
       <div class="user-create-theme">
-        {{d-button action=(route-action "installModal") icon="upload" label="theme_creator.install_theme" class="btn-primary"}}
-        {{d-button action=(route-action "editLocalModal") icon="laptop-code" label="theme_creator.api_key"}}
+        {{d-button
+          action=(route-action "installModal")
+          icon="upload"
+          label="theme_creator.install_theme"
+          class="btn-primary"
+        }}
+        {{d-button
+          action=(route-action "editLocalModal")
+          icon="laptop-code"
+          label="theme_creator.api_key"
+        }}
       </div>
     </div>
   {{/unless}}

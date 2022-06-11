@@ -1,54 +1,94 @@
-{{#d-modal-body id="theme-creator-share-modal" title="theme_creator.share_theme"}}
+{{#d-modal-body
+  id="theme-creator-share-modal"
+  title="theme_creator.share_theme"
+}}
   {{#if model.can_share}}
     {{#if model.is_shared}}
       <p>{{i18n "theme_creator.shared_at"}}</p>
 
       {{#if editingSlug}}
         <code>
-          {{model.base_share_url}} {{text-field value=model.share_slug autofocus="true"}}
+          {{model.base_share_url}}
+          {{text-field value=model.share_slug autofocus="true"}}
         </code>
 
-        {{d-button action=(action "finishedEditingSlug") class="btn-primary btn-small submit-edit" icon="check" disabled=saveDisabled}}
-        {{d-button action=(action "cancelEditingSlug") class="btn-small cancel-edit" icon="times"}}
+        {{d-button
+          action=(action "finishedEditingSlug")
+          class="btn-primary btn-small submit-edit"
+          icon="check"
+          disabled=saveDisabled
+        }}
+        {{d-button
+          action=(action "cancelEditingSlug")
+          class="btn-small cancel-edit"
+          icon="times"
+        }}
 
         <p>{{i18n "theme_creator.share_destination"}}</p>
 
         <code>
-          {{model.base_destination_url}}{{text-field value=model.share_destination autofocus="true"}}
+          {{model.base_destination_url}}
+          {{text-field value=model.share_destination autofocus="true"}}
         </code>
 
-        {{d-button action=(action "finishedEditingSlug") class="btn-primary btn-small submit-edit" icon="check" disabled=saveDisabled}}
-        {{d-button action=(action "cancelEditingSlug") class="btn-small cancel-edit" icon="times"}}
+        {{d-button
+          action=(action "finishedEditingSlug")
+          class="btn-primary btn-small submit-edit"
+          icon="check"
+          disabled=saveDisabled
+        }}
+        {{d-button
+          action=(action "cancelEditingSlug")
+          class="btn-small cancel-edit"
+          icon="times"
+        }}
       {{else}}
         <code>
-          {{model.base_share_url}}{{model.share_slug}} <a href {{action "startEditingSlug"}}>{{d-icon "pencil"}}</a>
+          {{model.base_share_url}}
+          {{model.share_slug}}
+          <a href {{action "startEditingSlug"}}>{{d-icon "pencil"}}</a>
         </code>
 
         <p>{{i18n "theme_creator.share_destination"}}</p>
 
         <code>
-          {{model.base_destination_url}}{{model.share_destination}} <a href {{action "startEditingSlug"}}>{{d-icon "pencil"}}</a>
+          {{model.base_destination_url}}
+          {{model.share_destination}}
+          <a href {{action "startEditingSlug"}}>{{d-icon "pencil"}}</a>
         </code>
       {{/if}}
 
       <p>
-        {{d-button action=(action "stopSharing") icon="times-circle" class="btn-danger btn-large" label="theme_creator.stop_sharing"}}
+        {{d-button
+          action=(action "stopSharing")
+          icon="times-circle"
+          class="btn-danger btn-large"
+          label="theme_creator.stop_sharing"
+        }}
       </p>
     {{else}}
       <p>{{i18n "theme_creator.share_instructions"}}</p>
 
       <code>
-        {{model.base_share_url}} {{text-field value=model.share_slug autofocus="true"}}
+        {{model.base_share_url}}
+        {{text-field value=model.share_slug autofocus="true"}}
       </code>
 
       <p>{{i18n "theme_creator.share_destination_instructions"}}</p>
 
       <code>
-        {{model.base_destination_url}} {{text-field value=model.share_destination placeholder="/"}}
+        {{model.base_destination_url}}
+        {{text-field value=model.share_destination placeholder="/"}}
       </code>
 
       <p>
-        {{d-button action=(action "share") icon="users" class="btn-primary btn-large" label="theme_creator.start_sharing" disabled=saveDisabled}}
+        {{d-button
+          action=(action "share")
+          icon="users"
+          class="btn-primary btn-large"
+          label="theme_creator.start_sharing"
+          disabled=saveDisabled
+        }}
       </p>
     {{/if}}
   {{else}}

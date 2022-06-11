@@ -2,8 +2,16 @@
 
 {{#if editing}}
   {{text-field value=value autofocus="true"}}
-  {{d-button action=(action "finishedEditing") class="btn-primary btn-small submit-edit" icon="check"}}
-  {{d-button action=(action "cancelEditing") class="btn-small cancel-edit" icon="times"}}
+  {{d-button
+    action=(action "finishedEditing")
+    class="btn-primary btn-small submit-edit"
+    icon="check"
+  }}
+  {{d-button
+    action=(action "cancelEditing")
+    class="btn-small cancel-edit"
+    icon="times"
+  }}
 {{else}}
   {{#if value}}
     {{value}}
