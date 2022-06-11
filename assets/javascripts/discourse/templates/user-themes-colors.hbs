@@ -3,7 +3,12 @@
     {{text-field value=model.name autofocus="true"}}
   </h2>
 
-  <h4>({{i18n "theme_creator.color_scheme_belongs_to"}} {{#link-to "user.themes.show" model.theme_id replace=true}}{{model.theme_name}}{{/link-to}})</h4>
+  <h4>
+    ({{i18n "theme_creator.color_scheme_belongs_to"}}
+    {{#link-to "user.themes.show" model.theme_id replace=true}}
+      {{model.theme_name}}
+    {{/link-to}})
+  </h4>
 
   {{color-scheme-editor colors=model.colors}}
 
@@ -19,7 +24,8 @@
       target="_blank"
       rel="noopener noreferrer"
     >
-      {{d-icon "desktop"}}{{i18n "theme_creator.preview"}}
+      {{d-icon "desktop"}}
+      {{i18n "theme_creator.preview"}}
     </a>
   {{/unless}}
 </div>

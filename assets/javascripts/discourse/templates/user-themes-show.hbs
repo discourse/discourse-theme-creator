@@ -2,6 +2,7 @@
   <h1>
     {{#if editingName}}
       {{text-field value=model.name autofocus="true"}}
+
       {{d-button
         action=(action "finishedEditingName")
         class="btn-primary btn-small submit-edit"
@@ -14,6 +15,7 @@
       }}
     {{else}}
       {{model.name}}
+
       <a href {{action "startEditingName"}}>
         {{d-icon "pencil"}}
       </a>
@@ -24,8 +26,10 @@
     {{#if model.can_share}}
       <div class="control-unit share-information">
         {{i18n "theme_creator.shared_at"}}
+
         <code>
-          {{model.base_share_url}}{{model.share_slug}}
+          {{model.base_share_url}}
+          {{model.share_slug}}
         </code>
 
         <a href {{action "shareModal"}}>
@@ -111,9 +115,8 @@
       <div class="control-unit">
         {{#if showRemoteError}}
           <div class="error-message">
-            {{d-icon "exclamation-triangle"}} {{i18n
-              "admin.customize.theme.repo_unreachable"
-            }}
+            {{d-icon "exclamation-triangle"}}
+            {{i18n "admin.customize.theme.repo_unreachable"}}
           </div>
           <div class="raw-error">
             <code>
@@ -147,6 +150,7 @@
                 "admin.customize.theme.commits_behind"
                 count=model.remote_theme.commits_behind
               }}
+
               {{#if model.remote_theme.github_diff_link}}
                 <a href={{model.remote_theme.github_diff_link}}>
                   {{i18n "admin.customize.theme.compare_commits"}}
@@ -154,10 +158,8 @@
               {{/if}}
             {{else}}
               {{#unless showRemoteError}}
-                {{i18n "admin.customize.theme.up_to_date"}} {{format-date
-                  model.remote_theme.updated_at
-                  leaveAgo="true"
-                }}
+                {{i18n "admin.customize.theme.up_to_date"}}
+                {{format-date model.remote_theme.updated_at leaveAgo="true"}}
               {{/unless}}
             {{/if}}
           {{/if}}
@@ -175,6 +177,7 @@
           {{i18n "theme_creator.theme"}}
         {{/if}}
       </div>
+
       <div class="description">
         {{#if model.component}}
           {{i18n "theme_creator.is_a_component"}}
@@ -182,6 +185,7 @@
           {{i18n "theme_creator.is_a_theme"}}
         {{/if}}
       </div>
+
       <div class="control">
         {{#if model.component}}
           {{d-button
@@ -251,17 +255,17 @@
         <div class="mini-title">
           {{i18n "admin.customize.theme.color_scheme"}}
         </div>
+
         <div class="description">
           {{i18n "admin.customize.theme.color_scheme_select"}}
         </div>
+
         <div class="control">
           {{combo-box
             content=colorSchemes
             value=colorSchemeId
             icon="paint-brush"
-            options=(hash
-              filterable=true
-            )
+            options=(hash filterable=true)
           }}
           {{#if colorSchemeChanged}}
             {{d-button
@@ -294,6 +298,7 @@
             }}
           {{/if}}
         </div>
+
         {{d-button
           action=(action "createColorScheme")
           label=(if
@@ -312,10 +317,12 @@
       <div class="mini-title">
         {{i18n "admin.customize.theme.css_html"}}
       </div>
+
       {{#if model.hasEditedFields}}
         <div class="description">
           {{i18n "admin.customize.theme.custom_sections"}}
         </div>
+
         <ul>
           {{#each editedFieldsFormatted as |field|}}
             <li>
@@ -340,16 +347,22 @@
       <div class="mini-title">
         {{i18n "admin.customize.theme.uploads"}}
       </div>
+
       {{#if model.uploads}}
         <ul class="removable-list">
           {{#each model.uploads as |upload|}}
             <li>
               <span class="col">
                 ${{upload.name}}:
-                <a href={{upload.url}} target="_blank" rel="noopener noreferrer">
+                <a
+                  href={{upload.url}}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   {{upload.filename}}
                 </a>
               </span>
+
               <span class="col">
                 {{d-button
                   action=(action "removeUpload")
@@ -366,6 +379,7 @@
           {{i18n "admin.customize.theme.no_uploads"}}
         </div>
       {{/if}}
+
       {{d-button
         action=(action "addUploadModal")
         class="btn-default"
@@ -379,6 +393,7 @@
         <div class="mini-title">
           {{i18n "admin.customize.theme.theme_settings"}}
         </div>
+
         {{#d-section class="form-horizontal theme settings"}}
           {{#each settings as |setting|}}
             {{user-theme-setting-editor
@@ -396,6 +411,7 @@
         <div class="mini-title">
           {{i18n "admin.customize.theme.theme_translations"}}
         </div>
+
         {{#d-section class="form-horizontal theme settings translations"}}
           {{#each translations as |translation|}}
             {{theme-translation
@@ -477,10 +493,12 @@
       </span>
     </a>
   {{/unless}}
+
   <a href={{downloadUrl}} class="btn" target="_blank" rel="noopener noreferrer">
     {{d-icon "download"}}
     {{i18n "admin.export_json.button_text"}}
   </a>
+
   {{d-button
     action=(action "destroy")
     label="theme_creator.delete"
