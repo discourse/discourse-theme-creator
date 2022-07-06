@@ -21,7 +21,7 @@ after_initialize do
   # We're re-using a lot of locale strings from the admin section
   # so we need to load it for non-staff users.
   register_html_builder('server:before-head-close') do |ctx|
-    "<script src='#{ExtraLocalesController.url('admin')}'></script>" +
+    ctx.helpers.preload_script_url ExtraLocalesController.url('admin') +
     ctx.helpers.preload_script('admin') +
     ctx.helpers.discourse_stylesheet_link_tag(:admin)
   end
