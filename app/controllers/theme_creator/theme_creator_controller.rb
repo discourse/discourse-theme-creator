@@ -6,6 +6,7 @@ class ThemeCreator::ThemeCreatorController < Admin::ThemesController
 
   requires_login(nil) # Override the blanket "require logged in" from the admin controller
   skip_before_action :ensure_staff # Open up to non-staff
+  skip_before_action :ensure_admin
 
   before_action :ensure_logged_in, except: [:preview, :share_preview, :share_info]
 
