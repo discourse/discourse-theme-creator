@@ -113,7 +113,7 @@ RSpec.describe "Theme Creator Controller", type: :request do
   end
 
   describe 'crud' do
-    context 'logged in as user 2' do
+    context 'when logged in as user 2' do
       before do
         sign_in(user2)
       end
@@ -156,7 +156,7 @@ RSpec.describe "Theme Creator Controller", type: :request do
       end
     end
 
-    context 'logged in as user 1' do
+    context 'when logged in as user 1' do
       before do
         sign_in(user1)
       end
