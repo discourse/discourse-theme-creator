@@ -3,11 +3,20 @@
 Discourse::Application.routes.append do
   mount ::ThemeCreator::Engine, at: "/user_themes"
   get "theme/:theme_id" => "theme_creator/theme_creator#share_info"
-  get "theme/:username/:slug" => "theme_creator/theme_creator#share_info", constraints: { username: RouteFormat.username }
-  get "u/:username/themes" => "users#index", constraints: { username: RouteFormat.username }
-  get "u/:username/themes/:id" => "users#index", constraints: { username: RouteFormat.username }
-  get "u/:username/themes/:theme_id/colors/:color_scheme_id" => "users#index", constraints: { username: RouteFormat.username }
-  get 'u/:username/themes/:id/:target/:field_name/edit' => 'users#index', constraints: { username: RouteFormat.username }
+  get "theme/:username/:slug" => "theme_creator/theme_creator#share_info",
+      :constraints => {
+        username: RouteFormat.username,
+      }
+  get "u/:username/themes" => "users#index", :constraints => { username: RouteFormat.username }
+  get "u/:username/themes/:id" => "users#index", :constraints => { username: RouteFormat.username }
+  get "u/:username/themes/:theme_id/colors/:color_scheme_id" => "users#index",
+      :constraints => {
+        username: RouteFormat.username,
+      }
+  get "u/:username/themes/:id/:target/:field_name/edit" => "users#index",
+      :constraints => {
+        username: RouteFormat.username,
+      }
 end
 
 ThemeCreator::Engine.routes.draw do

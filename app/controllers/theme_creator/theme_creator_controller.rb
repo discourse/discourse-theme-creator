@@ -3,26 +3,36 @@
 # We're going to extend the admin theme controller, so we don't repeat all the logic there
 
 class ThemeCreator::ThemeCreatorController < Admin::ThemesController
-
   requires_login(nil) # Override the blanket "require logged in" from the admin controller
   skip_before_action :ensure_admin
 
-  before_action :ensure_logged_in, except: [:preview, :share_preview, :share_info]
+  before_action :ensure_logged_in, except: %i[preview share_preview share_info]
 
-  before_action :ensure_own_theme, only: [:show, :export, :destroy, :update, :create_color_scheme, :update_color_scheme, :destroy_color_scheme, :update_single_setting]
+  before_action :ensure_own_theme,
+                only: %i[
+                  show
+                  export
+                  destroy
+                  update
+                  create_color_scheme
+                  update_color_scheme
+                  destroy_color_scheme
+                  update_single_setting
+                ]
 
-  skip_before_action :check_xhr, only: [:share_info, :preview, :share_preview]
+  skip_before_action :check_xhr, only: %i[share_info preview share_preview]
 
   def fetch_api_key
     client_id = "theme_cli_#{current_user.id}"
 
     UserApiKey.where(user_id: current_user.id, client_id: client_id).destroy_all
-    api_key = UserApiKey.create!(
-      application_name: I18n.t('theme_creator.api_application_name'),
-      client_id: client_id,
-      user_id: current_user.id,
-      scopes: [UserApiKeyScope.new(name: 'discourse-theme-creator:user_themes')]
-    )
+    api_key =
+      UserApiKey.create!(
+        application_name: I18n.t("theme_creator.api_application_name"),
+        client_id: client_id,
+        user_id: current_user.id,
+        scopes: [UserApiKeyScope.new(name: "discourse-theme-creator:user_themes")],
+      )
 
     render json: { api_key: api_key.key }
   end
@@ -44,10 +54,11 @@ class ThemeCreator::ThemeCreatorController < Admin::ThemesController
     dest_path = "/"
 
     if @theme.share_destination
-      parsed = begin
-        URI.parse(@theme.share_destination)
-      rescue URI::Error
-      end
+      parsed =
+        begin
+          URI.parse(@theme.share_destination)
+        rescue URI::Error
+        end
 
       if parsed && (parsed.host == nil || parsed.host == Discourse.current_hostname)
         dest_path = +"#{parsed.path}"
@@ -64,9 +75,11 @@ class ThemeCreator::ThemeCreatorController < Admin::ThemesController
     else
       raise Discourse::NotFound unless theme_owner = User.find_by_username(params[:username])
 
-      result = PluginStoreRow.where(plugin_name: 'discourse-theme-creator')
-        .where("key LIKE ?", "share:#{theme_owner.id}:%")
-        .where(value: params[:slug])
+      result =
+        PluginStoreRow
+          .where(plugin_name: "discourse-theme-creator")
+          .where("key LIKE ?", "share:#{theme_owner.id}:%")
+          .where(value: params[:slug])
 
       raise Discourse::InvalidAccess.new() if !result.any?
 
@@ -80,44 +93,47 @@ class ThemeCreator::ThemeCreatorController < Admin::ThemesController
     raise Discourse::InvalidAccess.new() if !guardian.can_see_user_theme?(@theme)
 
     respond_to do |format|
-      format.html do
-        render :share_info
-      end
+      format.html { render :share_info }
 
-      format.json do
-        render json: @theme, serializer: ::BasicUserThemeSerializer, root: 'theme'
-      end
+      format.json { render json: @theme, serializer: ::BasicUserThemeSerializer, root: "theme" }
     end
   end
 
   def list
-    @theme = Theme.where(user_id: theme_user.id).order(:name).includes(
-      :child_themes,
-      :parent_themes,
-      :remote_theme,
-      :theme_settings,
-      :settings_field,
-      :locale_fields,
-      :user,
-      :color_scheme,
-      theme_fields: :upload
-      )
+    @theme =
+      Theme
+        .where(user_id: theme_user.id)
+        .order(:name)
+        .includes(
+          :child_themes,
+          :parent_themes,
+          :remote_theme,
+          :theme_settings,
+          :settings_field,
+          :locale_fields,
+          :user,
+          :color_scheme,
+          theme_fields: :upload,
+        )
 
     # Only present color schemes that are attached to the user's themes
-    @color_schemes = ColorScheme.where(theme_id: @theme.map(&:id)).includes(color_scheme_colors: :color_scheme).to_a
+    @color_schemes =
+      ColorScheme
+        .where(theme_id: @theme.map(&:id))
+        .includes(color_scheme_colors: :color_scheme)
+        .to_a
     light = ColorScheme.new(name: I18n.t("color_schemes.light"))
     @color_schemes.unshift(light)
 
     payload = {
       user_themes: ActiveModel::ArraySerializer.new(@theme, each_serializer: ThemeSerializer),
       extras: {
-        color_schemes: ActiveModel::ArraySerializer.new(@color_schemes, each_serializer: ColorSchemeSerializer)
-      }
+        color_schemes:
+          ActiveModel::ArraySerializer.new(@color_schemes, each_serializer: ColorSchemeSerializer),
+      },
     }
 
-    respond_to do |format|
-      format.json { render json: payload }
-    end
+    respond_to { |format| format.json { render json: payload } }
   end
 
   # def create # Implemented in Admin::ThemesController
@@ -128,14 +144,19 @@ class ThemeCreator::ThemeCreatorController < Admin::ThemesController
     @theme ||= Theme.find(params[:id])
 
     # Set the user_theme specific fields
-    [:share_slug, :share_destination].each do |field|
-      if theme_params.key?(field)
-        @theme.send("#{field}=", theme_params[field])
-      end
+    %i[share_slug share_destination].each do |field|
+      @theme.send("#{field}=", theme_params[field]) if theme_params.key?(field)
     end
 
     # Set the user_theme specific fields
-    [:about_url, :license_url, :theme_version, :authors, :minimum_discourse_version, :maximum_discourse_version].each do |field|
+    %i[
+      about_url
+      license_url
+      theme_version
+      authors
+      minimum_discourse_version
+      maximum_discourse_version
+    ].each do |field|
       if theme_params[:remote_theme]&.key?(field)
         @theme.build_remote_theme(remote_url: "") unless @theme.remote_theme
         @theme.remote_theme.send("#{field}=", theme_params[:remote_theme][field])
@@ -159,16 +180,14 @@ class ThemeCreator::ThemeCreatorController < Admin::ThemesController
   def create_color_scheme
     @theme ||= Theme.find(params[:id])
 
-    new_scheme = ColorScheme.create_from_base(name: I18n.t('theme_creator.new_color_scheme'))
+    new_scheme = ColorScheme.create_from_base(name: I18n.t("theme_creator.new_color_scheme"))
     new_scheme.theme_id = @theme.id
     new_scheme.save!
 
     @theme.color_scheme_id = new_scheme.id
     @theme.save!
 
-    respond_to do |format|
-      format.json { head :no_content }
-    end
+    respond_to { |format| format.json { head :no_content } }
   end
 
   def update_color_scheme
@@ -181,7 +200,7 @@ class ThemeCreator::ThemeCreatorController < Admin::ThemesController
       raise Discourse::InvalidAccess.new("Cannot modify that color scheme.")
     end
 
-    color_scheme_params = params.permit(color_scheme: [:name, colors: [:name, :hex]])[:color_scheme]
+    color_scheme_params = params.permit(color_scheme: [:name, colors: %i[name hex]])[:color_scheme]
 
     color_scheme = ColorSchemeRevisor.revise(@color_scheme, color_scheme_params)
     if color_scheme.valid?
@@ -208,9 +227,7 @@ class ThemeCreator::ThemeCreatorController < Admin::ThemesController
 
     @color_scheme.destroy
 
-    respond_to do |format|
-      format.json { head :no_content }
-    end
+    respond_to { |format| format.json { head :no_content } }
   end
 
   private
@@ -233,10 +250,13 @@ class ThemeCreator::ThemeCreatorController < Admin::ThemesController
           # :default,
           # :user_selectable,
           :component,
-          settings: {},
-          translations: {},
-          remote_theme: {},
-          theme_fields: [:name, :target, :value, :upload_id, :type_id],
+          settings: {
+          },
+          translations: {
+          },
+          remote_theme: {
+          },
+          theme_fields: %i[name target value upload_id type_id],
           # child_theme_ids: []
         )
       end
@@ -255,8 +275,11 @@ class ThemeCreator::ThemeCreatorController < Admin::ThemesController
   end
 
   def theme_user
-    user_id = params[:user_id] || (params[:theme] && params[:theme].try(:[], :user_id)) || current_user.id
-    raise Discourse::InvalidAccess.new() unless (user_id.to_i == current_user.id) || current_user.staff?
+    user_id =
+      params[:user_id] || (params[:theme] && params[:theme].try(:[], :user_id)) || current_user.id
+    unless (user_id.to_i == current_user.id) || current_user.staff?
+      raise Discourse::InvalidAccess.new()
+    end
     User.find(user_id)
   end
 end
