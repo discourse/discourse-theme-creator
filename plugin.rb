@@ -13,17 +13,16 @@ register_svg_icon "arrow-right"
 register_svg_icon "laptop-code"
 register_svg_icon "eye"
 
-load File.expand_path('../lib/theme_creator/engine.rb', __FILE__)
+load File.expand_path("../lib/theme_creator/engine.rb", __FILE__)
 
 after_initialize do
   require_relative "app/jobs/scheduled/cleanup_topics"
 
   # We're re-using a lot of locale strings from the admin section
   # so we need to load it for non-staff users.
-  register_html_builder('server:before-head-close') do |ctx|
-    ctx.helpers.preload_script_url(ExtraLocalesController.url('admin')) +
-    ctx.helpers.preload_script('admin') +
-    ctx.helpers.discourse_stylesheet_link_tag(:admin)
+  register_html_builder("server:before-head-close") do |ctx|
+    ctx.helpers.preload_script_url(ExtraLocalesController.url("admin")) +
+      ctx.helpers.preload_script("admin") + ctx.helpers.discourse_stylesheet_link_tag(:admin)
   end
 
   # Override guardian to allow users to preview their own themes using the ?preview_theme_id= variable
@@ -42,9 +41,7 @@ after_initialize do
     true
   end
 
-  add_to_class(:guardian, :can_hotlink_user_theme?) do |theme|
-    is_my_own?(theme)
-  end
+  add_to_class(:guardian, :can_hotlink_user_theme?) { |theme| is_my_own?(theme) }
 
   add_to_class(:guardian, :can_see_user_theme?) do |theme|
     return true if is_staff?
@@ -55,9 +52,7 @@ after_initialize do
     theme.is_shared && User.find_by(id: theme.user_id)&.guardian&.can_share_user_theme?(theme)
   end
 
-  add_to_class(:guardian, :can_edit_user_theme?) do |theme|
-    is_staff? || is_my_own?(theme)
-  end
+  add_to_class(:guardian, :can_edit_user_theme?) { |theme| is_staff? || is_my_own?(theme) }
 
   add_to_class(:guardian, :can_share_user_theme?) do |theme|
     return true if SiteSetting.theme_creator_share_groups.blank? # all users can share
@@ -68,26 +63,25 @@ after_initialize do
   end
 
   # Add methods so that a theme can be shared/unshared by the user
-  add_to_class(:theme, :is_shared) do
-    !!share_slug
-  end
+  add_to_class(:theme, :is_shared) { !!share_slug }
 
   add_to_class(:theme, :share_slug) do
-    @share_slug ||= PluginStore.get('discourse-theme-creator', "share:#{user_id}:#{id}")
+    @share_slug ||= PluginStore.get("discourse-theme-creator", "share:#{user_id}:#{id}")
   end
 
   add_to_class(:theme, :share_destination) do
-    @share_destination ||= PluginStore.get('discourse-theme-creator', "share_destination:#{user_id}:#{id}")
+    @share_destination ||=
+      PluginStore.get("discourse-theme-creator", "share_destination:#{user_id}:#{id}")
   end
 
   add_model_callback(:theme, :after_destroy) do
-    PluginStore.remove('discourse-theme-creator', "share:#{user_id}:#{id}")
+    PluginStore.remove("discourse-theme-creator", "share:#{user_id}:#{id}")
   end
 
   add_to_class(:theme, :share_slug=) do |val|
     if !val
       @share_slug = nil
-      PluginStore.remove('discourse-theme-creator', "share:#{user_id}:#{id}")
+      PluginStore.remove("discourse-theme-creator", "share:#{user_id}:#{id}")
       return
     end
 
@@ -95,25 +89,27 @@ after_initialize do
     valid = (/^[a-z0-9_-]+$/ =~ val)
     return false if !valid
 
-    unique = !PluginStoreRow.where(plugin_name: 'discourse-theme-creator')
-      .where("key LIKE ?", "share:#{user_id}:%")
-      .where(value: val)
-      .any?
+    unique =
+      !PluginStoreRow
+        .where(plugin_name: "discourse-theme-creator")
+        .where("key LIKE ?", "share:#{user_id}:%")
+        .where(value: val)
+        .any?
     return false if !unique
 
     @share_slug = val
-    PluginStore.set('discourse-theme-creator', "share:#{user_id}:#{id}", val)
+    PluginStore.set("discourse-theme-creator", "share:#{user_id}:#{id}", val)
   end
 
   add_to_class(:theme, :share_destination=) do |val|
     if !val
       @share_slug = nil
-      PluginStore.remove('discourse-theme-creator', "share_destination:#{user_id}:#{id}")
+      PluginStore.remove("discourse-theme-creator", "share_destination:#{user_id}:#{id}")
       return
     end
 
     @share_destination = val
-    PluginStore.set('discourse-theme-creator', "share_destination:#{user_id}:#{id}", val)
+    PluginStore.set("discourse-theme-creator", "share_destination:#{user_id}:#{id}", val)
   end
 
   # We block hotlinking of other users themes.
@@ -132,25 +128,17 @@ after_initialize do
     end
   end
 
-  add_to_serializer(:theme, :is_shared) do
-    object.is_shared
-  end
+  add_to_serializer(:theme, :is_shared) { object.is_shared }
 
-  add_to_serializer(:theme, :share_slug) do
-    object.share_slug
-  end
+  add_to_serializer(:theme, :share_slug) { object.share_slug }
 
-  add_to_serializer(:theme, :share_destination) do
-    object.share_destination
-  end
+  add_to_serializer(:theme, :share_destination) { object.share_destination }
 
   add_to_serializer(:theme, :base_share_url) do
     UrlHelper.absolute_without_cdn("/theme/#{object.user&.username}/")
   end
 
-  add_to_serializer(:theme, :base_destination_url) do
-    Discourse.base_url_no_prefix
-  end
+  add_to_serializer(:theme, :base_destination_url) { Discourse.base_url_no_prefix }
 
   add_to_serializer(:theme, :can_share) do
     User.find_by(id: object.user_id)&.guardian&.can_share_user_theme?(object)
@@ -165,9 +153,8 @@ after_initialize do
         def handle_theme
           super()
           user_theme_id = flash[:user_theme_id]
-          if user_theme_id &&
-             Theme.theme_ids.include?(user_theme_id) && # Has requested a valid theme
-             guardian.can_see_user_theme?(Theme.find_by(id: user_theme_id))
+          if user_theme_id && Theme.theme_ids.include?(user_theme_id) && # Has requested a valid theme
+               guardian.can_see_user_theme?(Theme.find_by(id: user_theme_id))
             @theme_id = request.env[:resolved_theme_id] = user_theme_id
           end
         end
@@ -187,19 +174,22 @@ after_initialize do
             immutable_for(24.hours) if hash == params[:v]
           end
 
-          render plain: ExtraLocalesController.bundle_js(bundle), content_type: "application/javascript"
+          render plain: ExtraLocalesController.bundle_js(bundle),
+                 content_type: "application/javascript"
         end
       end
       prepend ThemeCreatorOverrides
     end
   end
 
-  add_user_api_key_scope(:user_themes, [
-      { methods: :post, actions: 'theme_creator/theme_creator#import' },
-      { methods: :put, actions: 'theme_creator/theme_creator#update' },
-      { methods: :get, actions: 'theme_creator/theme_creator#list' },
-      { methods: :get, actions: 'theme_creator/theme_creator#export' },
-      { methods: :get, actions: 'about#index' }
-  ])
-
+  add_user_api_key_scope(
+    :user_themes,
+    [
+      { methods: :post, actions: "theme_creator/theme_creator#import" },
+      { methods: :put, actions: "theme_creator/theme_creator#update" },
+      { methods: :get, actions: "theme_creator/theme_creator#list" },
+      { methods: :get, actions: "theme_creator/theme_creator#export" },
+      { methods: :get, actions: "about#index" },
+    ],
+  )
 end
