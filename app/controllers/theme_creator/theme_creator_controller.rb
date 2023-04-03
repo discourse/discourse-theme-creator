@@ -230,6 +230,10 @@ class ThemeCreator::ThemeCreatorController < Admin::ThemesController
     respond_to { |format| format.json { head :no_content } }
   end
 
+  def ban_for_remote_theme!
+    # no-op - we want to allow this stuff for theme-creator
+  end
+
   private
 
   # Override with a restricted version
