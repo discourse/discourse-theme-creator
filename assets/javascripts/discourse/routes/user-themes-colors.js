@@ -1,12 +1,12 @@
 import DiscourseRoute from "discourse/routes/discourse";
 
-export default DiscourseRoute.extend({
+export default class extends DiscourseRoute {
   serialize(model) {
     return {
       theme_id: model.get("theme_id"),
       id: model.get("id"),
     };
-  },
+  }
 
   model(params) {
     const schemes = this.modelFor("user.themes").get("colorSchemes");
@@ -18,5 +18,5 @@ export default DiscourseRoute.extend({
     }
 
     return model;
-  },
-});
+  }
+}

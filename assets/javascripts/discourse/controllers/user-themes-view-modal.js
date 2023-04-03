@@ -6,11 +6,13 @@ import { ajax } from "discourse/lib/ajax";
 import { action } from "@ember/object";
 import { next } from "@ember/runloop";
 
-export default Controller.extend(ModalFunctionality, {
+export default class UserThemesViewModal extends Controller.extend(
+  ModalFunctionality
+) {
   @discourseComputed("model.id")
   postURL(id) {
     return getURL(`/user_themes/${id}/view`);
-  },
+  }
 
   @action
   view() {
@@ -22,15 +24,15 @@ export default Controller.extend(ModalFunctionality, {
     } else {
       $("#view-theme-form").submit();
     }
-  },
+  }
 
   @action
   download() {
     document.location = getURL(`/user_themes/${this.model.id}`);
-  },
+  }
 
   @action
   cancel() {
     this.send("closeModal");
-  },
-});
+  }
+}

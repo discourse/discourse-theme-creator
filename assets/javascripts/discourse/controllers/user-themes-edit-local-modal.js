@@ -4,7 +4,9 @@ import { ajax } from "discourse/lib/ajax";
 import { popupAjaxError } from "discourse/lib/ajax-error";
 import { action } from "@ember/object";
 
-export default Controller.extend(ModalFunctionality, {
+export default class UserThemesEditLocalModal extends Controller.extend(
+  ModalFunctionality
+) {
   @action
   showKey() {
     this.set("loading", true);
@@ -17,5 +19,5 @@ export default Controller.extend(ModalFunctionality, {
         this.set("model.apiKey", data["api_key"]);
       })
       .catch(popupAjaxError);
-  },
-});
+  }
+}

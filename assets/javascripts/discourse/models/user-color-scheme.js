@@ -1,7 +1,7 @@
 import ColorScheme from "admin/models/color-scheme";
 import { ajax } from "discourse/lib/ajax";
 
-export default ColorScheme.extend({
+export default class UserColorScheme extends ColorScheme {
   save() {
     const data = {};
     data.name = this.get("name");
@@ -26,7 +26,7 @@ export default ColorScheme.extend({
         c.startTrackingChanges();
       });
     });
-  },
+  }
 
   destroy() {
     if (this.get("id")) {
@@ -35,5 +35,5 @@ export default ColorScheme.extend({
         { type: "DELETE" }
       );
     }
-  },
-});
+  }
+}

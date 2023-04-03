@@ -1,13 +1,13 @@
-import Theme from "admin/adapters/theme";
+import ThemeAdapter from "admin/adapters/theme";
 import { ajax } from "discourse/lib/ajax";
 import { Result } from "discourse/adapters/rest";
 
-export default Theme.extend({
+export default class UserThemeAdapter extends ThemeAdapter {
+  typeField = "theme";
+
   basePath() {
     return "/";
-  },
-
-  typeField: "theme",
+  }
 
   // Override update method
   // Possible PR to core to make typeField configurable?
@@ -22,7 +22,7 @@ export default Theme.extend({
     ).then(function (json) {
       return new Result(json[typeField], json);
     });
-  },
+  }
 
   createRecord(store, type, attrs) {
     const data = {};
@@ -33,15 +33,15 @@ export default Theme.extend({
         return new Result(json[typeField], json);
       }
     );
-  },
+  }
 
   afterFindAll(results) {
-    results = this._super(results);
+    results = super.afterFindAll(results);
     results.forEach((theme) => {
       if (!theme.get("remote_theme")) {
         theme.set("remote_theme", {});
       }
     });
     return results;
-  },
-});
+  }
+}
