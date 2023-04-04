@@ -3,9 +3,9 @@ import ThemesColors from "discourse/plugins/discourse-theme-creator/discourse/mi
 import { alias } from "@ember/object/computed";
 import { action } from "@ember/object";
 
-export default Controller.extend(ThemesColors, {
-  id: alias("model.theme_id"),
-  colors: alias("model.colors"),
+export default class UserThemesColors extends Controller.extend(ThemesColors) {
+  @alias("model.theme_id") id;
+  @alias("model.colors") colors;
 
   @action
   save() {
@@ -15,5 +15,5 @@ export default Controller.extend(ThemesColors, {
       .then(() => {
         this.set("isSaving", false);
       });
-  },
-});
+  }
+}

@@ -1,11 +1,11 @@
 import AdminCustomizeThemesIndex from "admin/routes/admin-customize-themes-index";
 
-export default AdminCustomizeThemesIndex.extend({
-  templateName: "adminCustomizeThemesIndex",
+export default class UserThemesIndex extends AdminCustomizeThemesIndex {
+  templateName = "adminCustomizeThemesIndex";
 
   setupController() {
-    this._super(...arguments);
+    super.setupController(...arguments);
     const parentController = this.controllerFor("user.themes");
     parentController.set("editingTheme", false);
-  },
-});
+  }
+}

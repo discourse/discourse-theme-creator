@@ -3,8 +3,8 @@ import DiscourseRoute from "discourse/routes/discourse";
 import { action } from "@ember/object";
 import bootbox from "bootbox";
 
-export default DiscourseRoute.extend({
-  templateName: "adminCustomizeThemesEdit",
+export default class extends DiscourseRoute {
+  templateName = "adminCustomizeThemesEdit";
 
   model(params) {
     const all = this.modelFor("user.themes");
@@ -16,7 +16,7 @@ export default DiscourseRoute.extend({
           field_name: params.field_name,
         }
       : this.replaceWith("user.themes.index");
-  },
+  }
 
   serialize(wrapper) {
     return {
@@ -25,7 +25,7 @@ export default DiscourseRoute.extend({
       field_name: wrapper.field_name || "scss",
       theme_id: wrapper.model.get("id"),
     };
-  },
+  }
 
   setupController(controller, wrapper) {
     const fields = wrapper.model
@@ -45,7 +45,7 @@ export default DiscourseRoute.extend({
     controller.set("fieldName", wrapper.field_name || "scss");
     this.controllerFor("user.themes").set("editingTheme", true);
     this.set("shouldAlertUnsavedChanges", true);
-  },
+  }
 
   @action
   willTransition(transition) {
@@ -67,5 +67,5 @@ export default DiscourseRoute.extend({
         }
       );
     }
-  },
-});
+  }
+}

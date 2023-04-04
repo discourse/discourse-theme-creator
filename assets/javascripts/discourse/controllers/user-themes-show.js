@@ -10,19 +10,21 @@ import { alias } from "@ember/object/computed";
 import EmberObject, { action } from "@ember/object";
 import bootbox from "bootbox";
 
-export default AdminCustomizeThemesShowController.extend(ThemesColors, {
-  parentController: EmberObject.create({ model: { content: [] } }),
-  id: alias("model.id"),
-  colors: alias("quickColorScheme.colors"),
+export default class UserThemesShow extends AdminCustomizeThemesShowController.extend(
+  ThemesColors
+) {
+  parentController = EmberObject.create({ model: { content: [] } });
+  @alias("model.id") id;
+  @alias("quickColorScheme.colors") colors;
 
-  editRouteName: "user.themes.edit",
+  editRouteName = "user.themes.edit";
+  @url("model.id", "/user_themes/%@/export") downloadUrl;
+  advancedOverride = false;
 
   @discourseComputed("model.color_scheme_id")
   colorSchemeEditDisabled(colorSchemeId) {
     return colorSchemeId === null;
-  },
-
-  downloadUrl: url("model.id", "/user_themes/%@/export"),
+  }
 
   @discourseComputed(
     "advancedOverride",
@@ -45,14 +47,12 @@ export default AdminCustomizeThemesShowController.extend(ThemesColors, {
       hasEditedFields ||
       component
     );
-  },
-
-  advancedOverride: false,
+  }
 
   @discourseComputed("quickColorScheme")
   hasQuickColorScheme(scheme) {
     return !!scheme;
-  },
+  }
 
   @discourseComputed("showAdvanced", "colorSchemes")
   quickColorScheme(showAdvanced, schemes) {
@@ -63,17 +63,17 @@ export default AdminCustomizeThemesShowController.extend(ThemesColors, {
       return c.id !== null;
     });
     return scheme;
-  },
+  }
 
   @action
   saveMetadata() {
     return this.get("model").saveChanges("remote_theme");
-  },
+  }
 
   @action
-  showAdvanced() {
+  showAdvancedAction() {
     this.set("advancedOverride", true);
-  },
+  }
 
   @action
   saveQuickColorScheme() {
@@ -83,12 +83,12 @@ export default AdminCustomizeThemesShowController.extend(ThemesColors, {
       .then(() => {
         this.set("isSaving", false);
       });
-  },
+  }
 
   @action
   shareModal() {
     showModal("user-themes-share-modal", { model: this.get("model") });
-  },
+  }
 
   @action
   addUploadModal() {
@@ -97,7 +97,7 @@ export default AdminCustomizeThemesShowController.extend(ThemesColors, {
       admin: true,
       templateName: "admin-add-upload",
     });
-  },
+  }
 
   @action
   createColorScheme() {
@@ -113,7 +113,7 @@ export default AdminCustomizeThemesShowController.extend(ThemesColors, {
         this.send("refreshThemes");
       })
       .catch(popupAjaxError);
-  },
+  }
 
   @action
   destroyColorScheme() {
@@ -123,7 +123,7 @@ export default AdminCustomizeThemesShowController.extend(ThemesColors, {
       .then(() => {
         this.send("refreshThemes");
       });
-  },
+  }
 
   @action
   destroy() {
@@ -141,5 +141,5 @@ export default AdminCustomizeThemesShowController.extend(ThemesColors, {
         }
       }
     );
-  },
-});
+  }
+}

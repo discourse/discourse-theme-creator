@@ -17,7 +17,7 @@
       {{model.name}}
 
       <a href {{action "startEditingName"}}>
-        {{d-icon "pencil"}}
+        {{d-icon "pencil-alt"}}
       </a>
     {{/if}}
   </h1>
@@ -33,7 +33,7 @@
         </code>
 
         <a href {{action "shareModal"}}>
-          {{d-icon "pencil"}}
+          {{d-icon "pencil-alt"}}
         </a>
       </div>
     {{/if}}
@@ -440,7 +440,7 @@
           disabled=creatingColorScheme
         }}
         {{d-button
-          action=(action "showAdvanced")
+          action=(action "showAdvancedAction")
           icon="cog"
           label="theme_creator.show_advanced"
         }}

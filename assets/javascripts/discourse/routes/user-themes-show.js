@@ -1,15 +1,15 @@
 import DiscourseRoute from "discourse/routes/discourse";
 
-export default DiscourseRoute.extend({
+export default class UserThemesShow extends DiscourseRoute {
   serialize(model) {
     return { theme_id: model.get("id") };
-  },
+  }
 
   model(params) {
     const all = this.modelFor("user.themes");
     const model = all.findBy("id", parseInt(params.theme_id, 10));
     return model ? model : this.replaceWith("user.themes.index");
-  },
+  }
 
   setupController(controller, model) {
     controller.set("model", model);
@@ -27,5 +27,5 @@ export default DiscourseRoute.extend({
     controller.set("colorSchemeId", model.get("color_scheme_id"));
 
     controller.set("advancedOverride", false);
-  },
-});
+  }
+}

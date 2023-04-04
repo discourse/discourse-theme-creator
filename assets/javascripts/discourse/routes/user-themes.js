@@ -6,7 +6,7 @@ import DiscourseRoute from "discourse/routes/discourse";
 import { action } from "@ember/object";
 import ArrayProxy from "@ember/array/proxy";
 
-export default DiscourseRoute.extend({
+export default class UserThemes extends DiscourseRoute {
   model() {
     return this.store
       .findAll("user-theme", { user_id: this.modelFor("user").id })
@@ -40,11 +40,11 @@ export default DiscourseRoute.extend({
 
         return data;
       });
-  },
+  }
 
   titleToken() {
     return I18n.t("theme_creator.my_themes");
-  },
+  }
 
   @action
   addTheme(theme, afterTransition) {
@@ -53,7 +53,7 @@ export default DiscourseRoute.extend({
     this.transitionTo("user.themes.show", theme.get("id")).then(
       afterTransition
     );
-  },
+  }
 
   @action
   installModal() {
@@ -62,15 +62,15 @@ export default DiscourseRoute.extend({
       templateName: "admin-install-theme",
       model: { user_id: this.modelFor("user").id },
     });
-  },
+  }
 
   @action
   editLocalModal() {
     showModal("user-themes-edit-local-modal", { model: { apiKey: null } });
-  },
+  }
 
   @action
   refreshThemes() {
     this.refresh();
-  },
-});
+  }
+}
