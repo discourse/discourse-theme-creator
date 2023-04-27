@@ -171,6 +171,13 @@
       width: 650px;
       max-width: 100%;
     }
+
+    .theme-controls {
+      clear: left;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
   }
 
   .status-message {
