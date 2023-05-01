@@ -8,11 +8,13 @@ import AdminCustomizeThemesShowController from "admin/controllers/admin-customiz
 import ThemesColors from "discourse/plugins/discourse-theme-creator/discourse/mixins/themes-colors";
 import { alias } from "@ember/object/computed";
 import EmberObject, { action } from "@ember/object";
-import bootbox from "bootbox";
+import { inject as service } from "@ember/service";
 
 export default class UserThemesShow extends AdminCustomizeThemesShowController.extend(
   ThemesColors
 ) {
+  @service dialog;
+
   parentController = EmberObject.create({ model: { content: [] } });
   @alias("model.id") id;
   @alias("quickColorScheme.colors") colors;
@@ -127,19 +129,15 @@ export default class UserThemesShow extends AdminCustomizeThemesShowController.e
 
   @action
   destroy() {
-    return bootbox.confirm(
-      I18n.t("theme_creator.delete_confirm"),
-      I18n.t("no_value"),
-      I18n.t("yes_value"),
-      (result) => {
-        if (result) {
-          const model = this.get("model");
-          model.destroyRecord().then(() => {
-            this.get("allThemes").removeObject(model);
-            this.transitionToRoute("user.themes");
-          });
-        }
-      }
-    );
+    return this.dialog.deleteConfirm({
+      message: I18n.t("theme_creator.delete_confirm"),
+      didConfirm: () => {
+        const model = this.get("model");
+        model.destroyRecord().then(() => {
+          this.get("allThemes").removeObject(model);
+          this.transitionToRoute("user.themes");
+        });
+      },
+    });
   }
 }
