@@ -447,62 +447,68 @@
       </div>
     {{/if}}
   {{/if}}
+  <div class="theme-controls">
+    {{#if quickColorScheme}}
+      {{#d-button
+        action=(action "saveQuickColorScheme")
+        class="btn btn-primary"
+        disabled=isSaving
+      }}
+        {{saveButtonText}}
+      {{/d-button}}
+    {{/if}}
 
-  {{#if quickColorScheme}}
-    {{#d-button
-      action=(action "saveQuickColorScheme")
-      class="btn btn-primary"
-      disabled=isSaving
-    }}
-      {{saveButtonText}}
-    {{/d-button}}
-  {{/if}}
-
-  {{d-button
-    action=(action "shareModal")
-    label="theme_creator.share"
-    icon="users"
-    class="btn-primary"
-  }}
-
-  {{#if quickColorScheme}}
     {{d-button
-      action=(action "showAdvanced")
-      icon="cog"
-      label="theme_creator.show_advanced"
+      action=(action "shareModal")
+      label="theme_creator.share"
+      icon="users"
+      class="btn-primary"
     }}
-  {{else if showAdvanced}}
-    {{d-button
-      action=(route-action "editLocalModal")
-      icon="pencil-alt"
-      label="theme_creator.edit_local"
-    }}
-  {{/if}}
 
-  {{#unless hidePreview}}
+    {{#if quickColorScheme}}
+      {{d-button
+        action=(action "showAdvanced")
+        icon="cog"
+        label="theme_creator.show_advanced"
+      }}
+    {{else if showAdvanced}}
+      {{d-button
+        action=(route-action "editLocalModal")
+        icon="pencil-alt"
+        label="theme_creator.edit_local"
+      }}
+    {{/if}}
+
+    {{#unless hidePreview}}
+      <a
+        href={{previewUrl}}
+        title={{i18n "theme_creator.explain_preview"}}
+        class="btn btn-icon-text"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {{d-icon "desktop"}}
+        <span class="d-button-label">
+          {{i18n "theme_creator.preview"}}
+        </span>
+      </a>
+    {{/unless}}
+
     <a
-      href={{previewUrl}}
-      title={{i18n "theme_creator.explain_preview"}}
-      class="btn btn-icon-text"
+      href={{downloadUrl}}
+      class="btn"
       target="_blank"
       rel="noopener noreferrer"
     >
-      {{d-icon "desktop"}}
-      <span class="d-button-label">
-        {{i18n "theme_creator.preview"}}
-      </span>
+      {{d-icon "download"}}
+      {{i18n "admin.export_json.button_text"}}
     </a>
-  {{/unless}}
 
-  <a href={{downloadUrl}} class="btn" target="_blank" rel="noopener noreferrer">
-    {{d-icon "download"}}
-    {{i18n "admin.export_json.button_text"}}
-  </a>
-
-  {{d-button
-    action=(action "destroy")
-    label="theme_creator.delete"
-    icon="trash-alt"
-    class="btn btn-danger"
-  }}
+    {{d-button
+      action=(action "destroy")
+      label="theme_creator.delete"
+      icon="trash-alt"
+      class="btn btn-danger"
+    }}
+  </div>
 </div>
