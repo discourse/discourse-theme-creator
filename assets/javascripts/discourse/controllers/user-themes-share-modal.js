@@ -6,11 +6,11 @@ import { action } from "@ember/object";
 export default class UserThemesShareModal extends Controller.extend(
   ModalFunctionality
 ) {
-  userThemes = controller("user.themes");
+  @controller("user.themes") themesController;
 
   @discourseComputed("model.share_slug")
   slugUnique(slug) {
-    const existingSlugs = this.get("userThemes.model").map((theme) => {
+    const existingSlugs = this.get("themesController.model").map((theme) => {
       if (theme.get("id") !== this.get("model.id")) {
         return theme.get("share_slug");
       }
