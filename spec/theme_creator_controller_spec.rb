@@ -107,6 +107,29 @@ RSpec.describe "Theme Creator Controller", type: :request do
     end
   end
 
+  describe "list" do
+    before { sign_in(user1) }
+
+    it "serializes theme_field values for remote themes" do
+      theme.build_remote_theme(
+        remote_url: "",
+        about_url: "abouturl",
+        license_url: "licenseurl",
+        authors: "markvanlan",
+        theme_version: "1.0",
+        minimum_discourse_version: "1.0.0",
+        maximum_discourse_version: "3.0.0.beta1",
+      )
+      theme.save!
+
+      theme_field = Fabricate(:theme_field, theme: theme, value: "test")
+      get "/user_themes.json?user_id=#{user1.id}"
+
+      expect(response.parsed_body["user_themes"].first["remote_theme"]).to be_present
+      expect(response.parsed_body["user_themes"].first["theme_fields"].first["value"]).to eq("test")
+    end
+  end
+
   describe "crud" do
     context "when logged in as user 2" do
       before { sign_in(user2) }
