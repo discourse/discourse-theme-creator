@@ -126,7 +126,12 @@ class ThemeCreator::ThemeCreatorController < Admin::ThemesController
     @color_schemes.unshift(light)
 
     payload = {
-      user_themes: ActiveModel::ArraySerializer.new(@theme, each_serializer: ThemeSerializer),
+      user_themes:
+        ActiveModel::ArraySerializer.new(
+          @theme,
+          each_serializer: ThemeSerializer,
+          include_theme_field_values: true,
+        ),
       extras: {
         color_schemes:
           ActiveModel::ArraySerializer.new(@color_schemes, each_serializer: ColorSchemeSerializer),
