@@ -121,6 +121,12 @@
     display: block;
     width: 100%;
 
+    .row:after {
+      clear: left;
+      display: table;
+      content: "";
+    }
+
     .btn {
       line-height: $line-height-medium; // Temporary button-height fix
     }
