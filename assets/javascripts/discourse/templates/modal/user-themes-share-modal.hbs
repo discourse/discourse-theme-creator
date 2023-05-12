@@ -44,8 +44,7 @@
         }}
       {{else}}
         <code>
-          {{model.base_share_url}}
-          {{model.share_slug}}
+          {{model.base_share_url}}{{model.share_slug}}
           <a href {{action "startEditingSlug"}}>{{d-icon "pencil-alt"}}</a>
         </code>
 
