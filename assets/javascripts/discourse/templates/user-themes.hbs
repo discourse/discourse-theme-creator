@@ -18,22 +18,22 @@
       </ul>
 
       <div class="user-create-theme">
-        {{d-button
-          action=(route-action "installModal")
-          icon="upload"
-          label="theme_creator.install_theme"
-          class="btn-primary"
-        }}
-        {{d-button
-          action=(route-action "editLocalModal")
-          icon="laptop-code"
-          label="theme_creator.api_key"
-        }}
+        <DButton
+          @action={{route-action "installModal"}}
+          @icon="upload"
+          @label="theme_creator.install_theme"
+          @class="btn-primary"
+        />
+        <DButton
+          @action={{route-action "editLocalModal"}}
+          @icon="laptop-code"
+          @label="theme_creator.api_key"
+        />
       </div>
     </div>
   {{/unless}}
 
-  <div class="user-theme-details {{if editingTheme 'editing'}}">
+  <div class="user-theme-details {{if editingTheme "editing"}}">
     {{outlet}}
   </div>
 </div>

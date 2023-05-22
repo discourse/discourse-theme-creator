@@ -1,7 +1,7 @@
-{{#d-modal-body
-  id="theme-creator-edit-local-modal"
-  title="theme_creator.edit_local"
-}}
+<DModalBody
+  @id="theme-creator-edit-local-modal"
+  @title="theme_creator.edit_local"
+>
   <p>{{html-safe (i18n "theme_creator.edit_local_description")}}</p>
 
   <h3>{{i18n "theme_creator.edit_local_key"}}</h3>
@@ -10,13 +10,13 @@
     {{#if model.apiKey}}
       <pre>{{model.apiKey}}</pre>
     {{else}}
-      {{d-button
-        action=(action "showKey")
-        icon="eye"
-        label="theme_creator.show_key"
-      }}
+      <DButton
+        @action={{action "showKey"}}
+        @icon="eye"
+        @label="theme_creator.show_key"
+      />
     {{/if}}
   {{/conditional-loading-spinner}}
 
   <p>{{html-safe (i18n "theme_creator.revoke_instructions")}}</p>
-{{/d-modal-body}}
+</DModalBody>

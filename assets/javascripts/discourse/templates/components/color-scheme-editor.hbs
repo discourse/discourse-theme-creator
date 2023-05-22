@@ -9,7 +9,7 @@
     </thead>
     <tbody>
       {{#each colors as |c|}}
-        <tr class="{{if c.changed 'changed'}}{{if c.valid 'valid' 'invalid'}}">
+        <tr class="{{if c.changed "changed"}}{{if c.valid "valid" "invalid"}}">
           <td class="name" title={{c.name}}>
             <b>{{c.translatedName}}</b>
             <br />
@@ -25,14 +25,14 @@
           <td class="actions">
             <button
               type="button"
-              class="btn revert {{unless c.savedIsOverriden 'invisible'}}"
+              class="btn revert {{unless c.savedIsOverriden "invisible"}}"
               {{action "revert" c}}
             >
               {{i18n "revert"}}
             </button>
             <button
               type="button"
-              class="btn undo {{unless c.changed 'invisible'}}"
+              class="btn undo {{unless c.changed "invisible"}}"
               {{action "undo" c}}
             >
               {{i18n "undo"}}
