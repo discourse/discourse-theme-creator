@@ -1,6 +1,6 @@
 <div class="theme-content">
   <h2>
-    {{text-field value=model.name autofocus="true"}}
+    <TextField @value={{model.name}} @autofocus="true" />
   </h2>
 
   <h4>
@@ -12,9 +12,9 @@
 
   {{color-scheme-editor colors=model.colors}}
 
-  {{#d-button action=(action "save") disabled=isSaving class="btn-primary"}}
+  <DButton @action={{action "save"}} @disabled={{isSaving}} class="btn-primary">
     {{saveButtonText}}
-  {{/d-button}}
+  </DButton>
 
   {{#unless hidePreview}}
     <a

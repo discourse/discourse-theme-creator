@@ -1,18 +1,18 @@
 <div class="show-current-style">
   <h1>
     {{#if editingName}}
-      {{text-field value=model.name autofocus="true"}}
+      <TextField @value={{model.name}} @autofocus="true" />
 
-      {{d-button
-        action=(action "finishedEditingName")
+      <DButton
+        @action={{action "finishedEditingName"}}
         class="btn-primary btn-small submit-edit"
-        icon="check"
-      }}
-      {{d-button
-        action=(action "cancelEditingName")
+        @icon="check"
+      />
+      <DButton
+        @action={{action "cancelEditingName"}}
         class="btn-small cancel-edit"
-        icon="times"
-      }}
+        @icon="times"
+      />
     {{else}}
       {{model.name}}
 
@@ -126,19 +126,19 @@
         {{/if}}
 
         {{#if model.remote_theme.commits_behind}}
-          {{d-button
-            action=(action "updateToLatest")
-            icon="download"
+          <DButton
+            @action={{action "updateToLatest"}}
+            @icon="download"
             class="btn-primary"
-            label="admin.customize.theme.update_to_latest"
-          }}
+            @label="admin.customize.theme.update_to_latest"
+          />
         {{else}}
-          {{d-button
-            action=(action "checkForThemeUpdates")
-            icon="sync"
+          <DButton
+            @action={{action "checkForThemeUpdates"}}
+            @icon="sync"
             class="btn-default"
-            label="admin.customize.theme.check_for_updates"
-          }}
+            @label="admin.customize.theme.check_for_updates"
+          />
         {{/if}}
 
         <span class="status-message">
@@ -188,21 +188,21 @@
 
       <div class="control">
         {{#if model.component}}
-          {{d-button
-            action=(action "switchType")
-            label="theme_creator.convert_to_theme"
-            icon=convertIcon
+          <DButton
+            @action={{action "switchType"}}
+            @label="theme_creator.convert_to_theme"
+            @icon={{convertIcon}}
             class="btn-default btn-normal"
-            title=convertTooltip
-          }}
+            @title={{convertTooltip}}
+          />
         {{else}}
-          {{d-button
-            action=(action "switchType")
-            label="theme_creator.convert_to_component"
-            icon=convertIcon
+          <DButton
+            @action={{action "switchType"}}
+            @label="theme_creator.convert_to_component"
+            @icon={{convertIcon}}
             class="btn-default btn-normal"
-            title=convertTooltip
-          }}
+            @title={{convertTooltip}}
+          />
         {{/if}}
       </div>
     </div>
@@ -261,55 +261,54 @@
         </div>
 
         <div class="control">
-          {{combo-box
-            content=colorSchemes
-            value=colorSchemeId
-            icon="paint-brush"
-            options=(hash filterable=true)
-          }}
+          <ComboBox
+            @content={{colorSchemes}}
+            @value={{colorSchemeId}}
+            @icon="paint-brush"
+            @options={{hash filterable=true}}
+          />
           {{#if colorSchemeChanged}}
-            {{d-button
-              action=(action "changeScheme")
+            <DButton
+              @action={{action "changeScheme"}}
               class="btn-primary submit-edit"
-              icon="check"
-            }}
-            {{d-button
-              action=(action "cancelChangeScheme")
+              @icon="check"
+            />
+            <DButton
+              @action={{action "cancelChangeScheme"}}
               class="btn-default cancel-edit"
-              icon="times"
-            }}
+              @icon="times"
+            />
           {{else}}
             {{#link-to
               "user.themes.colors"
               model.id
               model.color_scheme_id
-              class="btn no-text"
+              class="no-text"
               title="theme_creator.edit_color_scheme"
               disabled=colorSchemeEditDisabled
             }}
               {{d-icon "pencil-alt"}}
             {{/link-to}}
-            {{d-button
-              action=(action "destroyColorScheme")
-              title="theme_creator.delete_color_scheme"
-              icon="trash-alt"
-              disabled=colorSchemeEditDisabled
-              class="btn btn-danger"
-            }}
+            <DButton
+              @action={{action "destroyColorScheme"}}
+              @title="theme_creator.delete_color_scheme"
+              @icon="trash-alt"
+              @disabled={{colorSchemeEditDisabled}}
+              class="btn-danger"
+            />
           {{/if}}
         </div>
 
-        {{d-button
-          action=(action "createColorScheme")
-          label=(if
+        <DButton
+          @action={{action "createColorScheme"}}
+          @label={{if
             creatingColorScheme
             "theme_creator.adding_color_scheme"
             "theme_creator.add_color_scheme"
-          )
-          icon="plus"
-          class="btn"
-          disabled=creatingColorScheme
-        }}
+          }}
+          @icon="plus"
+          @disabled={{creatingColorScheme}}
+        />
       </div>
     {{/unless}}
 
@@ -336,11 +335,11 @@
         </div>
       {{/if}}
 
-      {{d-button
+      <DButton
         class="btn-default edit"
-        action=(action "editTheme")
-        label="admin.customize.theme.edit_css_html"
-      }}
+        @action={{action "editTheme"}}
+        @label="admin.customize.theme.edit_css_html"
+      />
     </div>
 
     <div class="control-unit">
@@ -364,12 +363,11 @@
               </span>
 
               <span class="col">
-                {{d-button
-                  action=(action "removeUpload")
-                  actionParam=upload
-                  class="second btn-default btn-default cancel-edit"
-                  icon="times"
-                }}
+                <DButton
+                  @action={{action "removeUpload" upload}}
+                  class="second btn-default cancel-edit"
+                  @icon="times"
+                />
               </span>
             </li>
           {{/each}}
@@ -380,12 +378,12 @@
         </div>
       {{/if}}
 
-      {{d-button
-        action=(action "addUploadModal")
+      <DButton
+        @action={{action "addUploadModal"}}
         class="btn-default"
-        icon="plus"
-        label="admin.customize.theme.add"
-      }}
+        @icon="plus"
+        @label="admin.customize.theme.add"
+      />
     </div>
 
     {{#if hasSettings}}
@@ -394,7 +392,7 @@
           {{i18n "admin.customize.theme.theme_settings"}}
         </div>
 
-        {{#d-section class="form-horizontal theme settings"}}
+        <DSection @class="form-horizontal theme settings">
           {{#each settings as |setting|}}
             {{user-theme-setting-editor
               setting=setting
@@ -402,7 +400,7 @@
               class="theme-setting"
             }}
           {{/each}}
-        {{/d-section}}
+        </DSection>
       </div>
     {{/if}}
 
@@ -412,15 +410,15 @@
           {{i18n "admin.customize.theme.theme_translations"}}
         </div>
 
-        {{#d-section class="form-horizontal theme settings translations"}}
+        <DSection @class="form-horizontal theme settings translations">
           {{#each translations as |translation|}}
-            {{theme-translation
-              translation=translation
-              model=model
-              class="theme-translation"
-            }}
+            <ThemeTranslation
+              @translation={{translation}}
+              @model={{model}}
+              @class="theme-translation"
+            />
           {{/each}}
-        {{/d-section}}
+        </DSection>
       </div>
     {{/if}}
   {{else}}
@@ -428,62 +426,62 @@
       {{color-scheme-editor colors=quickColorScheme.colors}}
     {{else}}
       <div class="control-unit">
-        {{d-button
-          action=(action "createColorScheme")
-          label=(if
+        <DButton
+          @action={{action "createColorScheme"}}
+          @label={{if
             creatingColorScheme
             "theme_creator.adding_color_scheme"
             "theme_creator.add_color_scheme"
-          )
-          icon="plus"
-          class="btn btn-primary"
-          disabled=creatingColorScheme
-        }}
-        {{d-button
-          action=(action "showAdvancedAction")
-          icon="cog"
-          label="theme_creator.show_advanced"
-        }}
+          }}
+          @icon="plus"
+          class="btn-primary"
+          @disabled={{creatingColorScheme}}
+        />
+        <DButton
+          @action={{action "showAdvancedAction"}}
+          @icon="cog"
+          @label="theme_creator.show_advanced"
+        />
       </div>
     {{/if}}
   {{/if}}
   <div class="theme-controls">
     {{#if quickColorScheme}}
-      {{#d-button
-        action=(action "saveQuickColorScheme")
-        class="btn btn-primary"
-        disabled=isSaving
-      }}
+      <DButton
+        @action={{action "saveQuickColorScheme"}}
+        class="btn-primary"
+        @disabled={{isSaving}}
+      >
         {{saveButtonText}}
-      {{/d-button}}
+      </DButton>
     {{/if}}
 
-    {{d-button
-      action=(action "shareModal")
-      label="theme_creator.share"
-      icon="users"
+    <DButton
+      @action={{action "shareModal"}}
+      @label="theme_creator.share"
+      @icon="users"
       class="btn-primary"
-    }}
+    />
 
     {{#if quickColorScheme}}
-      {{d-button
-        action=(action "showAdvancedAction")
-        icon="cog"
-        label="theme_creator.show_advanced"
-      }}
+      <DButton
+        @action={{action "showAdvancedAction"}}
+        @icon="cog"
+        @label="theme_creator.show_advanced"
+      />
     {{else if showAdvanced}}
-      {{d-button
-        action=(route-action "editLocalModal")
-        icon="pencil-alt"
-        label="theme_creator.edit_local"
-      }}
+      <DButton
+        @action={{route-action "editLocalModal"}}
+        @icon="pencil-alt"
+        @label="theme_creator.edit_local"
+      />
     {{/if}}
 
     {{#unless hidePreview}}
       <a
         href={{previewUrl}}
         title={{i18n "theme_creator.explain_preview"}}
-        class="btn btn-icon-text"
+        class="btn-icon-text"
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -494,21 +492,16 @@
       </a>
     {{/unless}}
 
-    <a
-      href={{downloadUrl}}
-      class="btn"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
+    <a href={{downloadUrl}} target="_blank" rel="noopener noreferrer">
       {{d-icon "download"}}
       {{i18n "admin.export_json.button_text"}}
     </a>
 
-    {{d-button
-      action=(action "destroy")
-      label="theme_creator.delete"
-      icon="trash-alt"
-      class="btn btn-danger"
-    }}
+    <DButton
+      @action={{action "destroy"}}
+      @label="theme_creator.delete"
+      @icon="trash-alt"
+      class="btn-danger"
+    />
   </div>
 </div>

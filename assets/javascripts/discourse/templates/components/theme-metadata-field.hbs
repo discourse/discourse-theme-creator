@@ -1,17 +1,17 @@
 <span class="label">{{d-icon icon}} {{i18n label}}:</span>
 
 {{#if editing}}
-  {{text-field value=value autofocus="true"}}
-  {{d-button
-    action=(action "finishedEditing")
+  <TextField @value={{value}} @autofocus="true" />
+  <DButton
+    @action={{action "finishedEditing"}}
     class="btn-primary btn-small submit-edit"
-    icon="check"
-  }}
-  {{d-button
-    action=(action "cancelEditing")
+    @icon="check"
+  />
+  <DButton
+    @action={{action "cancelEditing"}}
     class="btn-small cancel-edit"
-    icon="times"
-  }}
+    @icon="times"
+  />
 {{else}}
   {{#if value}}
     {{value}}

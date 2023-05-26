@@ -1,7 +1,7 @@
-{{#d-modal-body
-  id="theme-creator-view-modal"
-  title="theme_creator.view_shared_theme"
-}}
+<DModalBody
+  @id="theme-creator-view-modal"
+  @title="theme_creator.view_shared_theme"
+>
   <h1>{{model.name}}</h1>
 
   <p>
@@ -25,20 +25,20 @@
   <p>{{i18n "theme_creator.view_shared_theme_education"}}</p>
 
   <p>
-    {{d-button
+    <DButton
       class="btn-primary btn-large"
-      action=(action "view")
-      title="theme_creator.view_theme"
-      label="theme_creator.view_theme"
-    }}
+      @action={{action "view"}}
+      @title="theme_creator.view_theme"
+      @label="theme_creator.view_theme"
+    />
   </p>
 
   <form id="view-theme-form" method="post" action={{postURL}}>
-    <input
-      type="hidden"
+    <Input
+      @type="hidden"
       name="authenticity_token"
       id="authenticity_token"
-      value={{session.csrfToken}}
+      @value={{session.csrfToken}}
     />
   </form>
-{{/d-modal-body}}
+</DModalBody>
