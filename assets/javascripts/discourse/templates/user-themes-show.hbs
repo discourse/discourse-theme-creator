@@ -5,12 +5,12 @@
 
       <DButton
         @action={{action "finishedEditingName"}}
-        @class="btn-primary btn-small submit-edit"
+        class="btn-primary btn-small submit-edit"
         @icon="check"
       />
       <DButton
         @action={{action "cancelEditingName"}}
-        @class="btn-small cancel-edit"
+        class="btn-small cancel-edit"
         @icon="times"
       />
     {{else}}
@@ -129,14 +129,14 @@
           <DButton
             @action={{action "updateToLatest"}}
             @icon="download"
-            @class="btn-primary"
+            class="btn-primary"
             @label="admin.customize.theme.update_to_latest"
           />
         {{else}}
           <DButton
             @action={{action "checkForThemeUpdates"}}
             @icon="sync"
-            @class="btn-default"
+            class="btn-default"
             @label="admin.customize.theme.check_for_updates"
           />
         {{/if}}
@@ -192,7 +192,7 @@
             @action={{action "switchType"}}
             @label="theme_creator.convert_to_theme"
             @icon={{convertIcon}}
-            @class="btn-default btn-normal"
+            class="btn-default btn-normal"
             @title={{convertTooltip}}
           />
         {{else}}
@@ -200,7 +200,7 @@
             @action={{action "switchType"}}
             @label="theme_creator.convert_to_component"
             @icon={{convertIcon}}
-            @class="btn-default btn-normal"
+            class="btn-default btn-normal"
             @title={{convertTooltip}}
           />
         {{/if}}
@@ -270,12 +270,12 @@
           {{#if colorSchemeChanged}}
             <DButton
               @action={{action "changeScheme"}}
-              @class="btn-primary submit-edit"
+              class="btn-primary submit-edit"
               @icon="check"
             />
             <DButton
               @action={{action "cancelChangeScheme"}}
-              @class="btn-default cancel-edit"
+              class="btn-default cancel-edit"
               @icon="times"
             />
           {{else}}
@@ -283,7 +283,7 @@
               "user.themes.colors"
               model.id
               model.color_scheme_id
-              class="btn no-text"
+              class="no-text"
               title="theme_creator.edit_color_scheme"
               disabled=colorSchemeEditDisabled
             }}
@@ -294,7 +294,7 @@
               @title="theme_creator.delete_color_scheme"
               @icon="trash-alt"
               @disabled={{colorSchemeEditDisabled}}
-              @class="btn btn-danger"
+              class="btn-danger"
             />
           {{/if}}
         </div>
@@ -307,7 +307,6 @@
             "theme_creator.add_color_scheme"
           }}
           @icon="plus"
-          @class="btn"
           @disabled={{creatingColorScheme}}
         />
       </div>
@@ -337,7 +336,7 @@
       {{/if}}
 
       <DButton
-        @class="btn-default edit"
+        class="btn-default edit"
         @action={{action "editTheme"}}
         @label="admin.customize.theme.edit_css_html"
       />
@@ -365,9 +364,8 @@
 
               <span class="col">
                 <DButton
-                  @action={{action "removeUpload"}}
-                  @actionParam={{upload}}
-                  @class="second btn-default btn-default cancel-edit"
+                  @action={{action "removeUpload" upload}}
+                  class="second btn-default cancel-edit"
                   @icon="times"
                 />
               </span>
@@ -382,7 +380,7 @@
 
       <DButton
         @action={{action "addUploadModal"}}
-        @class="btn-default"
+        class="btn-default"
         @icon="plus"
         @label="admin.customize.theme.add"
       />
@@ -436,7 +434,7 @@
             "theme_creator.add_color_scheme"
           }}
           @icon="plus"
-          @class="btn btn-primary"
+          class="btn-primary"
           @disabled={{creatingColorScheme}}
         />
         <DButton
@@ -451,7 +449,7 @@
     {{#if quickColorScheme}}
       <DButton
         @action={{action "saveQuickColorScheme"}}
-        @class="btn btn-primary"
+        class="btn-primary"
         @disabled={{isSaving}}
       >
         {{saveButtonText}}
@@ -462,7 +460,7 @@
       @action={{action "shareModal"}}
       @label="theme_creator.share"
       @icon="users"
-      @class="btn-primary"
+      class="btn-primary"
     />
 
     {{#if quickColorScheme}}
@@ -483,7 +481,7 @@
       <a
         href={{previewUrl}}
         title={{i18n "theme_creator.explain_preview"}}
-        class="btn btn-icon-text"
+        class="btn-icon-text"
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -496,7 +494,6 @@
 
     <a
       href={{downloadUrl}}
-      class="btn"
       target="_blank"
       rel="noopener noreferrer"
     >
@@ -508,7 +505,7 @@
       @action={{action "destroy"}}
       @label="theme_creator.delete"
       @icon="trash-alt"
-      @class="btn btn-danger"
+      class="btn-danger"
     />
   </div>
 </div>

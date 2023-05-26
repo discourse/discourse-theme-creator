@@ -11,13 +11,13 @@
 
         <DButton
           @action={{action "finishedEditingSlug"}}
-          @class="btn-primary btn-small submit-edit"
+          class="btn-primary btn-small submit-edit"
           @icon="check"
           @disabled={{saveDisabled}}
         />
         <DButton
           @action={{action "cancelEditingSlug"}}
-          @class="btn-small cancel-edit"
+          class="btn-small cancel-edit"
           @icon="times"
         />
 
@@ -30,13 +30,13 @@
 
         <DButton
           @action={{action "finishedEditingSlug"}}
-          @class="btn-primary btn-small submit-edit"
+          class="btn-primary btn-small submit-edit"
           @icon="check"
           @disabled={{saveDisabled}}
         />
         <DButton
           @action={{action "cancelEditingSlug"}}
-          @class="btn-small cancel-edit"
+          class="btn-small cancel-edit"
           @icon="times"
         />
       {{else}}
@@ -58,7 +58,7 @@
         <DButton
           @action={{action "stopSharing"}}
           @icon="times-circle"
-          @class="btn-danger btn-large"
+          class="btn-danger btn-large"
           @label="theme_creator.stop_sharing"
         />
       </p>
@@ -81,7 +81,7 @@
         <DButton
           @action={{action "share"}}
           @icon="users"
-          @class="btn-primary btn-large"
+          class="btn-primary btn-large"
           @label="theme_creator.start_sharing"
           @disabled={{saveDisabled}}
         />
