@@ -212,42 +212,42 @@
         {{i18n "theme_creator.metadata"}}
       </div>
 
-      {{theme-metadata-field
-        icon="link"
-        label="theme_creator.about_url"
-        value=model.remote_theme.about_url
-        save=(action "saveMetadata")
-      }}
-      {{theme-metadata-field
-        icon="link"
-        label="theme_creator.license_url"
-        value=model.remote_theme.license_url
-        save=(action "saveMetadata")
-      }}
-      {{theme-metadata-field
-        icon="users"
-        label="theme_creator.authors"
-        value=model.remote_theme.authors
-        save=(action "saveMetadata")
-      }}
-      {{theme-metadata-field
-        icon="info-circle"
-        label="theme_creator.theme_version"
-        value=model.remote_theme.theme_version
-        save=(action "saveMetadata")
-      }}
-      {{theme-metadata-field
-        icon="arrow-left"
-        label="theme_creator.minimum_discourse_version"
-        value=model.remote_theme.minimum_discourse_version
-        save=(action "saveMetadata")
-      }}
-      {{theme-metadata-field
-        icon="arrow-right"
-        label="theme_creator.maximum_discourse_version"
-        value=model.remote_theme.maximum_discourse_version
-        save=(action "saveMetadata")
-      }}
+      <ThemeMetadataField
+        @icon="link"
+        @label="theme_creator.about_url"
+        @value={{model.remote_theme.about_url}}
+        @save={{action "saveMetadata"}}
+      />
+      <ThemeMetadataField
+        @icon="link"
+        @label="theme_creator.license_url"
+        @value={{model.remote_theme.license_url}}
+        @save={{action "saveMetadata"}}
+      />
+      <ThemeMetadataField
+        @icon="users"
+        @label="theme_creator.authors"
+        @value={{model.remote_theme.authors}}
+        @save={{action "saveMetadata"}}
+      />
+      <ThemeMetadataField
+        @icon="info-circle"
+        @label="theme_creator.theme_version"
+        @value={{model.remote_theme.theme_version}}
+        @save={{action "saveMetadata"}}
+      />
+      <ThemeMetadataField
+        @icon="arrow-left"
+        @label="theme_creator.minimum_discourse_version"
+        @value={{model.remote_theme.minimum_discourse_version}}
+        @save={{action "saveMetadata"}}
+      />
+      <ThemeMetadataField
+        @icon="arrow-right"
+        @label="theme_creator.maximum_discourse_version"
+        @value={{model.remote_theme.maximum_discourse_version}}
+        @save={{action "saveMetadata"}}
+      />
     </div>
 
     {{#unless model.component}}
@@ -279,16 +279,15 @@
               @icon="times"
             />
           {{else}}
-            {{#link-to
-              "user.themes.colors"
-              model.id
-              model.color_scheme_id
+            <LinkTo
+              @route="user.themes.colors"
+              @models={{array model.id model.color_scheme_id}}
               class="no-text"
-              title="theme_creator.edit_color_scheme"
-              disabled=colorSchemeEditDisabled
-            }}
+              @title="theme_creator.edit_color_scheme"
+              @disabled={{colorSchemeEditDisabled}}
+            >
               {{d-icon "pencil-alt"}}
-            {{/link-to}}
+            </LinkTo>
             <DButton
               @action={{action "destroyColorScheme"}}
               @title="theme_creator.delete_color_scheme"
@@ -394,11 +393,11 @@
 
         <DSection @class="form-horizontal theme settings">
           {{#each settings as |setting|}}
-            {{user-theme-setting-editor
-              setting=setting
-              model=model
-              class="theme-setting"
-            }}
+            <UserThemeSettingEditor
+              @setting={{setting}}
+              @model={{model}}
+              @class="theme-setting"
+            />
           {{/each}}
         </DSection>
       </div>
@@ -423,7 +422,7 @@
     {{/if}}
   {{else}}
     {{#if hasQuickColorScheme}}
-      {{color-scheme-editor colors=quickColorScheme.colors}}
+      <ColorSchemeEditor @colors={{quickColorScheme.colors}} />
     {{else}}
       <div class="control-unit">
         <DButton

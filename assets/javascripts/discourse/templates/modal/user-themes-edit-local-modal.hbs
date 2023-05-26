@@ -6,7 +6,7 @@
 
   <h3>{{i18n "theme_creator.edit_local_key"}}</h3>
 
-  {{#conditional-loading-spinner condition=loading}}
+  <ConditionalLoadingSpinner @condition={{loading}}>
     {{#if model.apiKey}}
       <pre>{{model.apiKey}}</pre>
     {{else}}
@@ -16,7 +16,7 @@
         @label="theme_creator.show_key"
       />
     {{/if}}
-  {{/conditional-loading-spinner}}
+  </ConditionalLoadingSpinner>
 
   <p>{{html-safe (i18n "theme_creator.revoke_instructions")}}</p>
 </DModalBody>

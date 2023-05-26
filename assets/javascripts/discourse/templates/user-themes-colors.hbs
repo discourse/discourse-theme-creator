@@ -5,12 +5,16 @@
 
   <h4>
     ({{i18n "theme_creator.color_scheme_belongs_to"}}
-    {{#link-to "user.themes.show" model.theme_id replace=true}}
+    <LinkTo
+      @route="user.themes.show"
+      @model={{model.theme_id}}
+      @replace={{true}}
+    >
       {{model.theme_name}}
-    {{/link-to}})
+    </LinkTo>)
   </h4>
 
-  {{color-scheme-editor colors=model.colors}}
+  <ColorSchemeEditor @colors={{model.colors}} />
 
   <DButton @action={{action "save"}} @disabled={{isSaving}} class="btn-primary">
     {{saveButtonText}}
