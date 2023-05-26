@@ -1,11 +1,11 @@
 <div class="user-theme-creator">
   {{#unless editingTheme}}
     <div class="user-theme-list">
-      {{#link-to "user.themes"}}
+      <LinkTo @route={{"user.themes"}}>
         <div class="user-theme-list-heading">
           {{i18n "theme_creator.my_themes"}}
         </div>
-      {{/link-to}}
+      </LinkTo>
 
       <ul>
         {{#each model as |theme|}}
@@ -22,7 +22,7 @@
           @action={{route-action "installModal"}}
           @icon="upload"
           @label="theme_creator.install_theme"
-          @class="btn-primary"
+          class="btn-primary"
         />
         <DButton
           @action={{route-action "editLocalModal"}}
@@ -33,7 +33,7 @@
     </div>
   {{/unless}}
 
-  <div class="user-theme-details {{if editingTheme 'editing'}}">
+  <div class="user-theme-details {{if editingTheme "editing"}}">
     {{outlet}}
   </div>
 </div>

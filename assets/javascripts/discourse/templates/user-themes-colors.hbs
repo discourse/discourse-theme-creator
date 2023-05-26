@@ -12,11 +12,7 @@
 
   {{color-scheme-editor colors=model.colors}}
 
-  <DButton
-    @action={{action "save"}}
-    @disabled={{isSaving}}
-    @class="btn-primary"
-  >
+  <DButton @action={{action "save"}} @disabled={{isSaving}} class="btn-primary">
     {{saveButtonText}}
   </DButton>
 
