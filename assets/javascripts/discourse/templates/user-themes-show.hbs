@@ -283,7 +283,7 @@
               @route="user.themes.colors"
               @models={{array model.id model.color_scheme_id}}
               class="no-text"
-              @title="theme_creator.edit_color_scheme"
+              title="theme_creator.edit_color_scheme"
               @disabled={{colorSchemeEditDisabled}}
             >
               {{d-icon "pencil-alt"}}
@@ -396,7 +396,7 @@
             <UserThemeSettingEditor
               @setting={{setting}}
               @model={{model}}
-              @class="theme-setting"
+              class="theme-setting"
             />
           {{/each}}
         </DSection>
