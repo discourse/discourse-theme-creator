@@ -10,9 +10,13 @@
       <ul>
         {{#each model as |theme|}}
           <li>
-            {{#link-to "user.themes.show" theme replace=true}}
+            <LinkTo
+              @route="user.themes.show"
+              @model={{theme}}
+              @replace={{true}}
+            >
               {{theme.name}}
-            {{/link-to}}
+            </LinkTo>
           </li>
         {{/each}}
       </ul>

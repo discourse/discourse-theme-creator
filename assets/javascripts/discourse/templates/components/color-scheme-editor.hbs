@@ -16,11 +16,11 @@
             <span class="description">{{c.description}}</span>
           </td>
           <td class="hex">
-            {{color-input
-              hexValue=c.hex
-              brightnessValue=c.brightness
-              valid=c.valid
-            }}
+            <ColorInput
+              @hexValue={{c.hex}}
+              @brightnessValue={{c.brightness}}
+              @valid={{c.valid}}
+            />
           </td>
           <td class="actions">
             <button
