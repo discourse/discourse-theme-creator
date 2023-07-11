@@ -5,7 +5,6 @@
 # version: 0.1
 # author: David Taylor dtaylor.uk
 # url: https://www.github.com/discourse/discourse-theme-creator
-# transpile_js: true
 
 register_asset "stylesheets/theme-creator.scss"
 register_svg_icon "arrow-left"
