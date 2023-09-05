@@ -5,8 +5,12 @@ import showModal from "discourse/lib/show-modal";
 import DiscourseRoute from "discourse/routes/discourse";
 import { action } from "@ember/object";
 import ArrayProxy from "@ember/array/proxy";
+import { inject as service } from "@ember/service";
+import InstallThemeModal from "admin/components/modal/install-theme";
 
 export default class UserThemes extends DiscourseRoute {
+  @service modal;
+
   model() {
     return this.store
       .findAll("user-theme", { user_id: this.modelFor("user").id })
@@ -57,10 +61,19 @@ export default class UserThemes extends DiscourseRoute {
 
   @action
   installModal() {
-    showModal("user-themes-install-modal", {
-      admin: true,
-      templateName: "admin-install-theme",
-      model: { user_id: this.modelFor("user").id },
+    const adminCustomizeThemesController = this.controllerFor(
+      "adminCustomizeThemes"
+    );
+    this.modal.show(InstallThemeModal, {
+      model: {
+        selectedType: adminCustomizeThemesController.currentTab,
+        userId: this.modelFor("user").id,
+        content: this.currentModel.content,
+        installedThemes: adminCustomizeThemesController.installedThemes,
+        addTheme: this.addTheme,
+        updateSelectedType: (type) =>
+          adminCustomizeThemesController.set("currentTab", type),
+      },
     });
   }
 

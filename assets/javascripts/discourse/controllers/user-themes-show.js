@@ -9,11 +9,13 @@ import ThemesColors from "discourse/plugins/discourse-theme-creator/discourse/mi
 import { alias } from "@ember/object/computed";
 import EmberObject, { action } from "@ember/object";
 import { inject as service } from "@ember/service";
+import ThemeUploadAddModal from "admin/components/theme-upload-add";
 
 export default class UserThemesShow extends AdminCustomizeThemesShowController.extend(
   ThemesColors
 ) {
   @service dialog;
+  @service modal;
 
   parentController = EmberObject.create({ model: { content: [] } });
   @alias("model.id") id;
@@ -94,10 +96,12 @@ export default class UserThemesShow extends AdminCustomizeThemesShowController.e
 
   @action
   addUploadModal() {
-    showModal("user-themes-upload-modal", {
-      name: "",
-      admin: true,
-      templateName: "admin-add-upload",
+    this.modal.show(ThemeUploadAddModal, {
+      model: {
+        themeFields: this.model.theme_fields,
+        addUpload: this.addUpload,
+        uploadUrl: "/user_themes/upload_asset",
+      },
     });
   }
 
