@@ -66,6 +66,10 @@ export default class UserThemes extends DiscourseRoute {
     );
     this.modal.show(InstallThemeModal, {
       model: {
+        keyGenUrl: "/user_themes/generate_key_pair",
+        importUrl: "/user_themes/import",
+        selection: "create",
+        recordType: "user-theme",
         selectedType: adminCustomizeThemesController.currentTab,
         userId: this.modelFor("user").id,
         content: this.currentModel.content,
