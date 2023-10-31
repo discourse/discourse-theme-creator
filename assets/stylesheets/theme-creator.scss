@@ -7,10 +7,6 @@
   grid-column-gap: 20px;
   border-top: 1px solid var(--primary-low);
 
-  // user themes are in user pages, we need this because the grid gap comes from
-  // parent elements
-  margin-top: -15px;
-
   .user-theme-list {
     grid-column-start: 1;
 

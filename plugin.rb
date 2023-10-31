@@ -2,8 +2,8 @@
 
 # name: discourse-theme-creator
 # about: Allows users to create and share their own themes.
-# version: 0.1
-# author: David Taylor dtaylor.uk
+# version: 1.0
+# author: Discourse Team
 # url: https://www.github.com/discourse/discourse-theme-creator
 
 register_asset "stylesheets/theme-creator.scss"

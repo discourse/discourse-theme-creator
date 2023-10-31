@@ -28,8 +28,13 @@
         {{i18n "theme_creator.shared_at"}}
 
         <code>
-          {{model.base_share_url}}
-          {{model.share_slug}}
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href={{concat model.base_share_url model.share_slug}}
+          >
+            {{model.base_share_url}}{{model.share_slug}}
+          </a>
         </code>
 
         <a href {{action "shareModal"}}>
@@ -411,7 +416,7 @@
 
         <DSection @class="form-horizontal theme settings translations">
           {{#each translations as |translation|}}
-            <ThemeTranslation
+            <UserThemeTranslation
               @translation={{translation}}
               @model={{model}}
               @class="theme-translation"
@@ -480,7 +485,7 @@
       <a
         href={{previewUrl}}
         title={{i18n "theme_creator.explain_preview"}}
-        class="btn-icon-text"
+        class="btn btn-icon-text"
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -491,7 +496,12 @@
       </a>
     {{/unless}}
 
-    <a href={{downloadUrl}} target="_blank" rel="noopener noreferrer">
+    <a
+      href={{downloadUrl}}
+      target="_blank"
+      class="btn btn-icon-text"
+      rel="noopener noreferrer"
+    >
       {{d-icon "download"}}
       {{i18n "admin.export_json.button_text"}}
     </a>
