@@ -28,8 +28,12 @@
         {{i18n "theme_creator.shared_at"}}
 
         <code>
-          {{model.base_share_url}}
-          {{model.share_slug}}
+          <a
+            target="_blank"
+            href={{concat model.base_share_url model.share_slug}}
+          >
+            {{model.base_share_url}}{{model.share_slug}}
+          </a>
         </code>
 
         <a href {{action "shareModal"}}>
