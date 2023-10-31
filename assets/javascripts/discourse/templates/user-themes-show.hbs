@@ -480,7 +480,7 @@
       <a
         href={{previewUrl}}
         title={{i18n "theme_creator.explain_preview"}}
-        class="btn-icon-text"
+        class="btn btn-icon-text"
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -491,7 +491,12 @@
       </a>
     {{/unless}}
 
-    <a href={{downloadUrl}} target="_blank" rel="noopener noreferrer">
+    <a
+      href={{downloadUrl}}
+      target="_blank"
+      class="btn btn-icon-text"
+      rel="noopener noreferrer"
+    >
       {{d-icon "download"}}
       {{i18n "admin.export_json.button_text"}}
     </a>
