@@ -1,17 +1,18 @@
-<DModalBody
-  @id="theme-creator-edit-local-modal"
-  @title="theme_creator.edit_local"
+<DModal
+  id="theme-creator-edit-local-modal"
+  @title={{i18n "theme_creator.edit_local"}}
+  @closeModal={{@closeModal}}
 >
   <p>{{html-safe (i18n "theme_creator.edit_local_description")}}</p>
 
   <h3>{{i18n "theme_creator.edit_local_key"}}</h3>
 
-  <ConditionalLoadingSpinner @condition={{loading}}>
-    {{#if model.apiKey}}
-      <pre>{{model.apiKey}}</pre>
+  <ConditionalLoadingSpinner @condition={{this.loading}}>
+    {{#if this.key}}
+      <pre>{{this.key}}</pre>
     {{else}}
       <DButton
-        @action={{action "showKey"}}
+        @action={{this.showKey}}
         @icon="eye"
         @label="theme_creator.show_key"
       />
@@ -19,4 +20,4 @@
   </ConditionalLoadingSpinner>
 
   <p>{{html-safe (i18n "theme_creator.revoke_instructions")}}</p>
-</DModalBody>
+</DModal>

@@ -1,18 +1,11 @@
-import showModal from "discourse/lib/show-modal";
 import { ajax } from "discourse/lib/ajax";
 import DiscourseRoute from "discourse/routes/discourse";
-import { next } from "@ember/runloop";
 
 export default class ThemeShareKey extends DiscourseRoute {
-  model(params) {
-    return ajax(`/theme/${params.theme_id}.json`).then((response) => {
-      return response["theme"];
-    });
-  }
+  templateName = "theme-share";
 
-  afterModel(model) {
-    this.replaceWith("discovery.latest").then(() => {
-      next(() => showModal("user-themes-view-modal", { model }));
-    });
+  async model(params) {
+    const response = await ajax(`/theme/${params.theme_id}.json`);
+    return response.theme;
   }
 }

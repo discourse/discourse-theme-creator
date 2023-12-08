@@ -51,6 +51,7 @@ en:
       shared_at: "Available to the public at"
 
       view_shared_theme: "View Shared Theme"
+      cancel: "Cancel"
       view_shared_theme_education: "(Return to your current theme by refreshing the page)"
       view_theme: "View Theme"
       download_theme: "Download Theme"

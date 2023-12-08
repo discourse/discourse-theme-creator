@@ -1,12 +1,10 @@
-<DModalBody
-  @id="theme-creator-view-modal"
-  @title="theme_creator.view_shared_theme"
->
-  <h1>{{model.name}}</h1>
+<div class="theme-creator-view-shared-theme">
+  <h1>{{i18n "theme_creator.view_shared_theme"}}</h1>
+  <h2>{{@model.name}}</h2>
 
   <p>
     {{avatar
-      model.user
+      @model.user
       avatarTemplatePath="avatar_template"
       title=user.username
       imageSize="extra_large"
@@ -15,10 +13,10 @@
 
   <h3>
     by
-    {{#if model.user.name}}
-      {{model.user.name}}
+    {{#if @model.user.name}}
+      {{@model.user.name}}
     {{else}}
-      {{model.user.username}}
+      {{@model.user.username}}
     {{/if}}
   </h3>
 
@@ -26,8 +24,15 @@
 
   <p>
     <DButton
+      class="btn-large"
+      @action={{this.cancel}}
+      @title="theme_creator.cancel"
+      @label="theme_creator.cancel"
+    />
+
+    <DButton
       class="btn-primary btn-large"
-      @action={{action "view"}}
+      @action={{this.view}}
       @title="theme_creator.view_theme"
       @label="theme_creator.view_theme"
     />
@@ -41,4 +46,4 @@
       @value={{session.csrfToken}}
     />
   </form>
-</DModalBody>
+</div>

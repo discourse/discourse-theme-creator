@@ -1,12 +1,16 @@
-<DModalBody @id="theme-creator-share-modal" @title="theme_creator.share_theme">
-  {{#if model.can_share}}
-    {{#if model.is_shared}}
+<DModal
+  id="theme-creator-share-modal"
+  @title={{i18n "theme_creator.share_theme"}}
+  @closeModal={{@closeModal}}
+>
+  {{#if @model.can_share}}
+    {{#if @model.is_shared}}
       <p>{{i18n "theme_creator.shared_at"}}</p>
 
       {{#if editingSlug}}
         <code>
-          {{model.base_share_url}}
-          <TextField @value={{model.share_slug}} @autofocus="true" />
+          {{@model.base_share_url}}
+          <TextField @value={{@model.share_slug}} @autofocus="true" />
         </code>
 
         <DButton
@@ -24,8 +28,8 @@
         <p>{{i18n "theme_creator.share_destination"}}</p>
 
         <code>
-          {{model.base_destination_url}}
-          <TextField @value={{model.share_destination}} @autofocus="true" />
+          {{@model.base_destination_url}}
+          <TextField @value={{@model.share_destination}} @autofocus="true" />
         </code>
 
         <DButton
@@ -41,15 +45,15 @@
         />
       {{else}}
         <code>
-          {{model.base_share_url}}{{model.share_slug}}
+          {{@model.base_share_url}}{{@model.share_slug}}
           <a href {{action "startEditingSlug"}}>{{d-icon "pencil-alt"}}</a>
         </code>
 
         <p>{{i18n "theme_creator.share_destination"}}</p>
 
         <code>
-          {{model.base_destination_url}}
-          {{model.share_destination}}
+          {{@model.base_destination_url}}
+          {{@model.share_destination}}
           <a href {{action "startEditingSlug"}}>{{d-icon "pencil-alt"}}</a>
         </code>
       {{/if}}
@@ -66,15 +70,15 @@
       <p>{{i18n "theme_creator.share_instructions"}}</p>
 
       <code>
-        {{model.base_share_url}}
-        <TextField @value={{model.share_slug}} @autofocus="true" />
+        {{@model.base_share_url}}
+        <TextField @value={{@model.share_slug}} @autofocus="true" />
       </code>
 
       <p>{{i18n "theme_creator.share_destination_instructions"}}</p>
 
       <code>
-        {{model.base_destination_url}}
-        <TextField @value={{model.share_destination}} @placeholder="/" />
+        {{@model.base_destination_url}}
+        <TextField @value={{@model.share_destination}} @placeholder="/" />
       </code>
 
       <p>
@@ -96,4 +100,4 @@
       </p>
     </div>
   {{/if}}
-</DModalBody>
+</DModal>

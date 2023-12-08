@@ -10,6 +10,7 @@ import { alias } from "@ember/object/computed";
 import EmberObject, { action } from "@ember/object";
 import { inject as service } from "@ember/service";
 import ThemeUploadAddModal from "admin/components/theme-upload-add";
+import UserThemesShareModal from "../components/modal/user-themes-share-modal";
 
 export default class UserThemesShow extends AdminCustomizeThemesShowController.extend(
   ThemesColors
@@ -91,7 +92,7 @@ export default class UserThemesShow extends AdminCustomizeThemesShowController.e
 
   @action
   shareModal() {
-    showModal("user-themes-share-modal", { model: this.get("model") });
+    this.modal.show(UserThemesShareModal, { model: this.model });
   }
 
   @action
