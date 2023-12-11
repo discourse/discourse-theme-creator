@@ -13,27 +13,18 @@
 
   <h3>
     by
-    {{#if @model.user.name}}
-      {{@model.user.name}}
-    {{else}}
-      {{@model.user.username}}
-    {{/if}}
+    {{or @model.user.name @model.user.username}}
+
   </h3>
 
   <p>{{i18n "theme_creator.view_shared_theme_education"}}</p>
 
   <p>
-    <DButton
-      class="btn-large"
-      @action={{this.cancel}}
-      @title="theme_creator.cancel"
-      @label="theme_creator.cancel"
-    />
+    <DButton class="btn-large" @action={{this.cancel}} @label="cancel" />
 
     <DButton
       class="btn-primary btn-large"
       @action={{this.view}}
-      @title="theme_creator.view_theme"
       @label="theme_creator.view_theme"
     />
   </p>
