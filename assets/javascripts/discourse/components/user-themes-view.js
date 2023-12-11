@@ -15,12 +15,11 @@ export default class UserThemesViewModal extends Component {
   }
 
   @action
-  view() {
+  async view() {
     if (!this.session.csrfToken) {
-      ajax(getURL("/session/csrf"), { cache: false }).then((result) => {
-        this.session.set("csrfToken", result.csrf);
-        next(() => document.querySelector("#view-theme-form").submit());
-      });
+      const result = await ajax("/session/csrf");
+      this.session.set("csrfToken", result.csrf);
+      next(() => document.querySelector("#view-theme-form").submit());
     } else {
       document.querySelector("#view-theme-form").submit();
     }
