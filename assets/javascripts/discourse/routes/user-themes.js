@@ -1,12 +1,12 @@
 import I18n from "I18n";
 import UserColorScheme from "../models/user-color-scheme";
 import ColorSchemeColor from "admin/models/color-scheme-color";
-import showModal from "discourse/lib/show-modal";
 import DiscourseRoute from "discourse/routes/discourse";
 import { action } from "@ember/object";
 import ArrayProxy from "@ember/array/proxy";
 import { inject as service } from "@ember/service";
 import InstallThemeModal from "admin/components/modal/install-theme";
+import UserThemesEditLocalModal from "../components/modal/user-themes-edit-local-modal";
 
 export default class UserThemes extends DiscourseRoute {
   @service modal;
@@ -83,7 +83,7 @@ export default class UserThemes extends DiscourseRoute {
 
   @action
   editLocalModal() {
-    showModal("user-themes-edit-local-modal", { model: { apiKey: null } });
+    this.modal.show(UserThemesEditLocalModal);
   }
 
   @action
