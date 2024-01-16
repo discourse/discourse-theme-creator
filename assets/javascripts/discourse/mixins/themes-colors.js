@@ -1,7 +1,7 @@
 import Mixin from "@ember/object/mixin";
-import I18n from "I18n";
-import discourseComputed from "discourse-common/utils/decorators";
 import { url } from "discourse/lib/computed";
+import discourseComputed from "discourse-common/utils/decorators";
+import I18n from "I18n";
 
 export default Mixin.create({
   previewUrl: url("id", "/user_themes/%@/preview"),

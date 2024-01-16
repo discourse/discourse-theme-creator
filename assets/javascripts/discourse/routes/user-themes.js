@@ -1,15 +1,16 @@
-import I18n from "I18n";
-import UserColorScheme from "../models/user-color-scheme";
-import ColorSchemeColor from "admin/models/color-scheme-color";
-import DiscourseRoute from "discourse/routes/discourse";
-import { action } from "@ember/object";
 import ArrayProxy from "@ember/array/proxy";
+import { action } from "@ember/object";
 import { inject as service } from "@ember/service";
+import DiscourseRoute from "discourse/routes/discourse";
 import InstallThemeModal from "admin/components/modal/install-theme";
+import ColorSchemeColor from "admin/models/color-scheme-color";
+import I18n from "I18n";
 import UserThemesEditLocalModal from "../components/modal/user-themes-edit-local-modal";
+import UserColorScheme from "../models/user-color-scheme";
 
 export default class UserThemes extends DiscourseRoute {
   @service modal;
+  @service router;
 
   model() {
     return this.store
@@ -54,9 +55,9 @@ export default class UserThemes extends DiscourseRoute {
   addTheme(theme, afterTransition) {
     const all = this.modelFor("user.themes");
     all.pushObject(theme);
-    this.transitionTo("user.themes.show", theme.get("id")).then(
-      afterTransition
-    );
+    this.router
+      .transitionTo("user.themes.show", theme.get("id"))
+      .then(afterTransition);
   }
 
   @action

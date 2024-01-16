@@ -1,10 +1,12 @@
-import I18n from "I18n";
-import DiscourseRoute from "discourse/routes/discourse";
 import { action } from "@ember/object";
 import { inject as service } from "@ember/service";
+import DiscourseRoute from "discourse/routes/discourse";
+import I18n from "I18n";
 
 export default class extends DiscourseRoute {
   @service dialog;
+  @service router;
+
   templateName = "adminCustomizeThemesEdit";
 
   model(params) {
@@ -16,7 +18,7 @@ export default class extends DiscourseRoute {
           target: params.target,
           field_name: params.field_name,
         }
-      : this.replaceWith("user.themes.index");
+      : this.router.replaceWith("user.themes.index");
   }
 
   serialize(wrapper) {
@@ -32,8 +34,9 @@ export default class extends DiscourseRoute {
     const fields = wrapper.model
       .get("fields")
       [wrapper.target].map((f) => f.name);
+
     if (!fields.includes(wrapper.field_name)) {
-      this.transitionTo(
+      this.router.transitionTo(
         "user.themes.edit",
         wrapper.model.id,
         wrapper.target,
@@ -41,9 +44,11 @@ export default class extends DiscourseRoute {
       );
       return;
     }
+
     controller.set("model", wrapper.model);
     controller.setTargetName(wrapper.target || "common");
     controller.set("fieldName", wrapper.field_name || "scss");
+
     this.controllerFor("user.themes").set("editingTheme", true);
     this.set("shouldAlertUnsavedChanges", true);
   }

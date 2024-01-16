@@ -5,13 +5,13 @@
 
       <DButton
         @action={{action "finishedEditingName"}}
-        class="btn-primary btn-small submit-edit"
         @icon="check"
+        class="btn-primary btn-small submit-edit"
       />
       <DButton
         @action={{action "cancelEditingName"}}
-        class="btn-small cancel-edit"
         @icon="times"
+        class="btn-small cancel-edit"
       />
     {{else}}
       {{model.name}}
@@ -134,15 +134,15 @@
           <DButton
             @action={{action "updateToLatest"}}
             @icon="download"
-            class="btn-primary"
             @label="admin.customize.theme.update_to_latest"
+            class="btn-primary"
           />
         {{else}}
           <DButton
             @action={{action "checkForThemeUpdates"}}
             @icon="sync"
-            class="btn-default"
             @label="admin.customize.theme.check_for_updates"
+            class="btn-default"
           />
         {{/if}}
 
@@ -197,16 +197,16 @@
             @action={{action "switchType"}}
             @label="theme_creator.convert_to_theme"
             @icon={{convertIcon}}
-            class="btn-default btn-normal"
             @title={{convertTooltip}}
+            class="btn-default btn-normal"
           />
         {{else}}
           <DButton
             @action={{action "switchType"}}
             @label="theme_creator.convert_to_component"
             @icon={{convertIcon}}
-            class="btn-default btn-normal"
             @title={{convertTooltip}}
+            class="btn-default btn-normal"
           />
         {{/if}}
       </div>
@@ -275,21 +275,21 @@
           {{#if colorSchemeChanged}}
             <DButton
               @action={{action "changeScheme"}}
-              class="btn-primary submit-edit"
               @icon="check"
+              class="btn-primary submit-edit"
             />
             <DButton
               @action={{action "cancelChangeScheme"}}
-              class="btn-default cancel-edit"
               @icon="times"
+              class="btn-default cancel-edit"
             />
           {{else}}
             <LinkTo
               @route="user.themes.colors"
               @models={{array model.id model.color_scheme_id}}
-              class="no-text"
-              title="theme_creator.edit_color_scheme"
               @disabled={{colorSchemeEditDisabled}}
+              title="theme_creator.edit_color_scheme"
+              class="no-text"
             >
               {{d-icon "pencil-alt"}}
             </LinkTo>
@@ -340,9 +340,9 @@
       {{/if}}
 
       <DButton
-        class="btn-default edit"
         @action={{action "editTheme"}}
         @label="admin.customize.theme.edit_css_html"
+        class="btn-default edit"
       />
     </div>
 
@@ -369,8 +369,8 @@
               <span class="col">
                 <DButton
                   @action={{action "removeUpload" upload}}
-                  class="second btn-default cancel-edit"
                   @icon="times"
+                  class="second btn-default cancel-edit"
                 />
               </span>
             </li>
@@ -384,9 +384,9 @@
 
       <DButton
         @action={{action "addUploadModal"}}
-        class="btn-default"
         @icon="plus"
         @label="admin.customize.theme.add"
+        class="btn-default"
       />
     </div>
 
@@ -396,7 +396,7 @@
           {{i18n "admin.customize.theme.theme_settings"}}
         </div>
 
-        <DSection @class="form-horizontal theme settings">
+        <section class="form-horizontal theme settings">
           {{#each settings as |setting|}}
             <UserThemeSettingEditor
               @setting={{setting}}
@@ -404,7 +404,7 @@
               class="theme-setting"
             />
           {{/each}}
-        </DSection>
+        </section>
       </div>
     {{/if}}
 
@@ -414,15 +414,15 @@
           {{i18n "admin.customize.theme.theme_translations"}}
         </div>
 
-        <DSection @class="form-horizontal theme settings translations">
+        <section class="form-horizontal theme settings translations">
           {{#each translations as |translation|}}
             <UserThemeTranslation
               @translation={{translation}}
               @model={{model}}
-              @class="theme-translation"
+              class="theme-translation"
             />
           {{/each}}
-        </DSection>
+        </section>
       </div>
     {{/if}}
   {{else}}
@@ -438,8 +438,8 @@
             "theme_creator.add_color_scheme"
           }}
           @icon="plus"
-          class="btn-primary"
           @disabled={{creatingColorScheme}}
+          class="btn-primary"
         />
         <DButton
           @action={{action "showAdvancedAction"}}
@@ -453,8 +453,8 @@
     {{#if quickColorScheme}}
       <DButton
         @action={{action "saveQuickColorScheme"}}
-        class="btn-primary"
         @disabled={{isSaving}}
+        class="btn-primary"
       >
         {{saveButtonText}}
       </DButton>
@@ -485,9 +485,9 @@
       <a
         href={{previewUrl}}
         title={{i18n "theme_creator.explain_preview"}}
-        class="btn btn-icon-text"
         target="_blank"
         rel="noopener noreferrer"
+        class="btn btn-icon-text"
       >
         {{d-icon "desktop"}}
         <span class="d-button-label">
@@ -499,8 +499,8 @@
     <a
       href={{downloadUrl}}
       target="_blank"
-      class="btn btn-icon-text"
       rel="noopener noreferrer"
+      class="btn btn-icon-text"
     >
       {{d-icon "download"}}
       {{i18n "admin.export_json.button_text"}}

@@ -1,14 +1,14 @@
-import I18n from "I18n";
-import { url } from "discourse/lib/computed";
-import discourseComputed from "discourse-common/utils/decorators";
+import EmberObject, { action } from "@ember/object";
+import { alias } from "@ember/object/computed";
+import { inject as service } from "@ember/service";
 import { ajax } from "discourse/lib/ajax";
 import { popupAjaxError } from "discourse/lib/ajax-error";
-import AdminCustomizeThemesShowController from "admin/controllers/admin-customize-themes-show";
-import ThemesColors from "discourse/plugins/discourse-theme-creator/discourse/mixins/themes-colors";
-import { alias } from "@ember/object/computed";
-import EmberObject, { action } from "@ember/object";
-import { inject as service } from "@ember/service";
+import { url } from "discourse/lib/computed";
+import discourseComputed from "discourse-common/utils/decorators";
 import ThemeUploadAddModal from "admin/components/theme-upload-add";
+import AdminCustomizeThemesShowController from "admin/controllers/admin-customize-themes-show";
+import I18n from "I18n";
+import ThemesColors from "discourse/plugins/discourse-theme-creator/discourse/mixins/themes-colors";
 import UserThemesShareModal from "../components/modal/user-themes-share-modal";
 
 export default class UserThemesShow extends AdminCustomizeThemesShowController.extend(
@@ -16,6 +16,7 @@ export default class UserThemesShow extends AdminCustomizeThemesShowController.e
 ) {
   @service dialog;
   @service modal;
+  @service router;
 
   parentController = EmberObject.create({ model: { content: [] } });
   @alias("model.id") id;
@@ -139,7 +140,7 @@ export default class UserThemesShow extends AdminCustomizeThemesShowController.e
         const model = this.get("model");
         model.destroyRecord().then(() => {
           this.get("allThemes").removeObject(model);
-          this.transitionToRoute("user.themes");
+          this.router.transitionTo("user.themes");
         });
       },
     });
