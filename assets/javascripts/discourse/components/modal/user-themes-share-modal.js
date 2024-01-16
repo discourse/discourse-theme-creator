@@ -1,7 +1,7 @@
 import Component from "@glimmer/component";
-import { action } from "@ember/object";
-import { getOwner } from "@ember/application";
 import { tracked } from "@glimmer/tracking";
+import { getOwner } from "@ember/application";
+import { action } from "@ember/object";
 
 export default class UserThemesShareModal extends Component {
   @tracked oldSlug;

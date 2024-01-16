@@ -1,7 +1,7 @@
 import Controller from "@ember/controller";
-import ThemesColors from "discourse/plugins/discourse-theme-creator/discourse/mixins/themes-colors";
-import { alias } from "@ember/object/computed";
 import { action } from "@ember/object";
+import { alias } from "@ember/object/computed";
+import ThemesColors from "discourse/plugins/discourse-theme-creator/discourse/mixins/themes-colors";
 
 export default class UserThemesColors extends Controller.extend(ThemesColors) {
   @alias("model.theme_id") id;

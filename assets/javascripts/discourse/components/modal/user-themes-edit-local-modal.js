@@ -1,8 +1,8 @@
+import { tracked } from "@glimmer/tracking";
 import Component from "@ember/component";
+import { action } from "@ember/object";
 import { ajax } from "discourse/lib/ajax";
 import { popupAjaxError } from "discourse/lib/ajax-error";
-import { action } from "@ember/object";
-import { tracked } from "@glimmer/tracking";
 
 export default class UserThemesEditLocalModal extends Component {
   @tracked loading;
