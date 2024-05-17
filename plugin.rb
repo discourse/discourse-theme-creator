@@ -12,10 +12,12 @@ register_svg_icon "arrow-right"
 register_svg_icon "laptop-code"
 register_svg_icon "eye"
 
-load File.expand_path("../lib/theme_creator/engine.rb", __FILE__)
+require_relative "lib/theme_creator/engine"
 
 after_initialize do
   require_relative "app/jobs/scheduled/cleanup_topics"
+  require_relative "lib/theme_creator/application_controller_extension"
+  require_relative "lib/theme_creator/extra_locales_controller_extension"
 
   # We're re-using a lot of locale strings from the admin section
   # so we need to load it for non-staff users.
@@ -143,42 +145,9 @@ after_initialize do
     User.find_by(id: object.user_id)&.guardian&.can_share_user_theme?(object)
   end
 
-  # Allow preview of shared user themes
-  # flash[:user_theme_id] will only be populated after a POST request
-  # after a UI confirmation (theme_creator_controller.rb) to prevent hotlinking
   reloadable_patch do |plugin|
-    class ::ApplicationController
-      module ThemeCreatorOverrides
-        def handle_theme
-          super()
-          user_theme_id = flash[:user_theme_id]
-          if user_theme_id && Theme.theme_ids.include?(user_theme_id) && # Has requested a valid theme
-               guardian.can_see_user_theme?(Theme.find_by(id: user_theme_id))
-            @theme_id = request.env[:resolved_theme_id] = user_theme_id
-          end
-        end
-      end
-      prepend ThemeCreatorOverrides
-    end
-  end
-
-  reloadable_patch do |plugin|
-    class ::ExtraLocalesController
-      module ThemeCreatorOverrides
-        def show
-          bundle = params[:bundle]
-
-          if params[:v]&.size == 32
-            hash = ExtraLocalesController.bundle_js_hash(bundle)
-            immutable_for(24.hours) if hash == params[:v]
-          end
-
-          render plain: ExtraLocalesController.bundle_js(bundle),
-                 content_type: "application/javascript"
-        end
-      end
-      prepend ThemeCreatorOverrides
-    end
+    ApplicationController.prepend(ThemeCreator::ApplicationControllerExtension)
+    ExtraLocalesController.prepend(ThemeCreator::ExtraLocalesControllerExtension)
   end
 
   add_user_api_key_scope(

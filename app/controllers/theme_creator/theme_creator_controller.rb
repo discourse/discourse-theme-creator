@@ -3,6 +3,8 @@
 # We're going to extend the admin theme controller, so we don't repeat all the logic there
 
 class ThemeCreator::ThemeCreatorController < Admin::ThemesController
+  requires_plugin ThemeCreator::PLUGIN_NAME
+
   requires_login(nil) # Override the blanket "require logged in" from the admin controller
   skip_before_action :ensure_admin
 
