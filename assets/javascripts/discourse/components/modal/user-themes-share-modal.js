@@ -37,7 +37,7 @@ export default class UserThemesShareModal extends Component {
 
   @action
   stopSharing() {
-    this.set("model.share_slug", null);
+    this.args.model.set("share_slug", null);
     this.args.model.saveChanges("share_slug");
   }
 
