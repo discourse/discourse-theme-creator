@@ -1,0 +1,20 @@
+<div class="customize-themes-show-schema__header row">
+  <LinkTo
+    @route="user.themes.show"
+    @model={{@model.theme.id}}
+    class="btn-transparent customize-themes-show-schema__back"
+  >
+    {{d-icon "arrow-left"}}{{@model.theme.name}}
+  </LinkTo>
+  <h2>
+    {{i18n
+      "admin.customize.theme.schema.title"
+      (hash name=@model.setting.setting)
+    }}
+  </h2>
+</div>
+
+<UserSchemaThemeSetting::Editor
+  @themeId={{@model.theme.id}}
+  @setting={{@model.setting}}
+/>
