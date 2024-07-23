@@ -242,16 +242,6 @@ class ThemeCreator::ThemeCreatorController < Admin::ThemesController
     # no-op - we want to allow this stuff for theme-creator
   end
 
-  def objects_setting_metadata
-    theme = Theme.find_by(id: params[:id])
-    raise Discourse::InvalidParameters.new(:id) unless theme
-
-    theme_setting = theme.settings[params[:setting_name].to_sym]
-    raise Discourse::InvalidParameters.new(:setting_name) unless theme_setting
-
-    render_serialized(theme_setting, ThemeObjectsSettingMetadataSerializer, root: false)
-  end
-
   private
 
   # Override with a restricted version
