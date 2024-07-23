@@ -85,6 +85,29 @@ RSpec.describe "Theme Creator Controller", type: :request do
     end
   end
 
+  describe "objects_setting_metadata" do
+    before do
+      theme.set_field(
+        target: :settings,
+        name: "yaml",
+        value: File.read("#{Rails.root}/spec/fixtures/theme_settings/objects_settings.yaml"),
+      )
+
+      theme.save!
+    end
+
+    it "fails to fetch metadata of other users themes" do
+      get "/user_themes/#{theme.id}/objects_setting_metadata/objects_setting.json"
+      expect(response).to have_http_status(:forbidden)
+    end
+
+    it "fetches metadata of own themes" do
+      sign_in(user1)
+      get "/user_themes/#{theme.id}/objects_setting_metadata/objects_setting.json"
+      expect(response).to have_http_status(:ok)
+    end
+  end
+
   describe "show" do
     it "fails to download other users themes" do
       get "/user_themes/#{theme.id}/export"

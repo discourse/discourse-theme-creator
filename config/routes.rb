@@ -9,6 +9,10 @@ Discourse::Application.routes.draw do
       }
   get "u/:username/themes" => "users#index", :constraints => { username: RouteFormat.username }
   get "u/:username/themes/:id" => "users#index", :constraints => { username: RouteFormat.username }
+  get "u/:username/themes/:id/schema/:setting_name" => "users#index",
+      :constraints => {
+        username: RouteFormat.username,
+      }
   get "u/:username/themes/:theme_id/colors/:color_scheme_id" => "users#index",
       :constraints => {
         username: RouteFormat.username,
@@ -45,4 +49,7 @@ ThemeCreator::Engine.routes.draw do
   post ":id/colors" => "theme_creator#create_color_scheme"
   put ":id/colors/:color_scheme_id" => "theme_creator#update_color_scheme"
   delete ":id/colors/:color_scheme_id" => "theme_creator#destroy_color_scheme"
+
+  # objects_setting_metadata
+  get ":id/objects_setting_metadata/:setting_name" => "theme_creator#objects_setting_metadata"
 end

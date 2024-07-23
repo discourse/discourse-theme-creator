@@ -20,6 +20,7 @@ class ThemeCreator::ThemeCreatorController < Admin::ThemesController
                   update_color_scheme
                   destroy_color_scheme
                   update_single_setting
+                  objects_setting_metadata
                 ]
 
   skip_before_action :check_xhr, only: %i[share_info preview share_preview]
