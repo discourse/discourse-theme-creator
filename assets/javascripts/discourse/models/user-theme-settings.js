@@ -10,4 +10,18 @@ export default class UserThemeSettings extends ThemeSettings {
       .then((result) => this.set("metadata", result))
       .catch(popupAjaxError);
   }
+
+  updateSetting(themeId, newValue) {
+    if (this.objects_schema) {
+      newValue = JSON.stringify(newValue);
+    }
+
+    return ajax(`/user_themes/${themeId}/setting`, {
+      type: "PUT",
+      data: {
+        name: this.setting,
+        value: newValue,
+      },
+    });
+  }
 }
