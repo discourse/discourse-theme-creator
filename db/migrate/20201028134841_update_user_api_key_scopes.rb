@@ -8,4 +8,8 @@ class UpdateUserApiKeyScopes < ActiveRecord::Migration[6.0]
       WHERE name = 'user_themes'
     SQL
   end
+
+  def down
+    raise ActiveRecord::IrreversibleMigration
+  end
 end
