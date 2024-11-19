@@ -1,6 +1,6 @@
 import ArrayProxy from "@ember/array/proxy";
 import { action } from "@ember/object";
-import { inject as service } from "@ember/service";
+import { service } from "@ember/service";
 import DiscourseRoute from "discourse/routes/discourse";
 import InstallThemeModal from "admin/components/modal/install-theme";
 import ColorSchemeColor from "admin/models/color-scheme-color";
