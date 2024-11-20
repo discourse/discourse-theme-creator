@@ -1,28 +1,32 @@
 <div class="theme-content">
   <h2>
-    <TextField @value={{model.name}} @autofocus="true" />
+    <TextField @value={{this.model.name}} @autofocus="true" />
   </h2>
 
   <h4>
     ({{i18n "theme_creator.color_scheme_belongs_to"}}
     <LinkTo
       @route="user.themes.show"
-      @model={{model.theme_id}}
+      @model={{this.model.theme_id}}
       @replace={{true}}
     >
-      {{model.theme_name}}
+      {{this.model.theme_name}}
     </LinkTo>)
   </h4>
 
-  <ColorSchemeEditor @colors={{model.colors}} />
+  <ColorSchemeEditor @colors={{this.model.colors}} />
 
-  <DButton @action={{action "save"}} @disabled={{isSaving}} class="btn-primary">
-    {{saveButtonText}}
+  <DButton
+    @action={{action "save"}}
+    @disabled={{this.isSaving}}
+    class="btn-primary"
+  >
+    {{this.saveButtonText}}
   </DButton>
 
-  {{#unless hidePreview}}
+  {{#unless this.hidePreview}}
     <a
-      href={{previewUrl}}
+      href={{this.previewUrl}}
       title={{i18n "theme_creator.explain_preview"}}
       class="btn"
       target="_blank"

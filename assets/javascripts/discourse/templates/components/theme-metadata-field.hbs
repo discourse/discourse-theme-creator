@@ -1,7 +1,7 @@
-<span class="label">{{d-icon icon}} {{i18n label}}:</span>
+<span class="label">{{d-icon this.icon}} {{i18n this.label}}:</span>
 
-{{#if editing}}
-  <TextField @value={{value}} @autofocus="true" />
+{{#if this.editing}}
+  <TextField @value={{this.value}} @autofocus="true" />
   <DButton
     @action={{action "finishedEditing"}}
     class="btn-primary btn-small submit-edit"
@@ -13,8 +13,8 @@
     @icon="times"
   />
 {{else}}
-  {{#if value}}
-    {{value}}
+  {{#if this.value}}
+    {{this.value}}
   {{else}}
     {{i18n "theme_creator.missing_metadata"}}
   {{/if}}

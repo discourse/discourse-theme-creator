@@ -6,7 +6,7 @@
     {{avatar
       @model.user
       avatarTemplatePath="avatar_template"
-      title=user.username
+      title=this.user.username
       imageSize="extra_large"
     }}
   </p>
@@ -29,12 +29,12 @@
     />
   </p>
 
-  <form id="view-theme-form" method="post" action={{postURL}}>
+  <form id="view-theme-form" method="post" action={{this.postURL}}>
     <Input
       @type="hidden"
       name="authenticity_token"
       id="authenticity_token"
-      @value={{session.csrfToken}}
+      @value={{this.session.csrfToken}}
     />
   </form>
 </div>
