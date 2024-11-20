@@ -1,7 +1,7 @@
 <div class="show-current-style">
   <h1>
-    {{#if editingName}}
-      <TextField @value={{model.name}} @autofocus="true" />
+    {{#if this.editingName}}
+      <TextField @value={{this.model.name}} @autofocus="true" />
 
       <DButton
         @action={{action "finishedEditingName"}}
@@ -14,7 +14,7 @@
         class="btn-small cancel-edit"
       />
     {{else}}
-      {{model.name}}
+      {{this.model.name}}
 
       <a href {{action "startEditingName"}}>
         {{d-icon "pencil-alt"}}
@@ -22,8 +22,8 @@
     {{/if}}
   </h1>
 
-  {{#if model.is_shared}}
-    {{#if model.can_share}}
+  {{#if this.model.is_shared}}
+    {{#if this.model.can_share}}
       <div class="control-unit share-information">
         {{i18n "theme_creator.shared_at"}}
 
@@ -31,9 +31,9 @@
           <a
             target="_blank"
             rel="noopener noreferrer"
-            href={{concat model.base_share_url model.share_slug}}
+            href={{concat this.model.base_share_url this.model.share_slug}}
           >
-            {{model.base_share_url}}{{model.share_slug}}
+            {{this.model.base_share_url}}{{this.model.share_slug}}
           </a>
         </code>
 
@@ -44,7 +44,7 @@
     {{/if}}
   {{/if}}
 
-  {{#each model.errors as |error|}}
+  {{#each this.model.errors as |error|}}
     <div class="alert alert-error">
       <button type="button" class="close" data-dismiss="alert">
         ×
@@ -53,84 +53,84 @@
     </div>
   {{/each}}
 
-  {{#unless model.enabled}}
+  {{#unless this.model.enabled}}
     <div class="alert alert-error">
       {{i18n "admin.customize.theme.required_version.error"}}
-      {{#if model.remote_theme.minimum_discourse_version}}
+      {{#if this.model.remote_theme.minimum_discourse_version}}
         {{i18n
           "admin.customize.theme.required_version.minimum"
-          version=model.remote_theme.minimum_discourse_version
+          version=this.model.remote_theme.minimum_discourse_version
         }}
       {{/if}}
-      {{#if model.remote_theme.maximum_discourse_version}}
+      {{#if this.model.remote_theme.maximum_discourse_version}}
         {{i18n
           "admin.customize.theme.required_version.maximum"
-          version=model.remote_theme.maximum_discourse_version
+          version=this.model.remote_theme.maximum_discourse_version
         }}
       {{/if}}
     </div>
   {{/unless}}
 
-  {{#if model.remote_theme}}
-    {{#if model.remote_theme.remote_url}}
-      <a class="remote-url" href={{model.remote_theme.remote_url}}>
+  {{#if this.model.remote_theme}}
+    {{#if this.model.remote_theme.remote_url}}
+      <a class="remote-url" href={{this.model.remote_theme.remote_url}}>
         {{i18n "admin.customize.theme.source_url"}}
         {{d-icon "link"}}
       </a>
     {{/if}}
-    {{#if model.remote_theme.about_url}}
-      <a class="url about-url" href={{model.remote_theme.about_url}}>
+    {{#if this.model.remote_theme.about_url}}
+      <a class="url about-url" href={{this.model.remote_theme.about_url}}>
         {{i18n "admin.customize.theme.about_theme"}}
         {{d-icon "link"}}
       </a>
     {{/if}}
-    {{#if model.remote_theme.license_url}}
-      <a class="url license-url" href={{model.remote_theme.license_url}}>
+    {{#if this.model.remote_theme.license_url}}
+      <a class="url license-url" href={{this.model.remote_theme.license_url}}>
         {{i18n "admin.customize.theme.license"}}
         {{d-icon "link"}}
       </a>
     {{/if}}
 
-    {{#if model.description}}
+    {{#if this.model.description}}
       <span class="theme-description">
-        {{model.description}}
+        {{this.model.description}}
       </span>
     {{/if}}
 
     <span class="metadata">
-      {{#if model.remote_theme.authors}}
+      {{#if this.model.remote_theme.authors}}
         <span class="authors">
           <span class="heading">
             {{i18n "admin.customize.theme.authors"}}
           </span>
-          {{model.remote_theme.authors}}
+          {{this.model.remote_theme.authors}}
         </span>
       {{/if}}
-      {{#if model.remote_theme.theme_version}}
+      {{#if this.model.remote_theme.theme_version}}
         <span class="version">
           <span class="heading">
             {{i18n "admin.customize.theme.version"}}
           </span>
-          {{model.remote_theme.theme_version}}
+          {{this.model.remote_theme.theme_version}}
         </span>
       {{/if}}
     </span>
 
-    {{#if model.remote_theme.is_git}}
+    {{#if this.model.remote_theme.is_git}}
       <div class="control-unit">
-        {{#if showRemoteError}}
+        {{#if this.showRemoteError}}
           <div class="error-message">
             {{d-icon "exclamation-triangle"}}
             {{i18n "admin.customize.theme.repo_unreachable"}}
           </div>
           <div class="raw-error">
             <code>
-              {{model.remoteError}}
+              {{this.model.remoteError}}
             </code>
           </div>
         {{/if}}
 
-        {{#if model.remote_theme.commits_behind}}
+        {{#if this.model.remote_theme.commits_behind}}
           <DButton
             @action={{action "updateToLatest"}}
             @icon="download"
@@ -147,24 +147,27 @@
         {{/if}}
 
         <span class="status-message">
-          {{#if updatingRemote}}
+          {{#if this.updatingRemote}}
             {{i18n "admin.customize.theme.updating"}}
           {{else}}
-            {{#if model.remote_theme.commits_behind}}
+            {{#if this.model.remote_theme.commits_behind}}
               {{i18n
                 "admin.customize.theme.commits_behind"
-                count=model.remote_theme.commits_behind
+                count=this.model.remote_theme.commits_behind
               }}
 
-              {{#if model.remote_theme.github_diff_link}}
-                <a href={{model.remote_theme.github_diff_link}}>
+              {{#if this.model.remote_theme.github_diff_link}}
+                <a href={{this.model.remote_theme.github_diff_link}}>
                   {{i18n "admin.customize.theme.compare_commits"}}
                 </a>
               {{/if}}
             {{else}}
-              {{#unless showRemoteError}}
+              {{#unless this.showRemoteError}}
                 {{i18n "admin.customize.theme.up_to_date"}}
-                {{format-date model.remote_theme.updated_at leaveAgo="true"}}
+                {{format-date
+                  this.model.remote_theme.updated_at
+                  leaveAgo="true"
+                }}
               {{/unless}}
             {{/if}}
           {{/if}}
@@ -173,10 +176,10 @@
     {{/if}}
   {{/if}}
 
-  {{#if showAdvanced}}
+  {{#if this.showAdvanced}}
     <div class="control-unit">
       <div class="mini-title">
-        {{#if model.component}}
+        {{#if this.model.component}}
           {{i18n "theme_creator.component"}}
         {{else}}
           {{i18n "theme_creator.theme"}}
@@ -184,7 +187,7 @@
       </div>
 
       <div class="description">
-        {{#if model.component}}
+        {{#if this.model.component}}
           {{i18n "theme_creator.is_a_component"}}
         {{else}}
           {{i18n "theme_creator.is_a_theme"}}
@@ -192,20 +195,20 @@
       </div>
 
       <div class="control">
-        {{#if model.component}}
+        {{#if this.model.component}}
           <DButton
             @action={{action "switchType"}}
             @label="theme_creator.convert_to_theme"
-            @icon={{convertIcon}}
-            @title={{convertTooltip}}
+            @icon={{this.convertIcon}}
+            @title={{this.convertTooltip}}
             class="btn-default btn-normal"
           />
         {{else}}
           <DButton
             @action={{action "switchType"}}
             @label="theme_creator.convert_to_component"
-            @icon={{convertIcon}}
-            @title={{convertTooltip}}
+            @icon={{this.convertIcon}}
+            @title={{this.convertTooltip}}
             class="btn-default btn-normal"
           />
         {{/if}}
@@ -220,42 +223,42 @@
       <ThemeMetadataField
         @icon="link"
         @label="theme_creator.about_url"
-        @value={{model.remote_theme.about_url}}
+        @value={{this.model.remote_theme.about_url}}
         @save={{action "saveMetadata"}}
       />
       <ThemeMetadataField
         @icon="link"
         @label="theme_creator.license_url"
-        @value={{model.remote_theme.license_url}}
+        @value={{this.model.remote_theme.license_url}}
         @save={{action "saveMetadata"}}
       />
       <ThemeMetadataField
         @icon="users"
         @label="theme_creator.authors"
-        @value={{model.remote_theme.authors}}
+        @value={{this.model.remote_theme.authors}}
         @save={{action "saveMetadata"}}
       />
       <ThemeMetadataField
         @icon="info-circle"
         @label="theme_creator.theme_version"
-        @value={{model.remote_theme.theme_version}}
+        @value={{this.model.remote_theme.theme_version}}
         @save={{action "saveMetadata"}}
       />
       <ThemeMetadataField
         @icon="arrow-left"
         @label="theme_creator.minimum_discourse_version"
-        @value={{model.remote_theme.minimum_discourse_version}}
+        @value={{this.model.remote_theme.minimum_discourse_version}}
         @save={{action "saveMetadata"}}
       />
       <ThemeMetadataField
         @icon="arrow-right"
         @label="theme_creator.maximum_discourse_version"
-        @value={{model.remote_theme.maximum_discourse_version}}
+        @value={{this.model.remote_theme.maximum_discourse_version}}
         @save={{action "saveMetadata"}}
       />
     </div>
 
-    {{#unless model.component}}
+    {{#unless this.model.component}}
       <div class="control-unit">
         <div class="mini-title">
           {{i18n "admin.customize.theme.color_scheme"}}
@@ -267,12 +270,12 @@
 
         <div class="control">
           <ComboBox
-            @content={{colorSchemes}}
-            @value={{colorSchemeId}}
+            @content={{this.colorSchemes}}
+            @value={{this.colorSchemeId}}
             @icon="paint-brush"
             @options={{hash filterable=true}}
           />
-          {{#if colorSchemeChanged}}
+          {{#if this.colorSchemeChanged}}
             <DButton
               @action={{action "changeScheme"}}
               @icon="check"
@@ -286,8 +289,8 @@
           {{else}}
             <LinkTo
               @route="user.themes.colors"
-              @models={{array model.id model.color_scheme_id}}
-              @disabled={{colorSchemeEditDisabled}}
+              @models={{array this.model.id this.model.color_scheme_id}}
+              @disabled={{this.colorSchemeEditDisabled}}
               title="theme_creator.edit_color_scheme"
               class="no-text"
             >
@@ -297,7 +300,7 @@
               @action={{action "destroyColorScheme"}}
               @title="theme_creator.delete_color_scheme"
               @icon="trash-alt"
-              @disabled={{colorSchemeEditDisabled}}
+              @disabled={{this.colorSchemeEditDisabled}}
               class="btn-danger"
             />
           {{/if}}
@@ -306,12 +309,12 @@
         <DButton
           @action={{action "createColorScheme"}}
           @label={{if
-            creatingColorScheme
+            this.creatingColorScheme
             "theme_creator.adding_color_scheme"
             "theme_creator.add_color_scheme"
           }}
           @icon="plus"
-          @disabled={{creatingColorScheme}}
+          @disabled={{this.creatingColorScheme}}
         />
       </div>
     {{/unless}}
@@ -321,13 +324,13 @@
         {{i18n "admin.customize.theme.css_html"}}
       </div>
 
-      {{#if model.hasEditedFields}}
+      {{#if this.model.hasEditedFields}}
         <div class="description">
           {{i18n "admin.customize.theme.custom_sections"}}
         </div>
 
         <ul>
-          {{#each editedFieldsFormatted as |field|}}
+          {{#each this.editedFieldsFormatted as |field|}}
             <li>
               {{field}}
             </li>
@@ -351,9 +354,9 @@
         {{i18n "admin.customize.theme.uploads"}}
       </div>
 
-      {{#if model.uploads}}
+      {{#if this.model.uploads}}
         <ul class="removable-list">
-          {{#each model.uploads as |upload|}}
+          {{#each this.model.uploads as |upload|}}
             <li>
               <span class="col">
                 ${{upload.name}}:
@@ -390,17 +393,17 @@
       />
     </div>
 
-    {{#if hasSettings}}
+    {{#if this.hasSettings}}
       <div class="control-unit">
         <div class="mini-title">
           {{i18n "admin.customize.theme.theme_settings"}}
         </div>
 
         <section class="form-horizontal theme settings">
-          {{#each settings as |setting|}}
+          {{#each this.settings as |setting|}}
             <UserThemeSettingEditor
               @setting={{setting}}
-              @model={{model}}
+              @model={{this.model}}
               class="theme-setting"
             />
           {{/each}}
@@ -408,17 +411,17 @@
       </div>
     {{/if}}
 
-    {{#if hasTranslations}}
+    {{#if this.hasTranslations}}
       <div class="control-unit">
         <div class="mini-title">
           {{i18n "admin.customize.theme.theme_translations"}}
         </div>
 
         <section class="form-horizontal theme settings translations">
-          {{#each translations as |translation|}}
+          {{#each this.translations as |translation|}}
             <UserThemeTranslation
               @translation={{translation}}
-              @model={{model}}
+              @model={{this.model}}
               class="theme-translation"
             />
           {{/each}}
@@ -426,19 +429,19 @@
       </div>
     {{/if}}
   {{else}}
-    {{#if hasQuickColorScheme}}
-      <ColorSchemeEditor @colors={{quickColorScheme.colors}} />
+    {{#if this.hasQuickColorScheme}}
+      <ColorSchemeEditor @colors={{this.quickColorScheme.colors}} />
     {{else}}
       <div class="control-unit">
         <DButton
           @action={{action "createColorScheme"}}
           @label={{if
-            creatingColorScheme
+            this.creatingColorScheme
             "theme_creator.adding_color_scheme"
             "theme_creator.add_color_scheme"
           }}
           @icon="plus"
-          @disabled={{creatingColorScheme}}
+          @disabled={{this.creatingColorScheme}}
           class="btn-primary"
         />
         <DButton
@@ -450,13 +453,13 @@
     {{/if}}
   {{/if}}
   <div class="theme-controls">
-    {{#if quickColorScheme}}
+    {{#if this.quickColorScheme}}
       <DButton
         @action={{action "saveQuickColorScheme"}}
-        @disabled={{isSaving}}
+        @disabled={{this.isSaving}}
         class="btn-primary"
       >
-        {{saveButtonText}}
+        {{this.saveButtonText}}
       </DButton>
     {{/if}}
 
@@ -467,13 +470,13 @@
       class="btn-primary"
     />
 
-    {{#if quickColorScheme}}
+    {{#if this.quickColorScheme}}
       <DButton
         @action={{action "showAdvancedAction"}}
         @icon="cog"
         @label="theme_creator.show_advanced"
       />
-    {{else if showAdvanced}}
+    {{else if this.showAdvanced}}
       <DButton
         @action={{route-action "editLocalModal"}}
         @icon="pencil-alt"
@@ -481,9 +484,9 @@
       />
     {{/if}}
 
-    {{#unless hidePreview}}
+    {{#unless this.hidePreview}}
       <a
-        href={{previewUrl}}
+        href={{this.previewUrl}}
         title={{i18n "theme_creator.explain_preview"}}
         target="_blank"
         rel="noopener noreferrer"
@@ -497,7 +500,7 @@
     {{/unless}}
 
     <a
-      href={{downloadUrl}}
+      href={{this.downloadUrl}}
       target="_blank"
       rel="noopener noreferrer"
       class="btn btn-icon-text"

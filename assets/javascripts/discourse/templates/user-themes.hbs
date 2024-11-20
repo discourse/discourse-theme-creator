@@ -1,5 +1,5 @@
 <div class="user-theme-creator">
-  {{#unless editingTheme}}
+  {{#unless this.editingTheme}}
     <div class="user-theme-list">
       <LinkTo @route="user.themes">
         <div class="user-theme-list-heading">
@@ -8,7 +8,7 @@
       </LinkTo>
 
       <ul>
-        {{#each model as |theme|}}
+        {{#each this.model as |theme|}}
           <li>
             <LinkTo
               @route="user.themes.show"
@@ -37,7 +37,7 @@
     </div>
   {{/unless}}
 
-  <div class="user-theme-details {{if editingTheme 'editing'}}">
+  <div class="user-theme-details {{if this.editingTheme 'editing'}}">
     {{outlet}}
   </div>
 </div>

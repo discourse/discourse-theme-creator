@@ -7,7 +7,7 @@
     {{#if @model.is_shared}}
       <p>{{i18n "theme_creator.shared_at"}}</p>
 
-      {{#if editingSlug}}
+      {{#if this.editingSlug}}
         <code>
           {{@model.base_share_url}}
           <TextField @value={{@model.share_slug}} @autofocus="true" />
@@ -17,7 +17,7 @@
           @action={{action "finishedEditingSlug"}}
           class="btn-primary btn-small submit-edit"
           @icon="check"
-          @disabled={{saveDisabled}}
+          @disabled={{this.saveDisabled}}
         />
         <DButton
           @action={{action "cancelEditingSlug"}}
@@ -36,7 +36,7 @@
           @action={{action "finishedEditingSlug"}}
           class="btn-primary btn-small submit-edit"
           @icon="check"
-          @disabled={{saveDisabled}}
+          @disabled={{this.saveDisabled}}
         />
         <DButton
           @action={{action "cancelEditingSlug"}}
@@ -87,7 +87,7 @@
           @icon="users"
           class="btn-primary btn-large"
           @label="theme_creator.start_sharing"
-          @disabled={{saveDisabled}}
+          @disabled={{this.saveDisabled}}
         />
       </p>
     {{/if}}
