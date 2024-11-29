@@ -16,7 +16,7 @@ export default class UserThemes extends DiscourseRoute {
     return this.store
       .findAll("user-theme", { user_id: this.modelFor("user").id })
       .then((data) => {
-        const ColorSchemes = ArrayProxy.extend({});
+        class ColorSchemes extends ArrayProxy {}
         const colorSchemes = ColorSchemes.create({
           content: [],
           loading: true,
