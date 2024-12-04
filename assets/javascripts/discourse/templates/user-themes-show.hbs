@@ -17,7 +17,7 @@
       {{this.model.name}}
 
       <a href {{action "startEditingName"}}>
-        {{d-icon "pencil-alt"}}
+        {{d-icon "pencil"}}
       </a>
     {{/if}}
   </h1>
@@ -38,7 +38,7 @@
         </code>
 
         <a href {{action "shareModal"}}>
-          {{d-icon "pencil-alt"}}
+          {{d-icon "pencil"}}
         </a>
       </div>
     {{/if}}
@@ -120,7 +120,7 @@
       <div class="control-unit">
         {{#if this.showRemoteError}}
           <div class="error-message">
-            {{d-icon "exclamation-triangle"}}
+            {{d-icon "triangle-exclamation"}}
             {{i18n "admin.customize.theme.repo_unreachable"}}
           </div>
           <div class="raw-error">
@@ -294,7 +294,7 @@
               title="theme_creator.edit_color_scheme"
               class="no-text"
             >
-              {{d-icon "pencil-alt"}}
+              {{d-icon "pencil"}}
             </LinkTo>
             <DButton
               @action={{action "destroyColorScheme"}}
