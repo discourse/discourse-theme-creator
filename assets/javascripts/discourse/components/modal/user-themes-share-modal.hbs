@@ -22,7 +22,7 @@
         <DButton
           @action={{action "cancelEditingSlug"}}
           class="btn-small cancel-edit"
-          @icon="times"
+          @icon="xmark"
         />
 
         <p>{{i18n "theme_creator.share_destination"}}</p>
@@ -41,7 +41,7 @@
         <DButton
           @action={{action "cancelEditingSlug"}}
           class="btn-small cancel-edit"
-          @icon="times"
+          @icon="xmark"
         />
       {{else}}
         <code>
@@ -61,7 +61,7 @@
       <p>
         <DButton
           @action={{action "stopSharing"}}
-          @icon="times-circle"
+          @icon="circle-xmark"
           class="btn-danger btn-large"
           @label="theme_creator.stop_sharing"
         />

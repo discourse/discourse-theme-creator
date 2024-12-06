@@ -20,7 +20,7 @@ export default class UserThemeSettingEditor extends ThemeSettingEditor {
           });
         },
         label: "admin.site_settings.json_schema.edit",
-        icon: "pencil-alt",
+        icon: "pencil",
       };
     } else if (setting.objects_schema) {
       return {
@@ -32,7 +32,7 @@ export default class UserThemeSettingEditor extends ThemeSettingEditor {
           );
         },
         label: "admin.customize.theme.edit_objects_theme_setting",
-        icon: "pencil-alt",
+        icon: "pencil",
       };
     }
   }

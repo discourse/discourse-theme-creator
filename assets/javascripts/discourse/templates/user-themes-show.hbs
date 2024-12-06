@@ -10,7 +10,7 @@
       />
       <DButton
         @action={{action "cancelEditingName"}}
-        @icon="times"
+        @icon="xmark"
         class="btn-small cancel-edit"
       />
     {{else}}
@@ -140,7 +140,7 @@
         {{else}}
           <DButton
             @action={{action "checkForThemeUpdates"}}
-            @icon="sync"
+            @icon="arrows-rotate"
             @label="admin.customize.theme.check_for_updates"
             class="btn-default"
           />
@@ -239,7 +239,7 @@
         @save={{action "saveMetadata"}}
       />
       <ThemeMetadataField
-        @icon="info-circle"
+        @icon="circle-info"
         @label="theme_creator.theme_version"
         @value={{this.model.remote_theme.theme_version}}
         @save={{action "saveMetadata"}}
@@ -272,7 +272,7 @@
           <ComboBox
             @content={{this.colorSchemes}}
             @value={{this.colorSchemeId}}
-            @icon="paint-brush"
+            @icon="paintbrush"
             @options={{hash filterable=true}}
           />
           {{#if this.colorSchemeChanged}}
@@ -283,7 +283,7 @@
             />
             <DButton
               @action={{action "cancelChangeScheme"}}
-              @icon="times"
+              @icon="xmark"
               class="btn-default cancel-edit"
             />
           {{else}}
@@ -299,7 +299,7 @@
             <DButton
               @action={{action "destroyColorScheme"}}
               @title="theme_creator.delete_color_scheme"
-              @icon="trash-alt"
+              @icon="trash-can"
               @disabled={{this.colorSchemeEditDisabled}}
               class="btn-danger"
             />
@@ -372,7 +372,7 @@
               <span class="col">
                 <DButton
                   @action={{action "removeUpload" upload}}
-                  @icon="times"
+                  @icon="xmark"
                   class="second btn-default cancel-edit"
                 />
               </span>
@@ -446,7 +446,7 @@
         />
         <DButton
           @action={{action "showAdvancedAction"}}
-          @icon="cog"
+          @icon="gear"
           @label="theme_creator.show_advanced"
         />
       </div>
@@ -473,13 +473,13 @@
     {{#if this.quickColorScheme}}
       <DButton
         @action={{action "showAdvancedAction"}}
-        @icon="cog"
+        @icon="gear"
         @label="theme_creator.show_advanced"
       />
     {{else if this.showAdvanced}}
       <DButton
         @action={{route-action "editLocalModal"}}
-        @icon="pencil-alt"
+        @icon="pencil"
         @label="theme_creator.edit_local"
       />
     {{/if}}
@@ -512,7 +512,7 @@
     <DButton
       @action={{action "destroy"}}
       @label="theme_creator.delete"
-      @icon="trash-alt"
+      @icon="trash-can"
       class="btn-danger"
     />
   </div>
