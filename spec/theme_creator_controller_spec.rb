@@ -235,4 +235,20 @@ RSpec.describe "Theme Creator Controller", type: :request do
       end
     end
   end
+
+  describe "fetch_api_key" do
+    before { sign_in(user1) }
+
+    it "creates a client and a key" do
+      post "/user_themes/fetch_api_key.json"
+      expect(response).to be_successful
+      client = UserApiKeyClient.find_by(client_id: "theme_cli_#{user1.id}")
+      expect(response.parsed_body["api_key"]).to be_present
+    end
+
+    it "only creates one client" do
+      Fabricate(:user_api_key_client, client_id: "theme_cli_#{user1.id}")
+      expect { post "/user_themes/fetch_api_key.json" }.not_to change { UserApiKeyClient.count }
+    end
+  end
 end

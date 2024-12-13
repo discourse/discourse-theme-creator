@@ -26,13 +26,14 @@ class ThemeCreator::ThemeCreatorController < Admin::ThemesController
   skip_before_action :check_xhr, only: %i[share_info preview share_preview]
 
   def fetch_api_key
-    client_id = "theme_cli_#{current_user.id}"
-
-    UserApiKey.where(user_id: current_user.id, client_id: client_id).destroy_all
-    api_key =
-      UserApiKey.create!(
+    client =
+      UserApiKeyClient.find_or_create_by(
+        client_id: "theme_cli_#{current_user.id}",
         application_name: I18n.t("theme_creator.api_application_name"),
-        client_id: client_id,
+      )
+
+    api_key =
+      client.keys.create!(
         user_id: current_user.id,
         scopes: [UserApiKeyScope.new(name: "discourse-theme-creator:user_themes")],
       )
