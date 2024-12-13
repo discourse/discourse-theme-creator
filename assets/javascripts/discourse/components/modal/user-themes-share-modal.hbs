@@ -10,7 +10,12 @@
       {{#if this.editingSlug}}
         <code>
           {{@model.base_share_url}}
-          <TextField @value={{@model.share_slug}} @autofocus="true" />
+          <input
+            type="text"
+            value={{@model.share_slug}}
+            placeholder="/"
+            {{on "input" (with-event-value (fn (mut @model.share_slug)))}}
+          />
         </code>
 
         <DButton
@@ -29,7 +34,15 @@
 
         <code>
           {{@model.base_destination_url}}
-          <TextField @value={{@model.share_destination}} @autofocus="true" />
+          <input
+            type="text"
+            value={{@model.share_destination}}
+            placeholder="/"
+            {{on
+              "change"
+              (with-event-value (fn (mut @model.share_destination)))
+            }}
+          />
         </code>
 
         <DButton
@@ -71,14 +84,24 @@
 
       <code>
         {{@model.base_share_url}}
-        <TextField @value={{@model.share_slug}} @autofocus="true" />
+        <input
+          type="text"
+          value={{@model.share_slug}}
+          placeholder="/"
+          {{on "input" (with-event-value (fn (mut @model.share_slug)))}}
+        />
       </code>
 
       <p>{{i18n "theme_creator.share_destination_instructions"}}</p>
 
       <code>
         {{@model.base_destination_url}}
-        <TextField @value={{@model.share_destination}} @placeholder="/" />
+        <input
+          type="text"
+          value={{@model.share_destination}}
+          placeholder="/"
+          {{on "input" (with-event-value (fn (mut @model.share_destination)))}}
+        />
       </code>
 
       <p>

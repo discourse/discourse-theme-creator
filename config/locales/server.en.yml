@@ -5,7 +5,7 @@ en:
   site_settings:
     theme_creator_share_groups: "Names of groups that are allowed to share themes with other users. Leave blank to allow all users."
   theme_creator:
-    new_color_scheme: "New Color Scheme"
+    new_color_scheme: "New Color Palette"
     api_application_name: "Discourse Theme CLI"
     meta_title: "'%{theme_name}' by @%{username}"
     meta_description: "A theme for Discourse shared on theme-creator.discourse.org"

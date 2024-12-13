@@ -21,12 +21,12 @@ en:
 
       show_advanced: "Advanced"
 
-      color_scheme: "Color Scheme"
-      color_scheme_belongs_to: "Color scheme for"
-      edit_color_scheme: "Edit Color Scheme"
-      delete_color_scheme: "Delete Color Scheme"
-      add_color_scheme: "Add Color Scheme"
-      adding_color_scheme: "Adding Color Scheme..."
+      color_scheme: "Color Palette"
+      color_scheme_belongs_to: "Color palette for"
+      edit_color_scheme: "Edit Color Palette"
+      delete_color_scheme: "Delete Color Palette"
+      add_color_scheme: "Add Color Palette"
+      adding_color_scheme: "Adding Color Palette..."
 
       css_html: "CSS/HTML"
       edit_css_html: "Edit CSS/HTML"
