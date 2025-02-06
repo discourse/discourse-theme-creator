@@ -1,7 +1,7 @@
 import { action } from "@ember/object";
 import { service } from "@ember/service";
 import DiscourseRoute from "discourse/routes/discourse";
-import I18n from "I18n";
+import { i18n } from "discourse-i18n";
 
 export default class extends DiscourseRoute {
   @service dialog;
@@ -63,7 +63,7 @@ export default class extends DiscourseRoute {
       transition.abort();
 
       this.dialog.confirm({
-        message: I18n.t("admin.customize.theme.unsaved_changes_alert"),
+        message: i18n("admin.customize.theme.unsaved_changes_alert"),
         confirmButtonLabel: "admin.customize.theme.discard",
         cancelButtonLabel: "admin.customize.theme.stay",
         didConfirm: () => {

@@ -3,7 +3,7 @@ import { action } from "@ember/object";
 import { next } from "@ember/runloop";
 import { service } from "@ember/service";
 import { ajax } from "discourse/lib/ajax";
-import getURL from "discourse-common/lib/get-url";
+import getURL from "discourse/lib/get-url";
 
 export default class UserThemesViewModal extends Component {
   @service session;
