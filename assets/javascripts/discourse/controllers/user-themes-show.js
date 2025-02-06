@@ -4,10 +4,10 @@ import { service } from "@ember/service";
 import { ajax } from "discourse/lib/ajax";
 import { popupAjaxError } from "discourse/lib/ajax-error";
 import { url } from "discourse/lib/computed";
-import discourseComputed from "discourse-common/utils/decorators";
+import discourseComputed from "discourse/lib/decorators";
+import { i18n } from "discourse-i18n";
 import ThemeUploadAddModal from "admin/components/theme-upload-add";
 import AdminCustomizeThemesShowController from "admin/controllers/admin-customize-themes-show";
-import I18n from "I18n";
 import ThemesColors from "discourse/plugins/discourse-theme-creator/discourse/mixins/themes-colors";
 import UserThemesShareModal from "../components/modal/user-themes-share-modal";
 
@@ -135,7 +135,7 @@ export default class UserThemesShow extends AdminCustomizeThemesShowController.e
   @action
   destroy() {
     return this.dialog.deleteConfirm({
-      message: I18n.t("theme_creator.delete_confirm"),
+      message: i18n("theme_creator.delete_confirm"),
       didConfirm: () => {
         const model = this.get("model");
         model.destroyRecord().then(() => {

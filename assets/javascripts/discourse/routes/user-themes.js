@@ -2,9 +2,9 @@ import ArrayProxy from "@ember/array/proxy";
 import { action } from "@ember/object";
 import { service } from "@ember/service";
 import DiscourseRoute from "discourse/routes/discourse";
+import { i18n } from "discourse-i18n";
 import InstallThemeModal from "admin/components/modal/install-theme";
 import ColorSchemeColor from "admin/models/color-scheme-color";
-import I18n from "I18n";
 import UserThemesEditLocalModal from "../components/modal/user-themes-edit-local-modal";
 import UserColorScheme from "../models/user-color-scheme";
 
@@ -48,7 +48,7 @@ export default class UserThemes extends DiscourseRoute {
   }
 
   titleToken() {
-    return I18n.t("theme_creator.my_themes");
+    return i18n("theme_creator.my_themes");
   }
 
   @action
