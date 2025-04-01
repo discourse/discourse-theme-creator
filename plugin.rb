@@ -146,7 +146,6 @@ after_initialize do
 
   reloadable_patch do |plugin|
     ApplicationController.prepend(ThemeCreator::ApplicationControllerExtension)
-    ExtraLocalesController.prepend(ThemeCreator::ExtraLocalesControllerExtension)
   end
 
   add_user_api_key_scope(
