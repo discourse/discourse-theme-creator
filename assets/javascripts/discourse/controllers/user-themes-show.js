@@ -8,12 +8,9 @@ import discourseComputed from "discourse/lib/decorators";
 import { i18n } from "discourse-i18n";
 import ThemeUploadAddModal from "admin/components/theme-upload-add";
 import AdminCustomizeThemesShowController from "admin/controllers/admin-customize-themes-show";
-import ThemesColors from "discourse/plugins/discourse-theme-creator/discourse/mixins/themes-colors";
 import UserThemesShareModal from "../components/modal/user-themes-share-modal";
 
-export default class UserThemesShow extends AdminCustomizeThemesShowController.extend(
-  ThemesColors
-) {
+export default class UserThemesShow extends AdminCustomizeThemesShowController {
   @service dialog;
   @service modal;
   @service router;
@@ -24,6 +21,7 @@ export default class UserThemesShow extends AdminCustomizeThemesShowController.e
 
   editRouteName = "user.themes.edit";
   @url("model.id", "/user_themes/%@/export") downloadUrl;
+  @url("id", "/user_themes/%@/preview") previewUrl;
   advancedOverride = false;
 
   @discourseComputed("model.color_scheme_id")
@@ -88,6 +86,16 @@ export default class UserThemesShow extends AdminCustomizeThemesShowController.e
       .then(() => {
         this.set("isSaving", false);
       });
+  }
+
+  @discourseComputed("isSaving")
+  saveButtonText(isSaving) {
+    return isSaving ? i18n("saving") : i18n("theme_creator.save");
+  }
+
+  @discourseComputed("colors.@each.changed")
+  hidePreview(colors) {
+    return colors && colors.some((color) => color.get("changed"));
   }
 
   @action
