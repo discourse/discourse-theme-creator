@@ -31,11 +31,12 @@ export default RouteTemplate(
             class="btn-small cancel-edit"
           />
         {{else}}
-          {{@controller.model.name}}
-
-          <a href {{@controller.startEditingName}}>
-            {{icon "pencil"}}
-          </a>
+          <span>{{@controller.model.name}}</span>
+          <DButton
+            @action={{@controller.startEditingName}}
+            @icon="pencil"
+            class="btn-small"
+          />
         {{/if}}
       </h1>
 
