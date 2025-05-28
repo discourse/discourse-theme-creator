@@ -1,4 +1,5 @@
 import { array, concat, fn, hash } from "@ember/helper";
+import { on } from "@ember/modifier";
 import { LinkTo } from "@ember/routing";
 import RouteTemplate from "ember-route-template";
 import DButton from "discourse/components/d-button";
@@ -58,7 +59,7 @@ export default RouteTemplate(
               </a>
             </code>
 
-            <a href {{@controller.shareModal}}>
+            <a href {{on "click" @controller.shareModal}}>
               {{icon "pencil"}}
             </a>
           </div>
