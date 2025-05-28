@@ -68,7 +68,7 @@
     padding-top: 1em;
 
     &.editing {
-      margin-left: 0px;
+      margin-left: 0;
       width: 100%;
     }
 
@@ -87,9 +87,11 @@
     .metadata-field {
       margin-bottom: 0.5em;
     }
+
     input[type="text"] {
       margin-bottom: 0;
     }
+
     .label {
       font-weight: bold;
 
@@ -117,7 +119,7 @@
     display: block;
     width: 100%;
 
-    .row:after {
+    .row::after {
       clear: left;
       display: table;
       content: "";
@@ -161,13 +163,16 @@
       font-weight: bold;
       margin-bottom: 7px;
     }
+
     .control-unit {
       margin-bottom: 25px;
       margin-top: 15px;
     }
+
     .control {
       margin-bottom: 10px;
     }
+
     .description {
       margin-bottom: 12px;
       width: 650px;
@@ -219,9 +224,11 @@
     thead th {
       border: none;
     }
+
     td.hex {
       width: 160px;
     }
+
     td.actions {
       width: 200px;
     }
@@ -234,9 +241,11 @@
       width: 80px;
       margin-bottom: 0;
     }
+
     .hex {
       text-align: center;
     }
+
     .description {
       color: var(--primary-medium);
     }
