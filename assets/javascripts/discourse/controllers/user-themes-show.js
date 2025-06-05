@@ -99,7 +99,8 @@ export default class UserThemesShow extends AdminCustomizeThemesShowController {
   }
 
   @action
-  shareModal() {
+  shareModal(event) {
+    event.preventDefault();
     this.modal.show(UserThemesShareModal, { model: this.model });
   }
 
