@@ -1,5 +1,4 @@
 import JsonSchemaEditorModal from "discourse/components/modal/json-schema-editor";
-import discourseComputed from "discourse/lib/decorators";
 import ThemeSettingEditor from "admin/components/theme-setting-editor";
 
 export default class UserThemeSettingEditor extends ThemeSettingEditor {
