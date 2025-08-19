@@ -41,6 +41,8 @@ after_initialize do
     true
   end
 
+  add_to_class(:guardian, :can_create_theme?) { true }
+
   add_to_class(:guardian, :can_hotlink_user_theme?) { |theme| is_my_own?(theme) }
 
   add_to_class(:guardian, :can_see_user_theme?) do |theme|

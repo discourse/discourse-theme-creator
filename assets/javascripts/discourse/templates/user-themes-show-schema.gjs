@@ -17,7 +17,7 @@ export default RouteTemplate(
       </LinkTo>
       <h2>
         {{i18n
-          "admin.customize.theme.schema.title"
+          "admin.customize.schema.title"
           (hash name=@model.setting.setting)
         }}
       </h2>

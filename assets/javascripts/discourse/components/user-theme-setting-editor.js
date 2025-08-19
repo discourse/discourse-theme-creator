@@ -1,10 +1,9 @@
 import JsonSchemaEditorModal from "discourse/components/modal/json-schema-editor";
-import discourseComputed from "discourse/lib/decorators";
 import ThemeSettingEditor from "admin/components/theme-setting-editor";
 
 export default class UserThemeSettingEditor extends ThemeSettingEditor {
-  @discourseComputed("setting")
-  settingEditButton(setting) {
+  get settingEditButton() {
+    const setting = this.setting;
     if (setting.json_schema) {
       return {
         action: () => {
@@ -27,7 +26,7 @@ export default class UserThemeSettingEditor extends ThemeSettingEditor {
         action: () => {
           this.router.transitionTo(
             "user.themes.show.schema",
-            this.model.id,
+            this.args.model.id,
             setting.setting
           );
         },
@@ -35,5 +34,6 @@ export default class UserThemeSettingEditor extends ThemeSettingEditor {
         icon: "pencil",
       };
     }
+    return null;
   }
 }
