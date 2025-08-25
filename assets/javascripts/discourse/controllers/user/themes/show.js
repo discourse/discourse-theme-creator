@@ -8,7 +8,7 @@ import discourseComputed from "discourse/lib/decorators";
 import { i18n } from "discourse-i18n";
 import ThemeUploadAddModal from "admin/components/theme-upload-add";
 import AdminCustomizeThemesShowIndexController from "admin/controllers/admin-customize-themes-show-index";
-import UserThemesShareModal from "../components/modal/user-themes-share-modal";
+import UserThemesShareModal from "../../../components/modal/user-themes-share-modal";
 
 export default class UserThemesShow extends AdminCustomizeThemesShowIndexController {
   @service dialog;
