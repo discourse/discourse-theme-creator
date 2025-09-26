@@ -1,4 +1,4 @@
-import AdminCustomizeThemesIndex from "admin/routes/admin-customize-themes-index";
+import AdminCustomizeThemesIndex from "admin/routes/admin-config/customize/themes";
 
 export default class UserThemesIndex extends AdminCustomizeThemesIndex {
   templateName = "adminCustomizeThemesIndex";
