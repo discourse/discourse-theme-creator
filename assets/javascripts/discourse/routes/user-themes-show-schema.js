@@ -1,9 +1,6 @@
-import { service } from "@ember/service";
 import DiscourseRoute from "discourse/routes/discourse";
 
 export default class UserThemesShowSchema extends DiscourseRoute {
-  @service router;
-
   async model(params) {
     const all = this.modelFor("user.themes");
     const theme = all.findBy("id", parseInt(params.theme_id, 10));

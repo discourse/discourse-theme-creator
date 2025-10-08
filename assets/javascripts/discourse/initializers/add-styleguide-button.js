@@ -13,6 +13,6 @@ function initializeWithApi(api) {
 export default {
   name: "add-styleguide-button",
   initialize() {
-    withPluginApi("0.1", initializeWithApi);
+    withPluginApi(initializeWithApi);
   },
 };

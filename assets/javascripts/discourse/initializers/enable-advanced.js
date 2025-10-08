@@ -10,6 +10,6 @@ function initializeWithApi(api) {
 export default {
   name: "enable-advanced",
   initialize() {
-    withPluginApi("0.1", initializeWithApi);
+    withPluginApi(initializeWithApi);
   },
 };

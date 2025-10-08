@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe "Discourse Theme Creator - user theme setting", system: true do
-  fab!(:current_user) { Fabricate(:user) }
+  fab!(:current_user, :user)
   fab!(:theme) { Fabricate(:theme, component: true, user: current_user) }
 
   before do
