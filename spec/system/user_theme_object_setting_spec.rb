@@ -33,6 +33,7 @@ RSpec.describe "Discourse Theme Creator - user theme object setting", system: tr
     admin_objects_theme_setting_editor_page.fill_in_field("name", "test")
     admin_objects_theme_setting_editor_page.save
 
+    admin_customize_themes_page.click_edit_objects_theme_setting_button("objects_setting")
     expect(admin_objects_theme_setting_editor_page).to have_setting_field("name", "test")
   end
 end
