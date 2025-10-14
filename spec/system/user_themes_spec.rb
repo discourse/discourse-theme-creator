@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe "User themes", type: :system do
+RSpec.describe "User themes" do
   before { enable_current_plugin }
 
   it "can navigate to the user themes page and create a theme" do
