@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe "User themes", type: :system do
   before { enable_current_plugin }
 
