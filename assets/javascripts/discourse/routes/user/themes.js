@@ -5,8 +5,8 @@ import DiscourseRoute from "discourse/routes/discourse";
 import { i18n } from "discourse-i18n";
 import InstallThemeModal from "admin/components/modal/install-theme";
 import ColorSchemeColor from "admin/models/color-scheme-color";
-import UserThemesEditLocalModal from "../components/modal/user-themes-edit-local-modal";
-import UserColorScheme from "../models/user-color-scheme";
+import UserThemesEditLocalModal from "../../components/modal/user-themes-edit-local-modal";
+import UserColorScheme from "../../models/user-color-scheme";
 
 export default class UserThemes extends DiscourseRoute {
   @service modal;

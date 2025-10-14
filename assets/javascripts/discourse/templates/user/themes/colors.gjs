@@ -4,7 +4,7 @@ import DButton from "discourse/components/d-button";
 import TextField from "discourse/components/text-field";
 import icon from "discourse/helpers/d-icon";
 import { i18n } from "discourse-i18n";
-import ColorSchemeEditor from "../components/color-scheme-editor";
+import ColorSchemeEditor from "../../../components/color-scheme-editor";
 
 export default RouteTemplate(
   <template>

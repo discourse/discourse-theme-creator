@@ -9,10 +9,10 @@ import formatDate from "discourse/helpers/format-date";
 import routeAction from "discourse/helpers/route-action";
 import { i18n } from "discourse-i18n";
 import ComboBox from "select-kit/components/combo-box";
-import ColorSchemeEditor from "../components/color-scheme-editor";
-import ThemeMetadataField from "../components/theme-metadata-field";
-import UserThemeSettingEditor from "../components/user-theme-setting-editor";
-import UserThemeTranslation from "../components/user-theme-translation";
+import ColorSchemeEditor from "../../../components/color-scheme-editor";
+import ThemeMetadataField from "../../../components/theme-metadata-field";
+import UserThemeSettingEditor from "../../../components/user-theme-setting-editor";
+import UserThemeTranslation from "../../../components/user-theme-translation";
 
 export default RouteTemplate(
   <template>
