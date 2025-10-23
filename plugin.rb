@@ -21,8 +21,16 @@ after_initialize do
   # We're re-using a lot of locale strings from the admin section
   # so we need to load it for non-staff users.
   register_html_builder("server:before-head-close") do |ctx|
-    ctx.helpers.preload_script_url(ExtraLocalesController.url("admin")) +
-      ctx.helpers.preload_script("admin") + ctx.helpers.discourse_stylesheet_link_tag(:admin)
+    admin_scripts =
+      EmberCli.script_chunks["chunk.admin"]&.map do |script_name|
+        "<link rel='preload' href='#{ctx.helpers.script_asset_path(script_name)}' as='script' nonce='#{ctx.helpers.csp_nonce_placeholder}' data-discourse-entrypoint='admin'>"
+      end || []
+
+    [
+      ctx.helpers.preload_script_url(ExtraLocalesController.url("admin")),
+      *admin_scripts,
+      ctx.helpers.discourse_stylesheet_link_tag(:admin),
+    ].join
   end
 
   # Override guardian to allow users to preview their own themes using the ?preview_theme_id= variable
