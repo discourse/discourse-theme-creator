@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 RSpec.describe "Discourse Theme Creator - user theme object setting", system: true do
-  fab!(:current_user, :admin)
-  fab!(:theme) { Fabricate(:theme, name: "Cool theme 1", component: true, user: current_user) }
+  fab!(:admin)
+  fab!(:theme) { Fabricate(:theme, name: "Cool theme 1", component: true, user: admin) }
 
   let(:objects_setting) do
     theme.set_field(
@@ -17,23 +17,28 @@ RSpec.describe "Discourse Theme Creator - user theme object setting", system: tr
 
   let(:admin_customize_themes_page) { PageObjects::Pages::AdminCustomizeThemes.new }
 
-  let(:admin_objects_theme_setting_editor_page) do
-    PageObjects::Pages::AdminObjectsThemeSettingEditor.new
-  end
+  let(:admin_objects_setting_editor_page) { PageObjects::Pages::AdminObjectsSettingEditor.new }
 
   before do
     objects_setting
-    sign_in(current_user)
+    sign_in(admin)
   end
 
   it "can edit object settings" do
-    visit "/u/#{current_user.username}/themes/#{theme.id}"
+    visit "/u/#{admin.username}/themes/#{theme.id}"
 
-    admin_customize_themes_page.click_edit_objects_theme_setting_button("objects_setting")
-    admin_objects_theme_setting_editor_page.fill_in_field("name", "test")
-    admin_objects_theme_setting_editor_page.save
+    # Wait for the theme settings section to appear
+    expect(page).to have_text("Custom theme settings")
 
-    admin_customize_themes_page.click_edit_objects_theme_setting_button("objects_setting")
-    expect(admin_objects_theme_setting_editor_page).to have_setting_field("name", "test")
+    # The setting should be visible with the edit button
+    expect(page).to have_css("[data-setting='objects_setting']")
+    find("[data-setting='objects_setting'] .setting-value-edit-button").click
+
+    admin_objects_setting_editor_page.fill_in_field("name", "test").save
+
+    expect(page).to have_current_path("/u/#{admin.username}/themes/#{theme.id}")
+
+    find("[data-setting='objects_setting'] .setting-value-edit-button").click
+    expect(admin_objects_setting_editor_page).to have_setting_field("name", "test")
   end
 end
