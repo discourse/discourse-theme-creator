@@ -4,7 +4,7 @@
   display: grid;
   grid-template-columns: 0.2fr 0.8fr;
   grid-template-rows: 1fr;
-  grid-column-gap: 20px;
+  column-gap: 20px;
   border-top: 1px solid var(--primary-low);
 
   .user-theme-list {

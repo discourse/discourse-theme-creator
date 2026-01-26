@@ -14,9 +14,7 @@ RSpec.describe "User themes" do
     find(".install-theme-content__theme-name").fill_in with: "My theme"
     find(".d-modal__footer .btn-primary").click
 
-    try_until_success do
-      expect(Theme.last.user.id).to eq(user.id)
-    end
+    try_until_success { expect(Theme.last.user.id).to eq(user.id) }
 
     expect(page).to have_current_path("/u/#{user.username}/themes/#{Theme.last.id}")
     expect(page).to have_css(".theme-controls")
