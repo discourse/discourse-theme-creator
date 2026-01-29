@@ -1,3 +1,5 @@
+// TODO: update this
+// eslint-disable-next-line discourse/deprecated-imports
 import ArrayProxy from "@ember/array/proxy";
 import { action } from "@ember/object";
 import { service } from "@ember/service";
