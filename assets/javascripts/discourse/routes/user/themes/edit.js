@@ -7,7 +7,7 @@ export default class extends DiscourseRoute {
   @service dialog;
   @service router;
 
-  templateName = "adminCustomizeThemesEdit";
+  templateName = "admin-customize-themes/edit";
 
   model(params) {
     const all = this.modelFor("user.themes");

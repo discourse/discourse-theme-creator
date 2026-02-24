@@ -1,9 +1,9 @@
-import Component from "@ember/component";
+import Component from "@glimmer/component";
 import { fn } from "@ember/helper";
 import { on } from "@ember/modifier";
 import { action } from "@ember/object";
+import ColorInput from "discourse/admin/components/color-input";
 import { i18n } from "discourse-i18n";
-import ColorInput from "admin/components/color-input";
 
 export default class ColorSchemeEditor extends Component {
   @action

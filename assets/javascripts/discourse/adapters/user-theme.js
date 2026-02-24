@@ -1,6 +1,6 @@
 import { Result } from "discourse/adapters/rest";
+import ThemeAdapter from "discourse/admin/adapters/theme";
 import { ajax } from "discourse/lib/ajax";
-import ThemeAdapter from "admin/adapters/theme";
 
 export default class UserThemeAdapter extends ThemeAdapter {
   typeField = "theme";

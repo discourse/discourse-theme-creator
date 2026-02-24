@@ -1,5 +1,5 @@
+import ColorScheme from "discourse/admin/models/color-scheme";
 import { ajax } from "discourse/lib/ajax";
-import ColorScheme from "admin/models/color-scheme";
 
 export default class UserColorScheme extends ColorScheme {
   save() {
