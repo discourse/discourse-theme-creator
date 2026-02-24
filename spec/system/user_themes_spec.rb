@@ -14,9 +14,7 @@ RSpec.describe "User themes" do
 
     find(".btn-default.edit").click
 
-    expect(page).to have_current_path(
-      %r{/u/#{user.username}/themes/#{theme.id}/common/scss/edit},
-    )
+    expect(page).to have_current_path(%r{/u/#{user.username}/themes/#{theme.id}/common/scss/edit})
     expect(page).to have_css(".current-style")
   end
 
