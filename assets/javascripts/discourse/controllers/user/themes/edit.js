@@ -1,5 +1,5 @@
+import AdminCustomizeThemesEdit from "discourse/admin/controllers/admin-customize-themes/edit";
 import { url } from "discourse/lib/computed";
-import AdminCustomizeThemesEdit from "admin/controllers/admin-customize-themes-edit";
 
 export default class UserThemesEdit extends AdminCustomizeThemesEdit {
   @url("model.id", "/user_themes/%@/preview") previewUrl;

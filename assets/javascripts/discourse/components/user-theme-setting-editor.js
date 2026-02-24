@@ -1,5 +1,5 @@
+import ThemeSettingEditor from "discourse/admin/components/theme-setting-editor";
 import JsonSchemaEditorModal from "discourse/components/modal/json-schema-editor";
-import ThemeSettingEditor from "admin/components/theme-setting-editor";
 
 export default class UserThemeSettingEditor extends ThemeSettingEditor {
   get settingEditButton() {

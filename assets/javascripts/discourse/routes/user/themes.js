@@ -3,10 +3,10 @@
 import ArrayProxy from "@ember/array/proxy";
 import { action } from "@ember/object";
 import { service } from "@ember/service";
+import InstallThemeModal from "discourse/admin/components/modal/install-theme";
+import ColorSchemeColor from "discourse/admin/models/color-scheme-color";
 import DiscourseRoute from "discourse/routes/discourse";
 import { i18n } from "discourse-i18n";
-import InstallThemeModal from "admin/components/modal/install-theme";
-import ColorSchemeColor from "admin/models/color-scheme-color";
 import UserThemesEditLocalModal from "../../components/modal/user-themes-edit-local-modal";
 import UserColorScheme from "../../models/user-color-scheme";
 

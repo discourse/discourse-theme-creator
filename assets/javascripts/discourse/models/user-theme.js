@@ -1,4 +1,4 @@
-import Theme from "admin/models/theme";
+import Theme from "discourse/admin/models/theme";
 import UserThemeSettings from "./user-theme-settings";
 
 export default class UserTheme extends Theme {

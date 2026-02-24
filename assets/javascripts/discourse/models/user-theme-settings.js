@@ -1,6 +1,6 @@
+import ThemeSettings from "discourse/admin/models/theme-settings";
 import { ajax } from "discourse/lib/ajax";
 import { popupAjaxError } from "discourse/lib/ajax-error";
-import ThemeSettings from "admin/models/theme-settings";
 
 export default class UserThemeSettings extends ThemeSettings {
   loadMetadata(themeId) {

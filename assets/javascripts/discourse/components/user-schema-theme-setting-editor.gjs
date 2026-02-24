@@ -1,6 +1,6 @@
 import { action } from "@ember/object";
+import SchemaThemeSettingEditor from "discourse/admin/components/schema-setting/editor";
 import { popupAjaxError } from "discourse/lib/ajax-error";
-import SchemaThemeSettingEditor from "admin/components/schema-setting/editor";
 
 export default class UserSchemaThemeSettingEditor extends SchemaThemeSettingEditor {
   @action

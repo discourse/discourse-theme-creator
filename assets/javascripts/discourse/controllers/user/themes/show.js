@@ -1,13 +1,13 @@
 import EmberObject, { action } from "@ember/object";
 import { alias } from "@ember/object/computed";
 import { service } from "@ember/service";
+import ThemeUploadAddModal from "discourse/admin/components/theme-upload-add";
+import AdminCustomizeThemesShowIndexController from "discourse/admin/controllers/admin-customize-themes/show/index";
 import { ajax } from "discourse/lib/ajax";
 import { popupAjaxError } from "discourse/lib/ajax-error";
 import { url } from "discourse/lib/computed";
 import discourseComputed from "discourse/lib/decorators";
 import { i18n } from "discourse-i18n";
-import ThemeUploadAddModal from "admin/components/theme-upload-add";
-import AdminCustomizeThemesShowIndexController from "admin/controllers/admin-customize-themes/show/index";
 import UserThemesShareModal from "../../../components/modal/user-themes-share-modal";
 
 export default class UserThemesShow extends AdminCustomizeThemesShowIndexController {

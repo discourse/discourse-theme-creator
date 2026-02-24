@@ -3,11 +3,11 @@ import { Input } from "@ember/component";
 import { action } from "@ember/object";
 import { next } from "@ember/runloop";
 import { service } from "@ember/service";
-import { or } from "truth-helpers";
 import DButton from "discourse/components/d-button";
 import avatar from "discourse/helpers/avatar";
 import { ajax } from "discourse/lib/ajax";
 import getURL from "discourse/lib/get-url";
+import { or } from "discourse/truth-helpers";
 import { i18n } from "discourse-i18n";
 
 export default class UserThemesViewModal extends Component {
