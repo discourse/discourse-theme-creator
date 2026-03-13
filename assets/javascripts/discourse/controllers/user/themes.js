@@ -1,9 +1,9 @@
 import Controller from "@ember/controller";
-import discourseComputed from "discourse/lib/decorators";
+import { computed } from "@ember/object";
 
 export default class UserThemes extends Controller {
-  @discourseComputed("model", "model.@each.component")
-  installedThemes(themes) {
-    return themes.map((t) => t.name);
+  @computed("model", "model.@each.component")
+  get installedThemes() {
+    return this.model.map((t) => t.name);
   }
 }

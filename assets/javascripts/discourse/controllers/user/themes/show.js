@@ -1,4 +1,4 @@
-import EmberObject, { action } from "@ember/object";
+import EmberObject, { action, computed } from "@ember/object";
 import { alias } from "@ember/object/computed";
 import { service } from "@ember/service";
 import ThemeUploadAddModal from "discourse/admin/components/theme-upload-add";
@@ -6,7 +6,6 @@ import AdminCustomizeThemesShowIndexController from "discourse/admin/controllers
 import { ajax } from "discourse/lib/ajax";
 import { popupAjaxError } from "discourse/lib/ajax-error";
 import { url } from "discourse/lib/computed";
-import discourseComputed from "discourse/lib/decorators";
 import { i18n } from "discourse-i18n";
 import UserThemesShareModal from "../../../components/modal/user-themes-share-modal";
 
@@ -24,45 +23,39 @@ export default class UserThemesShow extends AdminCustomizeThemesShowIndexControl
   @url("id", "/user_themes/%@/preview") previewUrl;
   advancedOverride = false;
 
-  @discourseComputed("model.color_scheme_id")
-  colorSchemeEditDisabled(colorSchemeId) {
-    return colorSchemeId === null;
+  @computed("model.color_scheme_id")
+  get colorSchemeEditDisabled() {
+    return this.model?.color_scheme_id === null;
   }
 
-  @discourseComputed(
+  @computed(
     "advancedOverride",
     "colorSchemes",
     "model.uploads",
     "model.hasEditedFields",
     "model.component"
   )
-  showAdvanced(
-    advancedOverride,
-    colorSchemes,
-    uploads,
-    hasEditedFields,
-    component
-  ) {
+  get showAdvanced() {
     return (
-      advancedOverride ||
-      uploads.length > 0 ||
-      colorSchemes.length > 2 ||
-      hasEditedFields ||
-      component
+      this.advancedOverride ||
+      this.model?.uploads?.length > 0 ||
+      this.colorSchemes.length > 2 ||
+      this.model?.hasEditedFields ||
+      this.model?.component
     );
   }
 
-  @discourseComputed("quickColorScheme")
-  hasQuickColorScheme(scheme) {
-    return !!scheme;
+  @computed("quickColorScheme")
+  get hasQuickColorScheme() {
+    return !!this.quickColorScheme;
   }
 
-  @discourseComputed("showAdvanced", "colorSchemes")
-  quickColorScheme(showAdvanced, schemes) {
-    if (showAdvanced) {
+  @computed("showAdvanced", "colorSchemes")
+  get quickColorScheme() {
+    if (this.showAdvanced) {
       return null;
     }
-    const scheme = schemes.find((c) => {
+    const scheme = this.colorSchemes.find((c) => {
       return c.id !== null;
     });
     return scheme;
@@ -88,14 +81,14 @@ export default class UserThemesShow extends AdminCustomizeThemesShowIndexControl
       });
   }
 
-  @discourseComputed("isSaving")
-  saveButtonText(isSaving) {
-    return isSaving ? i18n("saving") : i18n("theme_creator.save");
+  @computed("isSaving")
+  get saveButtonText() {
+    return this.isSaving ? i18n("saving") : i18n("theme_creator.save");
   }
 
-  @discourseComputed("colors.@each.changed")
-  hidePreview(colors) {
-    return colors && colors.some((color) => color.get("changed"));
+  @computed("colors.@each.changed")
+  get hidePreview() {
+    return this.colors && this.colors?.some((color) => color.get("changed"));
   }
 
   @action
