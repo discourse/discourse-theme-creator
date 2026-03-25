@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe "Discourse Theme Creator - user theme object setting", system: true do
+RSpec.describe "Discourse Theme Creator - user theme object setting" do
   fab!(:admin)
   fab!(:theme) { Fabricate(:theme, name: "Cool theme 1", component: true, user: admin) }
 

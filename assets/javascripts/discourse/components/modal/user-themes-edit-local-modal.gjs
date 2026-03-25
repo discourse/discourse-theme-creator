@@ -2,7 +2,7 @@
 import { tracked } from "@glimmer/tracking";
 import Component from "@ember/component";
 import { action } from "@ember/object";
-import { htmlSafe } from "@ember/template";
+import { trustHTML } from "@ember/template";
 import ConditionalLoadingSpinner from "discourse/components/conditional-loading-spinner";
 import DButton from "discourse/components/d-button";
 import DModal from "discourse/components/d-modal";
@@ -35,7 +35,7 @@ export default class UserThemesEditLocalModal extends Component {
       @title={{i18n "theme_creator.edit_local"}}
       @closeModal={{@closeModal}}
     >
-      <p>{{htmlSafe (i18n "theme_creator.edit_local_description")}}</p>
+      <p>{{trustHTML (i18n "theme_creator.edit_local_description")}}</p>
 
       <h3>{{i18n "theme_creator.edit_local_key"}}</h3>
 
@@ -51,7 +51,7 @@ export default class UserThemesEditLocalModal extends Component {
         {{/if}}
       </ConditionalLoadingSpinner>
 
-      <p>{{htmlSafe (i18n "theme_creator.revoke_instructions")}}</p>
+      <p>{{trustHTML (i18n "theme_creator.revoke_instructions")}}</p>
     </DModal>
   </template>
 }
