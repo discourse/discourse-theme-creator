@@ -4,7 +4,7 @@ import { fn } from "@ember/helper";
 import { on } from "@ember/modifier";
 import { action } from "@ember/object";
 import { getOwner } from "@ember/owner";
-import { htmlSafe } from "@ember/template";
+import { trustHTML } from "@ember/template";
 import DButton from "discourse/components/d-button";
 import DModal from "discourse/components/d-modal";
 import icon from "discourse/helpers/d-icon";
@@ -195,7 +195,7 @@ export default class UserThemesShareModal extends Component {
           <h1 class="large_theme_share_icon">{{icon "users"}}</h1>
 
           <p class="theme_share_unavailable">
-            {{htmlSafe (i18n "theme_creator.share_unavailable")}}
+            {{trustHTML (i18n "theme_creator.share_unavailable")}}
           </p>
         </div>
       {{/if}}
