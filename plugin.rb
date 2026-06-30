@@ -22,7 +22,7 @@ after_initialize do
   # so we need to load it for non-staff users.
   register_html_builder("server:before-head-close") do |ctx|
     admin_scripts =
-      EmberAssets.script_chunks["chunk.admin"]&.map do |script_name|
+      EmberAssets.script_chunks["admin/compat-modules"]&.map do |script_name|
         "<link rel='preload' href='#{ctx.helpers.script_asset_path(script_name)}' as='script' nonce='#{ctx.helpers.csp_nonce_placeholder}' data-discourse-entrypoint='admin'>"
       end || []
 
