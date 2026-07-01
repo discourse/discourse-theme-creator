@@ -17,6 +17,7 @@ require_relative "lib/theme_creator/engine"
 after_initialize do
   require_relative "app/jobs/scheduled/cleanup_topics"
   require_relative "lib/theme_creator/application_controller_extension"
+  require_relative "lib/theme_creator/application_helper_extension"
 
   # We're re-using a lot of locale strings from the admin section
   # so we need to load it for non-staff users.
@@ -156,6 +157,7 @@ after_initialize do
 
   reloadable_patch do |plugin|
     ApplicationController.prepend(ThemeCreator::ApplicationControllerExtension)
+    ApplicationHelper.prepend(ThemeCreator::ApplicationHelperExtension)
   end
 
   add_user_api_key_scope(
