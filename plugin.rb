@@ -17,12 +17,13 @@ require_relative "lib/theme_creator/engine"
 after_initialize do
   require_relative "app/jobs/scheduled/cleanup_topics"
   require_relative "lib/theme_creator/application_controller_extension"
+  require_relative "lib/theme_creator/application_helper_extension"
 
   # We're re-using a lot of locale strings from the admin section
   # so we need to load it for non-staff users.
   register_html_builder("server:before-head-close") do |ctx|
     admin_scripts =
-      EmberCli.script_chunks["chunk.admin"]&.map do |script_name|
+      EmberAssets.script_chunks["admin/compat-modules"]&.map do |script_name|
         "<link rel='preload' href='#{ctx.helpers.script_asset_path(script_name)}' as='script' nonce='#{ctx.helpers.csp_nonce_placeholder}' data-discourse-entrypoint='admin'>"
       end || []
 
@@ -156,6 +157,7 @@ after_initialize do
 
   reloadable_patch do |plugin|
     ApplicationController.prepend(ThemeCreator::ApplicationControllerExtension)
+    ApplicationHelper.prepend(ThemeCreator::ApplicationHelperExtension)
   end
 
   add_user_api_key_scope(
