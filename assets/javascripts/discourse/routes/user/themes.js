@@ -56,7 +56,7 @@ export default class UserThemes extends DiscourseRoute {
   @action
   addTheme(theme, afterTransition) {
     const all = this.modelFor("user.themes");
-    all.pushObject(theme);
+    all.content.push(theme);
     this.router
       .transitionTo("user.themes.show", theme.get("id"))
       .then(afterTransition);

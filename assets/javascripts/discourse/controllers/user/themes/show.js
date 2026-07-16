@@ -5,6 +5,7 @@ import ThemeUploadAddModal from "discourse/admin/components/theme-upload-add";
 import AdminCustomizeThemesShowIndexController from "discourse/admin/controllers/admin-customize-themes/show/index";
 import { ajax } from "discourse/lib/ajax";
 import { popupAjaxError } from "discourse/lib/ajax-error";
+import { removeValueFromArray } from "discourse/lib/array-tools";
 import { url } from "discourse/lib/computed";
 import { i18n } from "discourse-i18n";
 import UserThemesShareModal from "../../../components/modal/user-themes-share-modal";
@@ -127,7 +128,7 @@ export default class UserThemesShow extends AdminCustomizeThemesShowIndexControl
   @action
   destroyColorScheme() {
     this.get("colorSchemes")
-      .findBy("id", this.get("model.color_scheme_id"))
+      .find((cs) => cs.id === this.get("model.color_scheme_id"))
       .destroy()
       .then(() => {
         this.send("refreshThemes");
@@ -141,7 +142,7 @@ export default class UserThemesShow extends AdminCustomizeThemesShowIndexControl
       didConfirm: () => {
         const model = this.get("model");
         model.destroyRecord().then(() => {
-          this.get("allThemes").removeObject(model);
+          removeValueFromArray(this.get("allThemes").content, model);
           this.router.transitionTo("user.themes");
         });
       },
