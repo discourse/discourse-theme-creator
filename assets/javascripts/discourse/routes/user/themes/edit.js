@@ -11,7 +11,9 @@ export default class extends DiscourseRoute {
 
   model(params) {
     const all = this.modelFor("user.themes");
-    const model = all.findBy("id", parseInt(params.theme_id, 10));
+    const model = all.content.find(
+      (t) => t.id === parseInt(params.theme_id, 10)
+    );
     return model
       ? {
           model,

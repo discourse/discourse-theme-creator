@@ -8,7 +8,7 @@ export default class UserColorScheme extends ColorScheme {
     data.colors = [];
     this.get("colors").forEach((c) => {
       if (c.get("changed")) {
-        data.colors.pushObject({ name: c.get("name"), hex: c.get("hex") });
+        data.colors.push({ name: c.get("name"), hex: c.get("hex") });
       }
     });
 
