@@ -19,7 +19,7 @@ export default class UserThemesShareModal extends Component {
   themesController = getOwner(this).lookup("controller:user.themes");
 
   get slugUnique() {
-    const existingSlugs = this.themesController.model.map((theme) => {
+    const existingSlugs = this.themesController.model.content.map((theme) => {
       if (theme.get("id") !== this.args.model.id) {
         return theme.get("share_slug");
       }

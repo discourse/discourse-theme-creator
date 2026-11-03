@@ -14,7 +14,7 @@ export default <template>
         </LinkTo>
 
         <ul>
-          {{#each @controller.model as |theme|}}
+          {{#each @controller.model.content as |theme|}}
             <li>
               <LinkTo
                 @route="user.themes.show"
