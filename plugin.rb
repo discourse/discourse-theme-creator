@@ -65,6 +65,10 @@ after_initialize do
 
   add_to_class(:guardian, :can_edit_user_theme?) { |theme| is_staff? || is_my_own?(theme) }
 
+  add_to_class(:guardian, :can_edit_theme?) do |theme|
+    theme.present? && can_edit_user_theme?(theme)
+  end
+
   add_to_class(:guardian, :can_share_user_theme?) do |theme|
     return true if SiteSetting.theme_creator_share_groups.blank? # all users can share
 

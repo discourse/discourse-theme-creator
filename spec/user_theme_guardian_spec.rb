@@ -27,14 +27,26 @@ RSpec.describe ::Guardian do
   describe "editing protection" do
     it "allows editing own themes" do
       expect(guardian1.can_edit_user_theme?(theme)).to eq(true)
+      expect(guardian1.can_edit_theme?(theme)).to eq(true)
     end
 
     it "disallows editing other themes" do
       expect(guardian2.can_edit_user_theme?(theme)).to eq(false)
+      expect(guardian2.can_edit_theme?(theme)).to eq(false)
     end
 
     it "allows staff to edit other themes" do
       expect(adminGuardian.can_edit_user_theme?(theme)).to eq(true)
+      expect(adminGuardian.can_edit_theme?(theme)).to eq(true)
+      expect(Fabricate(:moderator).guardian.can_edit_theme?(theme)).to eq(true)
+    end
+
+    it "disallows anonymous users from editing themes" do
+      expect(Guardian.new.can_edit_theme?(theme)).to eq(false)
+    end
+
+    it "disallows editing a missing theme" do
+      expect(adminGuardian.can_edit_theme?(nil)).to eq(false)
     end
   end
 
