@@ -48,6 +48,22 @@ RSpec.describe ::Guardian do
     it "disallows editing a missing theme" do
       expect(adminGuardian.can_edit_theme?(nil)).to eq(false)
     end
+
+    it "respects plugin restrictions while allowing system theme imports" do
+      plugin = Plugin::Instance.new
+      restriction = proc { false }
+      plugin.register_modifier(:user_guardian_can_edit_theme, &restriction)
+
+      expect(guardian1.can_edit_theme?(theme)).to eq(false)
+      expect(adminGuardian.can_edit_theme?(theme)).to eq(false)
+      expect(Discourse.system_user.guardian.can_edit_theme?(theme)).to eq(true)
+    ensure
+      DiscoursePluginRegistry.unregister_modifier(
+        plugin,
+        :user_guardian_can_edit_theme,
+        &restriction
+      )
+    end
   end
 
   describe "share theme protection" do

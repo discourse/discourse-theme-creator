@@ -66,7 +66,10 @@ after_initialize do
   add_to_class(:guardian, :can_edit_user_theme?) { |theme| is_staff? || is_my_own?(theme) }
 
   add_to_class(:guardian, :can_edit_theme?) do |theme|
-    theme.present? && can_edit_user_theme?(theme)
+    return false if theme.blank? || !can_edit_user_theme?(theme)
+    return true if user.is_system_user?
+
+    DiscoursePluginRegistry.apply_modifier(:user_guardian_can_edit_theme, true, self, theme)
   end
 
   add_to_class(:guardian, :can_share_user_theme?) do |theme|
