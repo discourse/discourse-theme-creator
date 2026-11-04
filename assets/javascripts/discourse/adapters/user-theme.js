@@ -37,7 +37,7 @@ export default class UserThemeAdapter extends ThemeAdapter {
 
   afterFindAll(results) {
     results = super.afterFindAll(results);
-    results.forEach((theme) => {
+    results.content.forEach((theme) => {
       if (!theme.get("remote_theme")) {
         theme.set("remote_theme", {});
       }
